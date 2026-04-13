@@ -12,14 +12,14 @@
 
 #include "../include/minishell.h"
 
-int	main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **envp)
 {
-		t_pipex	pipex;
-
-	if (ac < 5)
-		return (ft_putstr_fd("Error: bad arguments\n", 2), 1);
-	if (ft_strncmp(av[1], "here_doc", 9) == 0 && ac < 6)
-		return (ft_putstr_fd("Error: bad arguments\n", 2), 1);
-	init_pipex(&pipex, ac, av, env);
+	t_pipex	pipex;
+	if (ac > 1)
+		return (ft_printf("No args"), 1);
+	if (!av)
+		return (1);
+	char *line = readline( "$:" );
+	exec_cmd(line, envp);
 	return (pipe_setup(&pipex));
 }
