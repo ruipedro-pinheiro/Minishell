@@ -14,12 +14,21 @@
 
 int	main(int ac, char **av, char **envp)
 {
-	t_pipex	pipex;
+	int pid;
+	int status;
 	if (ac > 1)
 		return (ft_printf("No args"), 1);
 	if (!av)
 		return (1);
-	char *line = readline( "$:" );
-	exec_cmd(line, envp);
-	return (pipe_setup(&pipex));
+	char *line;
+	line = readline("$: ");
+	while (true) // shouldnt be true = func that will wait for keypress like CTRL+C
+	{
+		pid = fork();
+		if (pid == 0)
+			exec_cmd(line, envp);
+		waitpid(pid, &status , 0 );
+		line = readline("$: ");
+	}
+	return (0);
 }
