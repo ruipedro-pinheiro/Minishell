@@ -13,6 +13,9 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include "../libft/libft.h"
 # include "unistd.h"
 # include <errno.h>
@@ -20,6 +23,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <stdlib.h>
 
 typedef struct s_pipex
 {
@@ -39,6 +43,6 @@ void		child_process(t_pipex *pipex, int i, int prev_fd, int *pipe_fd);
 void		child_end(t_pipex *pipex, int prev_fd);
 int			here_doc_input(t_pipex *pipex);
 int			pipe_setup(t_pipex *pipex);
-static void	init_pipex(t_pipex *pipex, int argc, char **argv, char **envp);
+void		init_pipex(t_pipex *pipex, int argc, char **argv, char **envp);
 
 #endif

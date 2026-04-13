@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../include/minishell.h"
 
-static void	init_pipex(t_pipex *pipex, int argc, char **argv, char **envp)
+void	init_pipex(t_pipex *pipex, int argc, char **argv, char **envp)
 {
 	pipex->envp = envp;
 	pipex->limiter = NULL;
