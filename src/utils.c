@@ -3,14 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpinheir <rpinhier@student.42Lausanne.ch>  +#+  +:+       +#+        */
+/*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 12:00:38 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/02/04 15:54:42 by rpinheir         ###   ########.ch       */
+/*   Updated: 2026/04/13 19:22:07 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../include/minishell.h"
+
+void	init_pipex(t_pipex *pipex, int argc, char **argv, char **envp)
+{
+	pipex->envp = envp;
+	pipex->limiter = NULL;
+	if (ft_strncmp(argv[1], "here_doc", 9) == 0)
+	{
+		pipex->limiter = argv[2];
+		pipex->cmds = &argv[3];
+		pipex->cmd_count = argc - 4;
+		pipex->infile = NULL;
+	}
+	else
+	{
+		pipex->cmds = &argv[2];
+		pipex->cmd_count = argc - 3;
+		pipex->infile = argv[1];
+	}
+	pipex->outfile = argv[argc - 1];
+	pipex->pids = NULL;
+}
 
 int	error_handler(char *msg)
 {
@@ -18,32 +39,7 @@ int	error_handler(char *msg)
 	exit(errno);
 }
 
-char	*get_envp(char **envp)
-{
-	int		i;
-	int		j;
-	char	*path;
-
-	i = 0;
-	j = 0;
-	while (envp[i])
-	{
-		j = 0;
-		while (envp[i][j] && envp[i][j] != '=')
-			j++;
-		path = ft_substr(envp[i], 0, j + 1);
-		if (ft_strncmp(path, "PATH=", 5) == 0)
-		{
-			free(path);
-			return (envp[i] + j + 1);
-		}
-		free(path);
-		i++;
-	}
-	return ("");
-}
-
-char	*get_path(char *cmd, char **envp)
+char	*get_path(char *cmd)
 {
 	char	**paths;
 	char	*exec;
@@ -51,7 +47,7 @@ char	*get_path(char *cmd, char **envp)
 	int		i;
 
 	i = 0;
-	paths = ft_split(get_envp(envp), ':');
+	paths =  ft_split(getenv("PATH"), ':');
 	if (!paths)
 		exit(0);
 	while (paths[i])
@@ -78,7 +74,7 @@ void	exec_cmd(char *cmd, char **envp)
 	char	*error_msg;
 
 	s_cmd = ft_split(cmd, ' ');
-	path = get_path(s_cmd[0], envp);
+	path = get_path(s_cmd[0]);
 	if (!path)
 	{
 		error_msg = ft_strjoin(*s_cmd, ": command not found\n");

@@ -7,8 +7,7 @@ LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I$(INCDIR) -I$(LIBFT_DIR)
-
-SRC = main.c pipes/here_doc.c pipes/multi-pipe.c pipes/pipes.c pipes/utils.c 
+SRC = main.c here_doc.c utils.c multi_pipe.c regex.c
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
 ################################################################################
@@ -36,15 +35,19 @@ endef
 #                                   RULES                                      #
 ################################################################################
 
-all: $(LIBFT) $(NAME)
+all: $(NAME) libft/
 	@if [ $$(cat $(CNT)) -gt 0 ]; then printf "\n"; fi
 	@printf " $(C)✅ [$(NAME)] $(B)Build complete$(X)\n"
+	@$(MAKE) --silent -C libft/ all
 
 $(NAME): $(OBJ) $(LIBFT)
-	@$(CC) $(CFLAGS) -L$(LIBFT_DIR) $(OBJ) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) -L$(LIBFT_DIR) $(OBJ) $(LIBFT) -lreadline -lncurses -o $(NAME)
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)
+
+$(LIBFT):
+	@$(MAKE) --silent -C $(LIBFT_DIR)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -61,4 +64,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re 
+.PHONY: all clean fclean re
