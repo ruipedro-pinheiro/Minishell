@@ -3,12 +3,12 @@ NAME = minishell
 SRCDIR = src
 OBJDIR = .obj
 INCDIR = include
-LIBFT_DIR = libft/
+LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I$(INCDIR) -I$(LIBFT_DIR)
 
-SRC = main.c 
+SRC = main.c pipes/here_doc.c pipes/multi-pipe.c pipes/pipes.c pipes/utils.c 
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
 ################################################################################
@@ -54,12 +54,10 @@ clean:
 	@printf "$(R)🗑️  [$(NAME)] Cleaned$(X)\n"
 	@rm -rf $(OBJDIR)
 	@$(MAKE) --silent -C $(LIBFT_DIR) clean
-	@$(MAKE) --silent -C Pipex/ clean
 
 fclean: clean
 	@rm -f $(NAME)
 	@$(MAKE) --silent -C $(LIBFT_DIR) fclean
-	@$(MAKE) --silent -C Pipex/ clean
 
 re: fclean all
 

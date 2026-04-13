@@ -14,9 +14,31 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
-# include "../Pipex/include/pipex.h"
-# include "errno.h"
 # include "unistd.h"
-#  include "fcntl.h"
+# include <errno.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <unistd.h>
+
+typedef struct s_pipex
+{
+	char	**cmds;
+	char	**envp;
+	char	*infile;
+	char	*outfile;
+	char	*limiter;
+	int		cmd_count;
+	pid_t	*pids;
+}			t_pipex;
+
+void		exec_cmd(char *cmd, char **envp);
+int			error_handler(char *msg);
+void		child_start(t_pipex *pipex, int *pipe_fd);
+void		child_process(t_pipex *pipex, int i, int prev_fd, int *pipe_fd);
+void		child_end(t_pipex *pipex, int prev_fd);
+int			here_doc_input(t_pipex *pipex);
+int			pipe_setup(t_pipex *pipex);
+static void	init_pipex(t_pipex *pipex, int argc, char **argv, char **envp);
 
 #endif
