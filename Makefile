@@ -1,19 +1,21 @@
-NAME = philo
+NAME = minishell
 
 SRCDIR = src
-OBJDIR = obj
+OBJDIR = .obj
 INCDIR = include
+LIBFT_DIR = libft/
+LIBFT = $(LIBFT_DIR)/libft.a
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I$(INCDIR)
+CFLAGS = -Wall -Wextra -Werror -I$(INCDIR) -I$(LIBFT_DIR)
 
-SRC = main.c parse.c utils.c init.c safe_functions.c mtx_set_get.c routine.c monitor.c
+SRC = main.c 
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
 ################################################################################
 #                                PROGRESS BAR                                  #
 ################################################################################
 
-CNT = /tmp/.philo_cnt
+CNT = /tmp/.mini_cnt
 RESET := $(shell echo 0 > $(CNT))
 C = \033[1;36m
 Y = \033[1;33m
@@ -34,14 +36,12 @@ endef
 #                                   RULES                                      #
 ################################################################################
 
-all: $(NAME)
+all: $(LIBFT) $(NAME)
 	@if [ $$(cat $(CNT)) -gt 0 ]; then printf "\n"; fi
 	@printf " $(C)✅ [$(NAME)] $(B)Build complete$(X)\n"
 
-
-
-$(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+$(NAME): $(OBJ) $(LIBFT)
+	@$(CC) $(CFLAGS) -L$(LIBFT_DIR) $(OBJ) $(LIBFT) -o $(NAME)
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)
@@ -53,9 +53,13 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 clean:
 	@printf "$(R)🗑️  [$(NAME)] Cleaned$(X)\n"
 	@rm -rf $(OBJDIR)
+	@$(MAKE) --silent -C $(LIBFT_DIR) clean
+	@$(MAKE) --silent -C Pipex/ clean
 
 fclean: clean
 	@rm -f $(NAME)
+	@$(MAKE) --silent -C $(LIBFT_DIR) fclean
+	@$(MAKE) --silent -C Pipex/ clean
 
 re: fclean all
 

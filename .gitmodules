@@ -1,0 +1,6 @@
+[submodule "Pipex"]
+	path = Pipex
+	url = git@github.com:ruipedro-pinheiro/Pipex.git
+[submodule "libft"]
+	path = libft
+	url = git@github.com:ruipedro-pinheiro/libft.git
