@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/13 18:56:20 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/04/14 16:57:55 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,13 @@
 
 typedef struct s_pipex
 {
-	char	**cmds;
+	char	**cmds; // ft_split(line);
+	char	*prompt; // If we need whole line and not splitted cmds
 	char	**envp;
 	char	*infile;
 	char	*outfile;
-	char	*limiter;
-	int		cmd_count;
+	char	*limiter; // cmds[3]
+	int		cmd_count; // how many splitted commands
 	pid_t	*pids;
 }			t_pipex;
 
@@ -41,7 +42,6 @@ void		child_end(t_pipex *pipex, int prev_fd);
 int			here_doc_input(t_pipex *pipex);
 int			pipe_setup(t_pipex *pipex);
 void		init_pipex(t_pipex *pipex, int argc, char **argv, char **envp);
-void		exer(char *cmd, char **env); //my exer
 void		regex(int argc, char **argv, char **env);
 void		unex(int argc, char **argv, char **env);
 void		parent(char **argv, char **env);

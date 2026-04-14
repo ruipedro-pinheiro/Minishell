@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 12:00:38 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/13 19:22:07 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/04/14 16:30:05 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,23 @@ char	*get_path(char *cmd)
 	return (NULL);
 }
 
+static void	trimmer(char **a)
+{
+	int		x;
+	char	*b;
+
+	x = 0;
+	while (a[x])
+	{
+		if (a[x][0] == '\'')
+		{
+			b = ft_strtrim(a[x], "\'");
+			a[x] = b;
+		}
+		x++;
+	}
+}
+
 void	exec_cmd(char *cmd, char **envp)
 {
 	char	**s_cmd;
@@ -74,6 +91,7 @@ void	exec_cmd(char *cmd, char **envp)
 	char	*error_msg;
 
 	s_cmd = ft_split(cmd, ' ');
+	trimmer(s_cmd);
 	path = get_path(s_cmd[0]);
 	if (!path)
 	{
