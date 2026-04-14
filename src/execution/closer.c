@@ -12,11 +12,7 @@
 
 #include "../../include/minishell.h"
 
-void	exiter(t_pipex *pipex, int x)
+void	exiter(int x)
 {
-	int	fd;
-
-	fd = open(".minishell_history", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	ft_putstr_fd(pipex->prompt, fd);
 	exit(x);
 }

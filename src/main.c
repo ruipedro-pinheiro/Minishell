@@ -12,48 +12,35 @@
 
 #include "../include/minishell.h"
 
-void	set_prompt(t_pipex *pipex)
+void	set_prompt(t_shell *shell)
 {
-	int pid;
-	int status;
+	int		pid;
+	int		status;
+	char	*prompt;
 
-	char *prompt;
 	prompt = "";
-	while (true) // shouldnt be true = func that will wait for keypress like CTRL+C
+	while (true)
 	{
 		pid = fork();
 		if (pid == 0)
-		{
-			if (ft_strncmp(prompt, "here_doc", 9) == 0)
-			{
-				//here doc mode << WITH limiter
-				here_doc_input(pipex);
-			}
-			else if (ft_strncmp(prompt, ">>", ft_strlen(prompt)) == 0)
-			{
-
-				// append mode not heredoc !!!
-			}
-			else
-				exec_cmd(prompt, pipex->envp);
-		}
-		waitpid(pid, &status , 0 );
-		pipex->prompt = prompt;
-		pipex->cmds = ft_split(prompt, ' ');
+			exec_cmd(prompt, shell->env); // replace by parser + execution
+		waitpid(pid, &status, 0);
 		prompt = readline("$: ");
 	}
 }
 
 int	main(int ac, char **av, char **env)
 {
-	t_pipex data;
+	t_shell	shell;
 
-	if (av[0][0] == '\0') // placeholder so av is used so clang doenst cry
+	if (av[0][0] == '\0')
 		return (0);
-	data.envp = env;
-	if (ac > 1) // Exec testing purposes
+	shell.env = env;
+	shell.exit_status = 0;
+	shell.cmds = NULL;
+	if (ac > 1)
 		return (pipex(ac, av, env));
-	set_prompt(&data);
+	set_prompt(&shell);
 	return (0);
 }
 

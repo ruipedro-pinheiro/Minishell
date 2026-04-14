@@ -27,17 +27,29 @@
 # include <stdlib.h>
 # include <stdbool.h>
 
+typedef struct s_cmd
+{
+	char			**cmd_args;
+	struct s_cmd	*next;
+}				t_cmd;
+
 typedef struct s_pipex
 {
-	char	**cmds; // ft_split(line);
-	char	*prompt; // If we need whole line and not splitted cmds
+	char	**cmds;
 	char	**envp;
 	char	*infile;
 	char	*outfile;
-	char	*limiter; // cmds[3]
-	int		cmd_count; // how many splitted commands
+	char	*limiter;
+	int		cmd_count;
 	pid_t	*pids;
 }			t_pipex;
+
+typedef struct s_shell
+{
+	t_cmd	*cmds;
+	char	**env;
+	int		exit_status;
+}			t_shell;
 
 void		exec_cmd(char *cmd, char **envp);
 int			error_handler(char *msg);
@@ -47,8 +59,6 @@ void		child_end(t_pipex *pipex, int prev_fd);
 int			here_doc_input(t_pipex *pipex);
 int			pipe_setup(t_pipex *pipex);
 void		init_pipex(t_pipex *pipex, int argc, char **argv, char **envp);
-void		regex(int argc, char **argv, char **env);
-void		unex(int argc, char **argv, char **env);
 void		parent(char **argv, char **env);
 int			pipex(int ac, char **av, char **env);
 char		*get_path(char *cmd);
