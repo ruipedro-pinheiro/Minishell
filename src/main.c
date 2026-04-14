@@ -65,9 +65,7 @@ int	pipex(int ac, char **av, char **env)
 		exec_cmd(av[1], env);
 	if (ac == 3)
 		parent(av, env);
-	if (ac == 4)
-
-	if (ac >= 5)
+	if (ac >= 4)
 	{
 		if (ft_strncmp(av[1], "here_doc", 9) == 0 && ac < 6)
 			return (ft_putstr_fd("Error: bad arguments\n", 2), 1);
