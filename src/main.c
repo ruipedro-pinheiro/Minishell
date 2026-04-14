@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:33 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/13 13:04:36 by rpinheir         ###   ########.ch       */
+/*   Updated: 2026/04/14 17:05:45 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
 
 void	set_prompt(t_pipex *pipex)
 {
@@ -47,14 +46,44 @@ void	set_prompt(t_pipex *pipex)
 
 int	main(int ac, char **av, char **env)
 {
-	t_pipex pipex;
+	t_pipex data;
 
-	if (ac > 1)
-		return (ft_printf("Minishell does not require arguments\n"), 1);
 	if (av[0][0] == '\0') // placeholder so av is used so clang doenst cry
 		return (0);
-	pipex.envp = env;
-	set_prompt(&pipex);
-	init_pipex(&pipex, pipex.prompt, env);
+	data.envp = env;
+	if (ac > 1) // Exec testing purposes
+		return (pipex(ac, av, env));
+	set_prompt(&data);
+	return (0);
+}
+
+int	pipex(int ac, char **av, char **env)
+{
+	t_pipex	pipex;
+
+	if (ac == 2)
+		exec_cmd(av[1], env);
+	if (ac == 3)
+		parent(av, env);
+	if (ac == 4)
+
+	if (ac >= 5)
+	{
+		if (ft_strncmp(av[1], "here_doc", 9) == 0 && ac < 6)
+			return (ft_putstr_fd("Error: bad arguments\n", 2), 1);
+		init_pipex(&pipex, ac, av, env);
+	}
 	return (pipe_setup(&pipex));
+}
+
+void	parent(char **argv, char **env)
+{
+	int	fd;
+
+	fd = open(argv[1], O_RDONLY);
+	if (fd == -1)
+		exit(1);
+	dup2(fd, STDIN_FILENO);
+	close(fd);
+	exec_cmd(argv[2], env);
 }

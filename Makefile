@@ -9,9 +9,9 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -I$(INCDIR) -I$(LIBFT_DIR)
 SRC = main.c \
       execution/here_doc.c \
-      execution/pipes.c \
       execution/utils.c \
-      execution/multi_pipe.c
+      execution/multi_pipe.c \
+      execution/closer.c
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
 ################################################################################
@@ -68,4 +68,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re 
+.PHONY: all clean fclean re
