@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 void	init_pipex(t_pipex *pipex, int argc, char **argv, char **envp)
 {

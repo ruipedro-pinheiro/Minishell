@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../../include/minishell.h"
 
 void	exiter(t_pipex *pipex, int x)
 {
 	int	fd;
 
 	fd = open(".minishell_history", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	ft_putstr_fd(pipex->prompt, fd)
+	ft_putstr_fd(pipex->prompt, fd);
 	exit(x);
 }

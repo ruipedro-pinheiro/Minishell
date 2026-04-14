@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-static void	here_doc_read(t_pipex *pipex, int *pipe_fd)
+void	here_doc_read(t_pipex *pipex, int *pipe_fd)
 {
 	char	*line;
 	int		len;

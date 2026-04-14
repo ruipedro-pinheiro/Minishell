@@ -46,16 +46,15 @@ void	set_prompt(t_pipex *pipex)
 
 int	main(int ac, char **av, char **env)
 {
-	t_pipex pipex;
+	t_pipex data;
 
-	if (ac > 1)
-		return (ft_printf("Minishell does not require arguments\n"), 1);
 	if (av[0][0] == '\0') // placeholder so av is used so clang doenst cry
 		return (0);
-	pipex.envp = env;
-	set_prompt(&pipex);
-	init_pipex(&pipex, pipex.prompt, env);
-	return (pipe_setup(&pipex));
+	data.envp = env;
+	if (ac > 1) // Exec testing purposes
+		return (pipex(ac, av, env));
+	set_prompt(&data);
+	return (0);
 }
 
 int	pipex(int ac, char **av, char **env)
@@ -67,7 +66,7 @@ int	pipex(int ac, char **av, char **env)
 	if (ac == 3)
 		parent(av, env);
 	if (ac == 4)
-		
+
 	if (ac >= 5)
 	{
 		if (ft_strncmp(av[1], "here_doc", 9) == 0 && ac < 6)
