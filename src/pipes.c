@@ -12,24 +12,32 @@
 
 #include "../include/minishell.h"
 
-void	init_pipex(t_pipex *pipex, int argc, char **argv, char **envp)
+int		cmds_counter(t_pipex pipex)
+{
+	int	i;
+
+	i = -1;
+	while (pipex.cmds[++i])
+		;
+	return (i);
+}
+
+void	init_pipex(t_pipex *pipex, char *prompt, char **envp)
 {
 	pipex->envp = envp;
 	pipex->limiter = NULL;
-	if (ft_strncmp(argv[1], "here_doc", 9) == 0)
+	if (ft_strncmp(prompt, "here_doc", 9) == 0)
 	{
-		pipex->limiter = argv[2];
-		pipex->cmds = &argv[3];
-		pipex->cmd_count = argc - 4;
+		pipex->limiter = pipex->cmds[1];
 		pipex->infile = NULL;
 	}
 	else
 	{
-		pipex->cmds = &argv[2];
-		pipex->cmd_count = argc - 3;
-		pipex->infile = argv[1];
+		pipex->infile = pipex->cmds[0];
 	}
-	pipex->outfile = argv[argc - 1];
+	pipex->cmd_count = cmds_counter(*pipex);
+	pipex->cmds = ft_split(prompt, ' ');
+	pipex->outfile = pipex->cmds[3];
 	pipex->pids = NULL;
 }
 

@@ -28,12 +28,13 @@
 
 typedef struct s_pipex
 {
-	char	**cmds;
+	char	**cmds; // ft_split(line);
+	char	*prompt; // If we need whole line and not splitted cmds
 	char	**envp;
 	char	*infile;
 	char	*outfile;
-	char	*limiter;
-	int		cmd_count;
+	char	*limiter; // cmds[3]
+	int		cmd_count; // how many splitted commands
 	pid_t	*pids;
 }			t_pipex;
 
@@ -44,6 +45,6 @@ void		child_process(t_pipex *pipex, int i, int prev_fd, int *pipe_fd);
 void		child_end(t_pipex *pipex, int prev_fd);
 int			here_doc_input(t_pipex *pipex);
 int			pipe_setup(t_pipex *pipex);
-void		init_pipex(t_pipex *pipex, int argc, char **argv, char **envp);
-
+void		init_pipex(t_pipex *pipex, char *prompt, char **envp);
+int			cmds_counter(t_pipex pipex);
 #endif
