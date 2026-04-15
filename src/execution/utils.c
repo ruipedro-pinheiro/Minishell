@@ -6,31 +6,31 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 12:00:38 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/14 16:30:05 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/04/15 17:18:40 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-void	init_pipex(t_pipex *pipex, int argc, char **argv, char **envp)
+void	init_pipex(t_shell *shell, int argc, char **argv, char **envp)
 {
-	pipex->envp = envp;
-	pipex->limiter = NULL;
+	shell->env = envp;
+	shell->limiter = NULL;
 	if (ft_strncmp(argv[1], "here_doc", 9) == 0)
 	{
-		pipex->limiter = argv[2];
-		pipex->cmds = &argv[3];
-		pipex->cmd_count = argc - 4;
-		pipex->infile = NULL;
+		shell->limiter = argv[2];
+		shell->cmds->cmd_args = &argv[3];
+		shell->cmd_count = argc - 4;
+		shell->infile = NULL;
 	}
 	else
 	{
-		pipex->cmds = &argv[2];
-		pipex->cmd_count = argc - 3;
-		pipex->infile = argv[1];
+		shell->cmds->cmd_args = &argv[2];
+		shell->cmd_count = argc - 3;
+		shell->infile = argv[1];
 	}
-	pipex->outfile = argv[argc - 1];
-	pipex->pids = NULL;
+	shell->outfile = argv[argc - 1];
+	shell->pids = NULL;
 }
 
 int	error_handler(char *msg)

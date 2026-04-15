@@ -7,7 +7,11 @@ LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I$(INCDIR) -I$(LIBFT_DIR)
-SRC = main.c here_doc.c utils.c multi_pipe.c regex.c
+SRC = main.c \
+      execution/here_doc.c \
+      execution/utils.c \
+      execution/multi_pipe.c \
+      execution/closer.c
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
 ################################################################################
@@ -44,7 +48,7 @@ $(NAME): $(OBJ) $(LIBFT)
 	@$(CC) $(CFLAGS) -L$(LIBFT_DIR) $(OBJ) $(LIBFT) -lreadline -lncurses -o $(NAME)
 
 $(OBJDIR):
-	@mkdir -p $(OBJDIR)
+	@mkdir -p $(OBJDIR)/execution $(OBJDIR)/parsing $(OBJDIR)/builtins
 
 $(LIBFT):
 	@$(MAKE) --silent -C $(LIBFT_DIR)

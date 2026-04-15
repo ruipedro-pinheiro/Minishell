@@ -1,0 +1,12 @@
+# Objects / binaries
+  *.o
+  *.a
+  *.gch
+  .obj/
+  minishell
+
+# Editors
+  *.swp
+  *.swo
+  *~
+  .vscode/

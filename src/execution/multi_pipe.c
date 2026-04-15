@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-static int	init_pipes(t_pipex *pipex)
+int	init_pipes(t_shell *pipex)
 {
 	pipex->pids = malloc(pipex->cmd_count * sizeof(pid_t));
 	if (!pipex->pids)
@@ -22,7 +22,7 @@ static int	init_pipes(t_pipex *pipex)
 	return (-1);
 }
 
-static void	run_child(t_pipex *pipex, int i, int prev_fd, int *pipe_fd)
+void	run_child(t_shell *pipex, int i, int prev_fd, int *pipe_fd)
 {
 	if (i == 0 && !pipex->limiter)
 		child_start(pipex, pipe_fd);
@@ -32,7 +32,7 @@ static void	run_child(t_pipex *pipex, int i, int prev_fd, int *pipe_fd)
 		child_process(pipex, i, prev_fd, pipe_fd);
 }
 
-static int	parent_update(int prev_fd, int *pipe_fd, int is_last)
+int	parent_update(int prev_fd, int *pipe_fd, int is_last)
 {
 	if (prev_fd != -1)
 		close(prev_fd);
@@ -44,7 +44,7 @@ static int	parent_update(int prev_fd, int *pipe_fd, int is_last)
 	return (-1);
 }
 
-static int	wait_children(t_pipex *pipex)
+int	wait_children(t_shell *pipex)
 {
 	int	i;
 	int	status;
@@ -58,7 +58,7 @@ static int	wait_children(t_pipex *pipex)
 	return (WEXITSTATUS(status));
 }
 
-int	pipe_setup(t_pipex *pipex)
+int	pipe_setup(t_shell *pipex)
 {
 	int	prev_fd;
 	int	i;
