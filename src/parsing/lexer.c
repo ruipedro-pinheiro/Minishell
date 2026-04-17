@@ -12,6 +12,34 @@
 
 #include "../../include/minishell.h"
 
+void	handle_in_redirs(char *line, int *i, t_token **head, t_token **last)
+{
+	if (line[*i + 1] == '<')
+	{
+		add_token(head, last, new_token(TOKEN_REDIR_HEREDOC, "<<"));
+		*i += 2;
+	}
+	else
+	{
+		add_token(head, last, new_token(TOKEN_REDIR_IN, "<"));
+		(*i)++;
+	}
+}
+
+void	handle_out_redirs(char *line, int *i, t_token **head, t_token **last)
+{
+	if (line[*i + 1] == '>')
+	{
+		add_token(head, last, new_token(TOKEN_REDIR_APPEND, ">>"));
+		*i += 2;
+	}
+	else
+	{
+		add_token(head, last, new_token(TOKEN_REDIR_OUT, ">"));
+		(*i)++;
+	}
+}
+
 void	handle_operator(char *line, int *i, t_token **head, t_token **last)
 {
 	if (line[*i] == '|')
@@ -21,50 +49,30 @@ void	handle_operator(char *line, int *i, t_token **head, t_token **last)
 	}
 	else if (line[*i] == '<')
 	{
-		if (line[*i+1] == '<')
-		{
-			add_token(head, last, new_token(TOKEN_REDIR_HEREDOC, "<<"));
-			*i+=2;
-		}
-		else
-		{
-			add_token(head, last, new_token(TOKEN_REDIR_IN, "<"));
-			(*i)++;
-		}
+		handle_in_redirs(line, i, head, last);
 	}
 	else if (line[*i] == '>')
 	{
-		if (line[*i+1] == '>')
-		{
-			add_token(head, last, new_token(TOKEN_REDIR_APPEND, ">>"));
-			*i+=2;
-		}
-		else
-		{
-			add_token(head, last, new_token(TOKEN_REDIR_OUT, ">"));
-			(*i)++;
-		}
+		handle_out_redirs(line, i, head, last);
 	}
 }
-
 
 void	handle_word(char *line, int *i, t_token **head, t_token **last)
 {
 	(void)i;
 	(void)line;
-	(void )*head;
-	(void )*last;
+	(void)*head;
+	(void)*last;
 }
 
 t_token	*lexer(char *line)
 {
-	int	i;
-	t_token *head;
-	t_token *last;
+	int		i;
+	t_token	*head;
+	t_token	*last;
 
 	head = NULL;
 	last = NULL;
-
 	i = 0;
 	while (line[i])
 	{

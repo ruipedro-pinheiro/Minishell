@@ -12,19 +12,40 @@
 
 #include "../../include/minishell.h"
 
+void	free_tokens(t_token *tokens)
+{
+	t_token	*tmp;
+
+	tmp = tokens;
+	while (tokens)
+	{
+		tokens->value = NULL;
+		free(tokens->value);
+		if (tokens->next)
+		{
+			tmp = tokens->next;
+			tokens->next = NULL;
+		}
+		free(tokens->next);
+		tokens = tmp;
+	}
+	free(tokens);
+}
+
+// placeholder so compilation works
 t_cmd	*build_cmds(t_token *tokens)
 {
-	(void )tokens; // placeholder so compilation works
+	(void )tokens;
 	return (NULL);
 }
 
-t_cmd *parse(char *line)
+t_cmd	*parse(char *line)
 {
-    t_token *tokens;
-	t_cmd   *cmds;
+	t_token	*tokens;
+	t_cmd	*cmds;
 
 	tokens = lexer(line);
-    cmds = build_cmds(tokens);
-    //free tokens;
-    return (cmds); // returning start of linked list;
+	cmds = build_cmds(tokens);
+	free_tokens(tokens);
+	return (cmds);
 }
