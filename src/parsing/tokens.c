@@ -6,7 +6,7 @@
 /*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:38:48 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/15 18:25:03 by rpinheir         ###   ########.ch       */
+/*   Updated: 2026/04/17 16:47:11 by rpinheir         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ t_token	*new_token(t_token_type token_type, char *value)
 	return (token);
 }
 
-void	add_token(t_token **head, t_token **last, t_token *new_token)
+void	add_token(t_token **head, t_token **last, t_token *token)
 {
 	if (!*head)
 	{
-		*head = new_token;
-		*last = new_token;
+		*head = token;
+		*last = token;
 	}
 	else
 	{
-		(*last)->next = new_token;
-		*last = new_token;
+		(*last)->next = token;
+		*last = token;
 	}
 }

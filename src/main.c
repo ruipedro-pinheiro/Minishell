@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:33 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/15 12:36:36 by rpinheir         ###   ########.ch       */
+/*   Updated: 2026/04/17 15:36:56 by rpinheir         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,8 @@ void	set_prompt(t_shell *shell)
 		if (pid == 0)
 		{
 			shell->cmds = parse(prompt);
-			//execute(shell->cmds, shell);
-			exec_cmd(prompt, shell->env); // replace by parser + execution
+			exec_cmd(prompt, shell->env);
 		}
-
 		waitpid(pid, &status, 0);
 		prompt = readline("$: ");
 	}

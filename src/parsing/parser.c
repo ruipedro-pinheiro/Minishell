@@ -32,7 +32,6 @@ void	free_tokens(t_token *tokens)
 	free(tokens);
 }
 
-// placeholder so compilation works
 t_cmd	*build_cmds(t_token *tokens)
 {
 	(void )tokens;
@@ -43,8 +42,7 @@ t_cmd	*parse(char *line)
 {
 	t_token	*tokens;
 	t_cmd	*cmds;
-
-	tokens = lexer(line);
+	tokens = lexer(&tokens, line);
 	cmds = build_cmds(tokens);
 	free_tokens(tokens);
 	return (cmds);
