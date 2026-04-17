@@ -1,9 +1,9 @@
-*minishell*
+minishell
 *.o
 *.a
 *.gch
-*.obj/*
+*.obj/
 *.swp
 *.swo
 *~
-*.vscode/*
+*.vscode/
