@@ -14,7 +14,7 @@
 
 t_token	*new_token(t_token_type token_type, char *value)
 {
-	t_token *token;
+	t_token	*token;
 
 	token = malloc(sizeof(t_token));
 	if (!token)
@@ -25,17 +25,16 @@ t_token	*new_token(t_token_type token_type, char *value)
 	return (token);
 }
 
-void	add_token(t_token **head, t_token **last, t_token *new)
+void	add_token(t_token **head, t_token **last, t_token *new_token)
 {
 	if (!*head)
 	{
-		*head = new;
-		*last = new;
+		*head = new_token;
+		*last = new_token;
 	}
 	else
 	{
-		(*last)->next = new;
-		*last = new;
+		(*last)->next = new_token;
+		*last = new_token;
 	}
 }
-
