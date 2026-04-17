@@ -4,6 +4,7 @@
   *.gch
   .obj/
   minishell
+  .minishell_history
 
 # Editors
   *.swp
