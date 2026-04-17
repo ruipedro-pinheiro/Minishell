@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/14 16:57:55 by saouissi         ###   ########.fr       */
+/*   Created: 2026/04/15 18:31:02 by rpinheir          #+#    #+#             */
+/*   Updated: 2026/04/15 18:31:09 by rpinheir         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,43 @@
 # include <stdlib.h>
 # include <stdbool.h>
 
+typedef enum e_token_type
+{
+	TOKEN_WORD,						// "cat" or "grep"
+	TOKEN_PIPE,						// " | "
+	TOKEN_REDIR_IN,					// " < "
+	TOKEN_REDIR_OUT,				// " > "
+	TOKEN_REDIR_APPEND,				// " >> "
+	TOKEN_REDIR_HEREDOC				// " << "
+}				t_token_type;
+
+typedef enum e_redir_type
+{
+	REDIR_IN,						// <
+	REDIR_OUT,						// >
+	REDIR_APPEND,					// >>
+	REDIR_HEREDOC					// <<
+}				t_redir_type;
+
+typedef struct s_token
+{
+	t_token_type	type;			// t_token_type like 'TOKEN_WORD'
+	char			*value;			// raw text from readline
+	struct s_token	*next;
+}				t_token;
+
+typedef struct s_redir
+{
+	t_redir_type	type;			// t_redir_type like 'REDIR_APPEND'
+	char			*file;			// "outfile or "infile"
+	struct s_redir	*next;			// si y'a plusieurs redirections sinon = NULL
+}				t_redir;
+
 typedef struct s_cmd
 {
-	char			**cmd_args;
-	struct s_cmd	*next;
+	char			**cmd_args;		// cat outfile =  {"cat", "outfile", NULL}
+	t_redir			*redirections;	// t_redir list, NULL if no redirections
+	struct s_cmd	*next;			// next cmd if pipe, NULL if last
 }				t_cmd;
 
 typedef struct s_pipex
@@ -62,4 +95,13 @@ void		init_pipex(t_pipex *pipex, int argc, char **argv, char **envp);
 void		parent(char **argv, char **env);
 int			pipex(int ac, char **av, char **env);
 char		*get_path(char *cmd);
+
+/**   ---     PARSING     ---     */
+t_cmd		*parse(char *line);
+t_token		*lexer(char *line);
+
+/**   ---     TOKENS      ---    */
+t_token		*new_token(t_token_type token_type, char *value);
+void		add_token(t_token **head, t_token **last, t_token *new);
+
 #endif
