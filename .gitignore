@@ -1,9 +1,13 @@
-minishell
-*.o
-*.a
-*.gch
-*.obj/
-*.swp
-*.swo
-*~
-*.vscode/
+# Objects / binaries
+  *.o
+  *.a
+  *.gch
+  .obj/
+  minishell
+  .minishell_history
+
+# Editors
+  *.swp
+  *.swo
+  *~
+  .vscode/

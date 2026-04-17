@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/15 18:31:02 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/17 16:35:05 by rpinheir         ###   ########.ch       */
+/*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
+/*   Updated: 2026/04/17 19:31:29 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,47 +89,31 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }				t_cmd;
 
-typedef struct s_pipex
+typedef struct s_shell
 {
-	char	**cmds;
-	char	**envp;
 	char	*infile;
 	char	*outfile;
 	char	*limiter;
 	int		cmd_count;
 	pid_t	*pids;
-}			t_pipex;
-
-typedef struct s_shell
-{
 	t_cmd	*cmds;
 	char	**env;
 	int		exit_status;
+	char	*historian;
 }			t_shell;
 
 void		exec_cmd(char *cmd, char **envp);
 int			error_handler(char *msg);
-void		child_start(t_pipex *pipex, int *pipe_fd);
-void		child_process(t_pipex *pipex, int i, int prev_fd, int *pipe_fd);
-void		child_end(t_pipex *pipex, int prev_fd);
-int			here_doc_input(t_pipex *pipex);
-int			pipe_setup(t_pipex *pipex);
-void		init_pipex(t_pipex *pipex, int argc, char **argv, char **envp);
-void		parent(char **argv, char **env);
-int			pipex(int ac, char **av, char **env);
+void		child_start(t_shell *shell, int *pipe_fd);
+void		child_process(t_shell *shell, int i, int prev_fd, int *pipe_fd);
+void		child_end(t_shell *shell, int prev_fd);
+int			here_doc_input(t_shell *shell);
+int			pipe_setup(t_shell *shell);
+void		init_pipex(t_shell *shell, int argc, char **argv, char **envp);
+void		twoarginfile(char **argv, char **env);
+int			pipex(int ac, char **av, t_shell *shell);
 char		*get_path(char *cmd);
-
-/**		---     PARSING			---		*/
-t_cmd		*parse(char *line);
-t_token		*lexer(t_token **tokens, char *line);
-
-/**		---     TOKENS			---		*/
-t_token		*new_token(t_token_type token_type, char *value);
-void		add_token(t_token **head, t_token **last, t_token *new_token);
-
-/**		---     REDIRECTIONS	---		*/
-void		input_redirs(char *line, int *i, t_token **head, t_token **last);
-void		output_redirs(char *line, int *i, t_token **head, t_token **last);
-void		handle_operator(char *line, int *i, t_token **head, t_token **last);
-
+void		exiter(t_shell *shell);
+void		scribe(t_shell *shell, char *prompt);
+void		historer(t_shell *shell);
 #endif
