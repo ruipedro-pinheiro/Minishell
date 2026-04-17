@@ -6,63 +6,32 @@
 /*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:29:13 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/15 18:05:19 by rpinheir         ###   ########.ch       */
+/*   Updated: 2026/04/17 16:52:48 by rpinheir         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	handle_in_redirs(char *line, int *i, t_token **head, t_token **last)
-{
-	if (line[*i + 1] == '<')
-	{
-		add_token(head, last, new_token(TOKEN_REDIR_HEREDOC, "<<"));
-		*i += 2;
-	}
-	else
-	{
-		add_token(head, last, new_token(TOKEN_REDIR_IN, "<"));
-		(*i)++;
-	}
-}
-
-void	handle_out_redirs(char *line, int *i, t_token **head, t_token **last)
-{
-	if (line[*i + 1] == '>')
-	{
-		add_token(head, last, new_token(TOKEN_REDIR_APPEND, ">>"));
-		*i += 2;
-	}
-	else
-	{
-		add_token(head, last, new_token(TOKEN_REDIR_OUT, ">"));
-		(*i)++;
-	}
-}
-
-void	handle_operator(char *line, int *i, t_token **head, t_token **last)
-{
-	if (line[*i] == '|')
-	{
-		add_token(head, last, new_token(TOKEN_PIPE, "|"));
-		(*i)++;
-	}
-	else if (line[*i] == '<')
-	{
-		handle_in_redirs(line, i, head, last);
-	}
-	else if (line[*i] == '>')
-	{
-		handle_out_redirs(line, i, head, last);
-	}
-}
-
 void	handle_word(char *line, int *i, t_token **head, t_token **last)
 {
-	(void)i;
-	(void)line;
-	(void)*head;
+	bool	is_in_quote;
+	char	*buffer;
+	is_in_quote = false;
+	buffer = malloc(ft_strlen(line) + 1);
+	if (!buffer)
+		return ;
+	while(line[*i])
+	{
+		if (line[*i] == 34 || line[*i] == 39)
+		{
+			is_in_quote = !is_in_quote;
+			if(is_in_quote)
+				buffer[*i] = line[*i];
+		}
+		(*i)++;
+	}
 	(void)*last;
+	(void)*head;
 }
 
 t_token	*lexer(char *line)
@@ -70,6 +39,7 @@ t_token	*lexer(char *line)
 	int		i;
 	t_token	*head;
 	t_token	*last;
+
 
 	head = NULL;
 	last = NULL;

@@ -15,6 +15,7 @@ SRC = main.c \
 	  parsing/parser.c \
 	  parsing/lexer.c \
 	  parsing/tokens.c \
+	  parsing/redirections.c \
 
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 

@@ -6,7 +6,7 @@
 /*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 18:31:02 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/15 18:31:09 by rpinheir         ###   ########.ch       */
+/*   Updated: 2026/04/17 16:35:05 by rpinheir         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <sys/types.h>
-# include <sys/wait.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdbool.h>
+# include <sys/wait.h>
+# include <signal.h> // usefull for handling keypresses like CTRL+ C
+//    signal(SIGINT, intHandler);
 
 /*  TOKEN_TYPES
 
@@ -117,12 +119,17 @@ void		parent(char **argv, char **env);
 int			pipex(int ac, char **av, char **env);
 char		*get_path(char *cmd);
 
-/**   ---     PARSING     ---     */
+/**		---     PARSING			---		*/
 t_cmd		*parse(char *line);
 t_token		*lexer(char *line);
 
-/**   ---     TOKENS      ---    */
+/**		---     TOKENS			---		*/
 t_token		*new_token(t_token_type token_type, char *value);
 void		add_token(t_token **head, t_token **last, t_token *new_token);
+
+/**		---     REDIRECTIONS	---		*/
+void		input_redirs(char *line, int *i, t_token **head, t_token **last);
+void		output_redirs(char *line, int *i, t_token **head, t_token **last);
+void		handle_operator(char *line, int *i, t_token **head, t_token **last);
 
 #endif
