@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/17 17:46:02 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/04/17 19:31:29 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,70 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <sys/types.h>
-# include <sys/wait.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdbool.h>
+# include <sys/wait.h>
+# include <signal.h> // usefull for handling keypresses like CTRL+ C
+//    signal(SIGINT, intHandler);
+
+/*  TOKEN_TYPES
+
+	TOKEN_WORD			=  "cat" or "grep"
+	TOKEN_PIPE			=  " | "
+	TOKEN_REDIR_IN		= " < "
+	TOKEN_REDIR_OUT		=  " > "
+	TOKEN_REDIR_APPEND	= " >> "
+	TOKEN_REDIR_HEREDOC	=  " << "
+*/
+typedef enum e_token_type
+{
+	TOKEN_WORD,
+	TOKEN_PIPE,
+	TOKEN_REDIR_IN,
+	TOKEN_REDIR_OUT,
+	TOKEN_REDIR_APPEND,
+	TOKEN_REDIR_HEREDOC
+}				t_token_type;
+
+/*
+	REDIR_TYPES
+
+	REDIR_IN			= '<'
+	REDIR_OUT			= '>'
+	REDIR_APPEND		= '>>'
+	REDIR_HEREDOC		= '<<'
+*/
+typedef enum e_redir_type
+{
+	REDIR_IN,
+	REDIR_OUT,
+	REDIR_APPEND,
+	REDIR_HEREDOC
+}				t_redir_type;
+
+typedef struct s_token
+{
+	t_token_type	type;
+	char			*value;
+	struct s_token	*next;
+}				t_token;
+
+typedef struct s_redir
+{
+	t_redir_type	type;
+	char			*file;
+	struct s_redir	*next;
+}				t_redir;
+
+// cat outfile =  {"cat", "outfile", NULL}
+// t_redir list, NULL if no redirections
+// next cmd if pipe, NULL if last
 
 typedef struct s_cmd
 {
 	char			**cmd_args;
+	t_redir			*redirections;
 	struct s_cmd	*next;
 }				t_cmd;
 
