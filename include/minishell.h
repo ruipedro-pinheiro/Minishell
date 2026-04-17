@@ -121,7 +121,7 @@ char		*get_path(char *cmd);
 
 /**		---     PARSING			---		*/
 t_cmd		*parse(char *line);
-t_token		*lexer(char *line);
+t_token		*lexer(t_token **tokens, char *line);
 
 /**		---     TOKENS			---		*/
 t_token		*new_token(t_token_type token_type, char *value);

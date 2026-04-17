@@ -27,12 +27,6 @@ t_token	*new_token(t_token_type token_type, char *value)
 
 void	add_token(t_token **head, t_token **last, t_token *token)
 {
-	if (!token)
-	{
-		token = new_token(token->type, token->value);
-		if (!token)
-			return ;
-	}
 	if (!*head)
 	{
 		*head = token;
