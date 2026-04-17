@@ -8,6 +8,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I$(INCDIR) -I$(LIBFT_DIR)
 SRC = main.c \
+      historer.c \
       execution/here_doc.c \
       execution/utils.c \
       execution/multi_pipe.c \

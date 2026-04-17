@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/15 17:32:51 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/04/17 17:46:02 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,10 @@ void		child_end(t_shell *shell, int prev_fd);
 int			here_doc_input(t_shell *shell);
 int			pipe_setup(t_shell *shell);
 void		init_pipex(t_shell *shell, int argc, char **argv, char **envp);
-void		parent(char **argv, char **env);
+void		twoarginfile(char **argv, char **env);
 int			pipex(int ac, char **av, t_shell *shell);
 char		*get_path(char *cmd);
 void		exiter(t_shell *shell);
+void		scribe(t_shell *shell, char *prompt);
+void		historer(t_shell *shell);
 #endif
