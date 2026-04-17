@@ -116,4 +116,17 @@ char		*get_path(char *cmd);
 void		exiter(t_shell *shell);
 void		scribe(t_shell *shell, char *prompt);
 void		historer(t_shell *shell);
+
+/**		---     PARSING			---		*/
+t_cmd		*parse(char *line);
+t_token		*lexer(char *line);
+
+/**		---     TOKENS			---		*/
+t_token		*new_token(t_token_type token_type, char *value);
+void		add_token(t_token **head, t_token **last, t_token *new_token);
+
+/**		---     REDIRECTIONS	---		*/
+void		input_redirs(char *line, int *i, t_token **head, t_token **last);
+void		output_redirs(char *line, int *i, t_token **head, t_token **last);
+void		handle_operator(char *line, int *i, t_token **head, t_token **last);
 #endif

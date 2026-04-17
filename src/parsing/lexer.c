@@ -37,27 +37,25 @@ void	handle_word(char *line, int *i, t_token **head, t_token **last)
 	}
 }
 
-t_token	*lexer(t_token **tokens, char *line)
+t_token	*lexer(char *line)
 {
 	int		i;
 	t_token	*head;
 	t_token	*last;
 
-	*tokens = malloc(sizeof(t_token));
-	if (!*tokens)
-		printf("Issue with malloc of token - lexer");
-	head = *tokens;
-	last = *tokens;
+	head = NULL;
+	last = NULL;
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] == ' ' || line[i] == '\t')
+		while (line[i] == ' ' || line[i] == '\t')
 			i++;
-		else if (line[i] == '|' || line[i] == '<' || line[i] == '>')
+		if (!line[i])
+			break;
+		if (line[i] == '|' || line[i] == '<' || line[i] == '>')
 			handle_operator(line, &i, &head, &last);
 		else
 			handle_word(line, &i, &head, &last);
-		i++;
 	}
 	return (head);
 }
