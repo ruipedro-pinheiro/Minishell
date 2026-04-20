@@ -14,50 +14,45 @@
 
 void	handle_word(char *line, int *i, t_token **head, t_token **last)
 {
-	bool	is_in_quote;
-	char	*buffer;
+	int		start;
+	char	*value;
+	char	quote_char;
 
-	is_in_quote = false;
-	buffer = malloc(sizeof(char) * ft_strlen(line) + 1);
-	if (!buffer)
+	start = *i;
+	quote_char = 0;
+	while (line[*i] && (quote_char || (line[*i] != ' ' && line[*i] != '\t'
+				&& line[*i] != '|' && line[*i] != '<' && line[*i] != '>')))
 	{
+		if (quote_char == 0 && (line[*i] == '\'' || line[*i] == '"'))
+			quote_char = line[*i];
+		else if (quote_char != 0 && line[*i] == quote_char)
+			quote_char = 0;
 		(*i)++;
-		return ;
 	}
-	while (line[*i])
-	{
-		if (line[*i] == 34 || line[*i] == 39)
-			is_in_quote = !is_in_quote;
-		if (is_in_quote)
-			buffer[*i] = line[*i];
-		(*i)++;
-		add_token(head, last, new_token(TOKEN_WORD, "A"));
-		(void)*head;
-		(void)*last;
-	}
+	value = ft_substr(line, start, *i - start);
+	add_token(head, last, new_token(TOKEN_WORD, value));
+	free(value);
 }
 
-t_token	*lexer(t_token **tokens, char *line)
+t_token	*lexer(char *line)
 {
 	int		i;
 	t_token	*head;
 	t_token	*last;
 
-	*tokens = malloc(sizeof(t_token));
-	if (!*tokens)
-		printf("Issue with malloc of token - lexer");
-	head = *tokens;
-	last = *tokens;
+	head = NULL;
+	last = NULL;
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] == ' ' || line[i] == '\t')
+		while (line[i] == ' ' || line[i] == '\t')
 			i++;
-		else if (line[i] == '|' || line[i] == '<' || line[i] == '>')
+		if (!line[i])
+			break ;
+		if (line[i] == '|' || line[i] == '<' || line[i] == '>')
 			handle_operator(line, &i, &head, &last);
 		else
 			handle_word(line, &i, &head, &last);
-		i++;
 	}
 	return (head);
 }
