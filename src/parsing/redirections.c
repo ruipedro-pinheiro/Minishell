@@ -14,11 +14,9 @@
 
 t_redir_type	set_redir_type(t_token *tokens)
 {
-	t_redir *redir;
+	t_redir	*redir;
 
-	redir = malloc(sizeof(t_redir));
-	if (!redir)
-		return (t_redir_type)0;
+	redir = (t_redir *)0 ;
 	if (tokens->type == TOKEN_REDIR_APPEND)
 		redir->type = REDIR_APPEND;
 	else if (tokens->type == TOKEN_REDIR_HEREDOC)
@@ -32,27 +30,26 @@ t_redir_type	set_redir_type(t_token *tokens)
 
 t_redir	*build_redirs(t_token *tokens)
 {
-	t_redir *head;
+	t_redir	*head;
+	t_redir *node;
 
 	head = malloc(sizeof(t_redir));
 	if (!head)
-		return NULL;
+		return (NULL);
 	head->type = set_redir_type(tokens);
-	head->file = tokens->value;
 	while (tokens)
 	{
 		if (is_redir(tokens))
 		{
-			head->next = malloc(sizeof(t_redir));
-			if (!head)
-				return NULL;
-			head = head->next;
+			node = head;
+			node->next = malloc(sizeof(t_redir));
+			if (!node)
+				return (NULL);
 			head->type = set_redir_type(tokens);
-			head->file = tokens->value;
+			head->file = ft_strdup(tokens->next->value);
 		}
 		tokens = tokens->next;
 	}
-	head->next = NULL;
 	return (head);
 }
 

@@ -17,13 +17,15 @@ void	execute(t_cmd *cmds, char **env)
 	int i;
 	int error;
 	i = -1;
-	error = open("error.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	int	pid;
 
-	while (cmds->cmd_args[++i])
+	pid =  fork();
+	(void)cmds;
+	if (pid  == 0)
 	{
-		(void)env;
-		exec_cmd(cmds->cmd_args[i], env);
-		ft_putstr_fd(cmds->cmd_args[i], error);
+		error = open("error.txt", O_WRONLY | O_CREAT | O_TRUNC, 0777);
+		ft_putstr_fd(cmds->cmd_args[0], error);
+		exec_cmd(cmds->cmd_args[0], env);
 	}
 }
 
@@ -56,8 +58,6 @@ int	main(int ac, char **av, char **env)
 
 	shell.historian = ft_strdup("");
 	historer(&shell);
-	if (av[0][0] == '\0')
-		return (0);
 	shell.env = env;
 	shell.exit_status = 0;
 	if (ac > 1)

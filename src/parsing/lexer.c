@@ -16,18 +16,18 @@ void	handle_word(char *line, int *i, t_token **head, t_token **last)
 {
 	int		start;
 	char	*value;
-	char quote_char;
+	char	quote_char;
 
 	start = *i;
 	quote_char = 0;
-	while (line[*i] && (quote_char || (line[*i] != ' ' && line[*i] != '\t' && line[*i] != '|'
-		&& line[*i] != '<' && line[*i] != '>')))
+	while (line[*i] && (quote_char || (line[*i] != ' ' && line[*i] != '\t'
+				&& line[*i] != '|' && line[*i] != '<' && line[*i] != '>')))
 	{
 		if (quote_char == 0 && (line[*i] == '\'' || line[*i] == '"'))
 			quote_char = line[*i];
 		else if (quote_char != 0 && line[*i] == quote_char)
 			quote_char = 0;
-		i++;
+		(*i)++;
 	}
 	value = ft_substr(line, start, *i - start);
 	add_token(head, last, new_token(TOKEN_WORD, value));
@@ -48,7 +48,7 @@ t_token	*lexer(char *line)
 		while (line[i] == ' ' || line[i] == '\t')
 			i++;
 		if (!line[i])
-			break;
+			break ;
 		if (line[i] == '|' || line[i] == '<' || line[i] == '>')
 			handle_operator(line, &i, &head, &last);
 		else
