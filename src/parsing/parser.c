@@ -16,20 +16,13 @@ void	free_tokens(t_token *tokens)
 {
 	t_token	*tmp;
 
-	tmp = tokens;
 	while (tokens)
 	{
-		tokens->value = NULL;
+		tmp = tokens->next;
 		free(tokens->value);
-		if (tokens->next)
-		{
-			tmp = tokens->next;
-			tokens->next = NULL;
-		}
-		free(tokens->next);
+		free(tokens);
 		tokens = tmp;
 	}
-	free(tokens);
 }
 
 t_cmd	*build_cmds(t_token *tokens)
@@ -42,7 +35,7 @@ t_cmd	*parse(char *line)
 {
 	t_token	*tokens;
 	t_cmd	*cmds;
-	tokens = lexer(&tokens, line);
+	tokens = lexer(line);
 	cmds = build_cmds(tokens);
 	free_tokens(tokens);
 	return (cmds);
