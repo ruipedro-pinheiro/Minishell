@@ -12,6 +12,21 @@
 
 #include "../include/minishell.h"
 
+void	execute(t_cmd *cmds, char **env)
+{
+	int i;
+	int error;
+	i = -1;
+	error = open("error.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+
+	while (cmds->cmd_args[++i])
+	{
+		(void)env;
+		exec_cmd(cmds->cmd_args[i], env);
+		ft_putstr_fd(cmds->cmd_args[i], error);
+	}
+}
+
 void	set_prompt(t_shell *shell)
 {
 	int		pid;
@@ -25,12 +40,13 @@ void	set_prompt(t_shell *shell)
 		{
 			pid = fork();
 			if (pid == 0)
-				exec_cmd(prompt, shell->env); // replace by parser + execution
+				execute(shell->cmds, shell->env);
 			waitpid(pid, &status, 0);
 		}
 		prompt = readline("$: ");
-		scribe(shell, prompt);
-		// exiter(shell); // remove/comment for testings, to be moved within the parser/whatever else (exit command and ctrl-D). only here for testing
+		scribe(shell, prompt); // prompt -> cmds
+		shell->cmds = parse(prompt);
+		//exiter(shell); // remove/comment for testings, to be moved within the parser/whatever else (exit command and ctrl-D). only here for testing
 	}
 }
 
@@ -44,7 +60,6 @@ int	main(int ac, char **av, char **env)
 		return (0);
 	shell.env = env;
 	shell.exit_status = 0;
-	shell.cmds = NULL;
 	if (ac > 1)
 		return (pipex(ac, av, &shell));
 	set_prompt(&shell);

@@ -27,7 +27,7 @@ void	handle_word(char *line, int *i, t_token **head, t_token **last)
 			quote_char = line[*i];
 		else if (quote_char != 0 && line[*i] == quote_char)
 			quote_char = 0;
-		(*i)++;
+		i++;
 	}
 	value = ft_substr(line, start, *i - start);
 	add_token(head, last, new_token(TOKEN_WORD, value));

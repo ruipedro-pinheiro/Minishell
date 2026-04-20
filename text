@@ -1,9 +1,0 @@
-total 56
-drwxr-xr-x 2 saouissi 2025_lausanne    25 Apr 15 15:23 include
-drwxr-xr-x 2 saouissi 2025_lausanne  4096 Apr 16 16:46 libft
--rw-r--r-- 1 saouissi 2025_lausanne  2548 Apr 16 17:00 main.c
--rw-r--r-- 1 saouissi 2025_lausanne  2024 Apr 15 15:23 Makefile
--rwxr-xr-x 1 saouissi 2025_lausanne 34616 Apr 16 16:46 minishell
-drwxr-xr-x 3 saouissi 2025_lausanne    37 Apr 15 15:23 src
--rw-r--r-- 1 saouissi 2025_lausanne     0 Apr 16 17:01 text
--rw-r--r-- 1 saouissi 2025_lausanne   522 Apr 15 17:40 whatev.c

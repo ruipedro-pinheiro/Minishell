@@ -129,4 +129,6 @@ void		add_token(t_token **head, t_token **last, t_token *new_token);
 void		input_redirs(char *line, int *i, t_token **head, t_token **last);
 void		output_redirs(char *line, int *i, t_token **head, t_token **last);
 void		handle_operator(char *line, int *i, t_token **head, t_token **last);
+t_redir		*build_redirs(t_token *tokens);
+bool		is_redir(t_token *tokens);
 #endif

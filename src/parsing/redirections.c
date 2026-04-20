@@ -12,6 +12,50 @@
 
 #include "../../include/minishell.h"
 
+t_redir_type	set_redir_type(t_token *tokens)
+{
+	t_redir *redir;
+
+	redir = malloc(sizeof(t_redir));
+	if (!redir)
+		return (t_redir_type)0;
+	if (tokens->type == TOKEN_REDIR_APPEND)
+		redir->type = REDIR_APPEND;
+	else if (tokens->type == TOKEN_REDIR_HEREDOC)
+		redir->type = REDIR_HEREDOC;
+	else if (tokens->type == TOKEN_REDIR_IN)
+		redir->type = REDIR_IN;
+	else if (tokens->type == TOKEN_REDIR_OUT)
+		redir->type = REDIR_OUT;
+	return (redir->type);
+}
+
+t_redir	*build_redirs(t_token *tokens)
+{
+	t_redir *head;
+
+	head = malloc(sizeof(t_redir));
+	if (!head)
+		return NULL;
+	head->type = set_redir_type(tokens);
+	head->file = tokens->value;
+	while (tokens)
+	{
+		if (is_redir(tokens))
+		{
+			head->next = malloc(sizeof(t_redir));
+			if (!head)
+				return NULL;
+			head = head->next;
+			head->type = set_redir_type(tokens);
+			head->file = tokens->value;
+		}
+		tokens = tokens->next;
+	}
+	head->next = NULL;
+	return (head);
+}
+
 void	input_redirs(char *line, int *i, t_token **head, t_token **last)
 
 {
