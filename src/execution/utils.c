@@ -47,7 +47,7 @@ char	*get_path(char *cmd)
 	int		i;
 
 	i = 0;
-	paths =  ft_split(getenv("PATH"), ':');
+	paths = ft_split(getenv("PATH"), ':');
 	if (!paths)
 		exit(0);
 	while (paths[i])
@@ -84,16 +84,16 @@ char	*get_path(char *cmd)
 //	}
 //}
 
+// removed strfree, it is already freed by free_cmds in the main
 void	exec_cmd(char **s_cmd, char **envp)
 {
 	char	*path;
 	char	*error_msg;
 
-	if (!s_cmd || s_cmd[0] == NULL)
+	if (!s_cmd || !s_cmd[0])
 	{
+		ft_putstr_fd(s_cmd[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
-		if (s_cmd)
-			ft_strfree(s_cmd);
 		exit(127);
 	}
 	path = get_path(s_cmd[0]);

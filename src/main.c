@@ -23,6 +23,7 @@ void	execute(t_shell *shell, char **env)
 		exec_cmd(shell->cmds->cmd_args, env);
 }
 
+//exiter is now on parser. if prompt contains exit in it, it will exit
 void	set_prompt(t_shell *shell)
 {
 	int		pid;
@@ -48,7 +49,6 @@ void	set_prompt(t_shell *shell)
 			free_cmds(shell->cmds);
 		shell->cmds = parse(prompt, shell);
 		free(prompt);
-		//exiter is now on parser. if prompt contains exit in it, it will exit
 	}
 }
 
