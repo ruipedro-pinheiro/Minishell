@@ -129,6 +129,7 @@ void			free_tokens(t_token *tokens);
 /**			---		DEBUG					*/
 void			debug_tokens(t_token *tokens, char *line);
 void			debug_cmds(t_cmd *cmds);
+void			debug_redirs(t_cmd *cmd, int fd);
 
 /**			---     REDIRECTIONS	---		*/
 void			handle_operator(char *line, int *i, t_token **head,

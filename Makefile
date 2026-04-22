@@ -17,7 +17,8 @@ SRC = main.c \
 	  parsing/lexer.c \
 	  parsing/tokens.c \
 	  parsing/redirections.c \
-	  parsing/debug.c \
+	  parsing/debug_cmd.c \
+	  parsing/debug_redir.c \
 
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 

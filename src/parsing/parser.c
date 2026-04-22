@@ -23,8 +23,8 @@ void	free_cmds(t_cmd *cmds)
 	{
 		next_cmd = cmds->next;
 		i = 0;
-		while (cmds->cmd_args && cmds->cmd_args[i])
-			free(cmds->cmd_args[i++]);
+		while (cmds->cmd_args && cmds->cmd_args[i++])
+			free(cmds->cmd_args[i]);
 		free(cmds->cmd_args);
 		redir = cmds->redirections;
 		while (redir)
@@ -78,9 +78,7 @@ t_cmd	*build_one_cmd(t_token **tokens)
 	while (*tokens && (*tokens)->type != TOKEN_PIPE)
 	{
 		if ((*tokens)->type == TOKEN_WORD)
-		{
 			cmd->cmd_args[i++] = ft_strdup((*tokens)->value);
-		}
 		else if (is_redir(*tokens) && (*tokens)->next)
 		{
 			append_redir(&cmd->redirections,
@@ -89,8 +87,7 @@ t_cmd	*build_one_cmd(t_token **tokens)
 		}
 		*tokens = (*tokens)->next;
 	}
-	cmd->cmd_args[i] = NULL;
-	return (cmd);
+	return (cmd->cmd_args[i] = NULL, cmd);
 }
 
 t_cmd	*build_cmds(t_token *tokens)

@@ -29,25 +29,12 @@ static char	*token_name(t_token_type type)
 	return ("UNKNOWN");
 }
 
-static char	*redir_name(t_redir_type type)
-{
-	if (type == REDIR_IN)
-		return ("<");
-	if (type == REDIR_OUT)
-		return (">");
-	if (type == REDIR_APPEND)
-		return (">>");
-	if (type == REDIR_HEREDOC)
-		return ("<<");
-	return ("?");
-}
-
 void	debug_tokens(t_token *tokens, char *line)
 {
 	int	fd;
 	int	i;
 
-	fd = open("debug.log", O_WRONLY | O_CREAT, 0644);
+	fd = open("debug.log", O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 		return ;
 	ft_putstr_fd("=== PROMPT ===\n", fd);
@@ -57,17 +44,16 @@ void	debug_tokens(t_token *tokens, char *line)
 	while (tokens)
 	{
 		ft_putstr_fd("[", fd);
-		ft_putnbr_fd(i, fd);
+		ft_putnbr_fd(i++, fd);
 		ft_putstr_fd("] ", fd);
 		ft_putstr_fd(token_name(tokens->type), fd);
 		ft_putstr_fd("(", fd);
 		if (tokens->value)
 			ft_putstr_fd(tokens->value, fd);
 		else
-			ft_putstr_fd("null", fd);
+			ft_putstr_fd("null\n", fd);
 		ft_putstr_fd(")\n", fd);
 		tokens = tokens->next;
-		i++;
 	}
 	close(fd);
 }
@@ -75,43 +61,20 @@ void	debug_tokens(t_token *tokens, char *line)
 static void	debug_one_cmd(t_cmd *cmd, int cmd_i, int fd)
 {
 	int		i;
-	t_redir	*redir;
 
 	ft_putstr_fd("cmd[", fd);
 	ft_putnbr_fd(cmd_i, fd);
 	ft_putstr_fd("]\n  argv:", fd);
-	i = 0;
-	while (cmd->cmd_args && cmd->cmd_args[i])
+	i = -1;
+	while (cmd->cmd_args && cmd->cmd_args[++i])
 	{
 		ft_putstr_fd(" [", fd);
 		ft_putstr_fd(cmd->cmd_args[i], fd);
 		ft_putstr_fd("]", fd);
-		i++;
 	}
 	if (i == 0)
 		ft_putstr_fd(" none", fd);
-	ft_putstr_fd("\n  redirs:", fd);
-	redir = cmd->redirections;
-	while (redir)
-	{
-		ft_putstr_fd(" ", fd);
-		ft_putstr_fd(redir_name(redir->type), fd);
-		ft_putstr_fd(" ", fd);
-		ft_putstr_fd("[", fd);
-		if (redir->file)
-			ft_putstr_fd(redir->file, fd);
-		else
-			ft_putstr_fd("null", fd);
-		ft_putstr_fd("]", fd);
-		redir = redir->next;
-	}
-	if (!cmd->redirections)
-		ft_putstr_fd(" none", fd);
-	ft_putstr_fd("\n  next: ", fd);
-	if (cmd->next)
-		ft_putstr_fd("YES\n", fd);
-	else
-		ft_putstr_fd("NULL\n", fd);
+	debug_redirs(cmd, fd);
 }
 
 void	debug_cmds(t_cmd *cmds)

@@ -9,8 +9,8 @@
 /*   Updated: 2026/04/17 16:41:11 by rpinheir         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../include/minishell.h"
+
 void	append_redir(t_redir **head, t_redir_type type, char *file)
 {
 	t_redir	*node;

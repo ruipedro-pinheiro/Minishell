@@ -21,7 +21,6 @@ void	execute(t_shell *shell, char **env)
 	pid = 0;
 	if (pid == 0)
 		exec_cmd(shell->cmds->cmd_args, env);
-
 }
 
 void	set_prompt(t_shell *shell)
@@ -70,6 +69,7 @@ int	main(int ac, char **av, char **env)
 	free(shell.historian);
 	return (0);
 }
+
 void	twoarginfile(char **cmd_args, char **env)
 {
 	int	fd;
@@ -85,15 +85,13 @@ void	twoarginfile(char **cmd_args, char **env)
 int	pipex(int ac, char **av, t_shell *shell)
 {
 	exec_cmd(shell->cmds->cmd_args, shell->env);
-		twoarginfile(shell->cmds->cmd_args, shell->env);
-		if (ft_strncmp(av[1], "here_doc", 9) == 0 && ac < 6)
-			return (ft_putstr_fd("Error: bad arguments\n", 2), 1);
-		init_pipex(shell, ac, av, shell->env);
-		return (pipe_setup(shell));
-	}
-
+	twoarginfile(shell->cmds->cmd_args, shell->env);
+	if (ft_strncmp(av[1], "here_doc", 9) == 0 && ac < 6)
+		return (ft_putstr_fd("Error: bad arguments\n", 2), 1);
+	init_pipex(shell, ac, av, shell->env);
+	return (pipe_setup(shell));
+}
 ///*Two arguments made of a command and an infile*/
-
 
 ///*Two arguments made of a command and an outfile*/
 //
