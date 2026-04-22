@@ -17,6 +17,7 @@ SRC = main.c \
 	  parsing/lexer.c \
 	  parsing/tokens.c \
 	  parsing/redirections.c \
+	  parsing/debug.c \
 
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
@@ -73,5 +74,10 @@ fclean: clean
 	@$(MAKE) --silent -C $(LIBFT_DIR) fclean
 
 re: fclean all
+
+run: re all
+	./$(NAME)
+norm:
+	norminette | grep "Error"
 
 .PHONY: all clean fclean re

@@ -12,6 +12,19 @@
 
 #include "../../include/minishell.h"
 
+void	free_tokens(t_token *tokens)
+{
+	t_token	*tmp;
+
+	while (tokens)
+	{
+		tmp = tokens->next;
+		free(tokens->value);
+		free(tokens);
+		tokens = tmp;
+	}
+}
+
 t_token	*new_token(t_token_type token_type, char *value)
 {
 	t_token	*token;
@@ -37,4 +50,14 @@ void	add_token(t_token **head, t_token **last, t_token *token)
 		(*last)->next = token;
 		*last = token;
 	}
+}
+
+bool	is_redir(t_token *tokens)
+{
+	if (tokens->type == TOKEN_REDIR_APPEND
+		|| tokens->type == TOKEN_REDIR_HEREDOC
+		|| tokens->type == TOKEN_REDIR_IN
+		|| tokens->type == TOKEN_REDIR_OUT)
+		return (true);
+	return (false);
 }

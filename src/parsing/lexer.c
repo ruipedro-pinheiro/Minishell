@@ -34,7 +34,7 @@ void	handle_word(char *line, int *i, t_token **head, t_token **last)
 	free(value);
 }
 
-t_token	*lexer(char *line)
+t_token	*lexer(char *line, t_shell *shell)
 {
 	int		i;
 	t_token	*head;
@@ -47,6 +47,8 @@ t_token	*lexer(char *line)
 	{
 		while (line[i] == ' ' || line[i] == '\t')
 			i++;
+		if (ft_strnstr(line, "exit", ft_strlen(line)))
+			exiter(shell);
 		if (!line[i])
 			break ;
 		if (line[i] == '|' || line[i] == '<' || line[i] == '>')

@@ -5,6 +5,7 @@
   .obj/
   minishell
   .minishell_history
+  debug.log
 
 # Editors
   *.swp

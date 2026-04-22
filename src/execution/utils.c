@@ -67,31 +67,35 @@ char	*get_path(char *cmd)
 	return (NULL);
 }
 
-static void	trimmer(char **a)
-{
-	int		x;
-	char	*b;
+//static void	trimmer(char **a)
+//{
+//	int		x;
+//	char	*b;
+//
+//	x = 0;
+//	while (a[x])
+//	{
+//		if (a[x][0] == '\'')
+//		{
+//			b = ft_strtrim(a[x], "\'");
+//			a[x] = b;
+//		}
+//		x++;
+//	}
+//}
 
-	x = 0;
-	while (a[x])
-	{
-		if (a[x][0] == '\'')
-		{
-			b = ft_strtrim(a[x], "\'");
-			a[x] = b;
-		}
-		x++;
-	}
-}
-
-void	exec_cmd(char *cmd, char **envp)
+void	exec_cmd(char **s_cmd, char **envp)
 {
-	char	**s_cmd;
 	char	*path;
 	char	*error_msg;
 
-	s_cmd = ft_split(cmd, ' ');
-	trimmer(s_cmd);
+	if (!s_cmd || s_cmd[0] == NULL)
+	{
+		ft_putstr_fd(": command not found\n", 2);
+		if (s_cmd)
+			ft_strfree(s_cmd);
+		exit(127);
+	}
 	path = get_path(s_cmd[0]);
 	if (!path)
 	{
