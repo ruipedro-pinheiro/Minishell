@@ -24,6 +24,8 @@ void	scribe(t_shell *shell, char *prompt)
 	shell->historian = a;
 }
 
+// read(fd, a, 0); is for testing only if the file is readable.
+// it might not be safe.
 void	historer(t_shell *shell)
 {
 	char	*a;
@@ -31,16 +33,16 @@ void	historer(t_shell *shell)
 	int		fd;
 
 	fd = open(".minishell_history", O_RDONLY);
-	if (fd > 0)
+	if (!fd)
+		return ;
+	a = " ";
+	while (read(fd, a, 0))
 	{
-		while ((a = get_next_line(fd))) //
-		{
-			b = ft_strjoin(shell->historian, a);
-			free(shell->historian);
-			shell->historian = b;
-			free(a);
-		}
-		close(fd);
+		a = get_next_line(fd);
+		b = ft_strjoin(shell->historian, a);
+		free(shell->historian);
+		shell->historian = b;
+		free(a);
 	}
+	close(fd);
 }
-

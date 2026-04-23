@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/17 19:31:29 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/04/21 21:57:12 by rpinheir         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,33 +102,39 @@ typedef struct s_shell
 	char	*historian;
 }			t_shell;
 
-void		exec_cmd(char *cmd, char **envp);
-int			error_handler(char *msg);
-void		child_start(t_shell *shell, int *pipe_fd);
-void		child_process(t_shell *shell, int i, int prev_fd, int *pipe_fd);
-void		child_end(t_shell *shell, int prev_fd);
-int			here_doc_input(t_shell *shell);
-int			pipe_setup(t_shell *shell);
-void		init_pipex(t_shell *shell, int argc, char **argv, char **envp);
-void		twoarginfile(char **argv, char **env);
-int			pipex(int ac, char **av, t_shell *shell);
-char		*get_path(char *cmd);
-void		exiter(t_shell *shell);
-void		scribe(t_shell *shell, char *prompt);
-void		historer(t_shell *shell);
+void			exec_cmd(char **s_cmd, char **envp);
+int				error_handler(char *msg);
+void			child_start(t_shell *shell, int *pipe_fd);
+void			child_process(t_shell *shell, int i, int prev_fd, int *pipe_fd);
+void			child_end(t_shell *shell, int prev_fd);
+int				here_doc_input(t_shell *shell);
+int				pipe_setup(t_shell *shell);
+void			init_pipex(t_shell *shell, int argc, char **argv, char **envp);
+int				pipex(int ac, char **av, t_shell *shell);
+char			*get_path(char *cmd);
+void			exiter(t_shell *shell);
+void			scribe(t_shell *shell, char *prompt);
+void			historer(t_shell *shell);
 
-/**		---     PARSING			---		*/
-t_cmd		*parse(char *line);
-t_token		*lexer(char *line);
+/**			---     PARSING			---		*/
+t_cmd			*parse(char *line, t_shell *shell);
+t_token			*lexer(char *line, t_shell *shell);
+void			free_cmds(t_cmd *cmds);
 
-/**		---     TOKENS			---		*/
-t_token		*new_token(t_token_type token_type, char *value);
-void		add_token(t_token **head, t_token **last, t_token *new_token);
+/**			---     TOKENS			---		*/
+t_token			*new_token(t_token_type token_type, char *value);
+void			add_token(t_token **head, t_token **last, t_token *new_token);
+void			free_tokens(t_token *tokens);
 
-/**		---     REDIRECTIONS	---		*/
-void		input_redirs(char *line, int *i, t_token **head, t_token **last);
-void		output_redirs(char *line, int *i, t_token **head, t_token **last);
-void		handle_operator(char *line, int *i, t_token **head, t_token **last);
-t_redir		*build_redirs(t_token *tokens);
-bool		is_redir(t_token *tokens);
+/**			---		DEBUG					*/
+void			debug_tokens(t_token *tokens, char *line);
+void			debug_cmds(t_cmd *cmds);
+void			debug_redirs(t_cmd *cmd, int fd);
+
+/**			---     REDIRECTIONS	---		*/
+void			handle_operator(char *line, int *i, t_token **head,
+					t_token **last);
+bool			is_redir(t_token *tokens);
+void			append_redir(t_redir **head, t_redir_type type, char *file);
+t_redir_type	token_to_redir_type(t_token_type token_type);
 #endif

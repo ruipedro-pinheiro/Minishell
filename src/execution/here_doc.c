@@ -70,17 +70,18 @@ void	child_start(t_shell *shell, int *pipe_fd)
 	close(fd);
 	dup2(pipe_fd[1], 1);
 	close(pipe_fd[1]);
-	exec_cmd(shell->cmds->cmd_args[0], shell->env);
+	exec_cmd(shell->cmds->cmd_args, shell->env);
 }
 
 void	child_process(t_shell *shell, int i, int prev_fd, int *pipe_fd)
 {
+	(void)i;
 	dup2(prev_fd, 0);
 	close(prev_fd);
 	dup2(pipe_fd[1], 1);
 	close(pipe_fd[1]);
 	close(pipe_fd[0]);
-	exec_cmd(shell->cmds->cmd_args[i], shell->env);
+	exec_cmd(shell->cmds->cmd_args, shell->env);
 }
 
 void	child_end(t_shell *shell, int prev_fd)
@@ -103,5 +104,5 @@ void	child_end(t_shell *shell, int prev_fd)
 	close(prev_fd);
 	dup2(fd, 1);
 	close(fd);
-	exec_cmd(shell->cmds->cmd_args[shell->cmd_count - 1], shell->env);
+	exec_cmd(shell->cmds->cmd_args, shell->env);
 }

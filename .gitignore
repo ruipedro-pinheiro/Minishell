@@ -1,13 +1,14 @@
 # Objects / binaries
-  *.o
-  *.a
-  *.gch
-  .obj/
-  minishell
-  .minishell_history
+*.o
+*.a
+*.gch
+.obj/
+minishell
+.minishell_history
+debug.log
 
 # Editors
-  *.swp
-  *.swo
-  *~
-  .vscode/
+*.swp
+*.swo
+*~
+.vscode/
