@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:33 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/19 17:32:59 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/04/23 18:10:26 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,23 @@ void	scribe(t_shell *shell, char *prompt)
 
 // read(fd, a, 0); is for testing only if the file is readable.
 // it might not be safe.
+
 void	historer(t_shell *shell)
 {
 	char	*a;
 	char	*b;
 	int		fd;
 
-	shell->historian = ft_strdup("");
 	fd = open(".minishell_history", O_RDONLY);
 	if (!fd)
 		return ;
 	a = " ";
-	while (read(fd, a, 0))
+	while (true)
 	{
 		a = get_next_line(fd);
 		b = ft_strjoin(shell->historian, a);
+		if (!a)
+			break;
 		free(shell->historian);
 		shell->historian = b;
 		free(a);

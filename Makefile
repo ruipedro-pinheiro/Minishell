@@ -54,7 +54,7 @@ all: $(NAME) libft/
 	@$(MAKE) --silent -C libft/ all
 
 $(NAME): $(OBJ) $(LIBFT)
-	@$(CC) $(CFLAGS) -L$(LIBFT_DIR) $(OBJ) $(LIBFT) $(ASAN_FLAGS) -lreadline -lncurses -o $(NAME)
+	@$(CC) $(CFLAGS) -L$(LIBFT_DIR) $(OBJ) $(LIBFT) $(ASAN_FLAGS) -lreadline -lncurses -o $(NAME) 
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)/execution $(OBJDIR)/parsing $(OBJDIR)/builtins
