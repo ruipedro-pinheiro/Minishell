@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 12:00:38 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/17 19:31:03 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/04/20 18:14:09 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,28 +84,49 @@ static void	trimmer(char **a)
 	}
 }
 
-void	exec_cmd(char *cmd, char **envp)
+void	exec_cmd(char **cmd, char **envp)
 {
-	char	**s_cmd;
 	char	*path;
 	char	*error_msg;
 
-	s_cmd = ft_split(cmd, ' ');
-	trimmer(s_cmd);
-	path = get_path(s_cmd[0]);
+	trimmer(cmd);
+	path = get_path(cmd[0]);
 	if (!path)
 	{
-		error_msg = ft_strjoin(*s_cmd, ": command not found\n");
+		error_msg = ft_strjoin(*cmd, ": command not found\n");
 		ft_putstr_fd(error_msg, 2);
-		ft_strfree(s_cmd);
+		ft_strfree(cmd);
 		free(error_msg);
 		exit(127);
 	}
-	if (execve(path, s_cmd, envp) == -1)
+	if (execve(path, cmd, envp) == -1)
 	{
-		perror(s_cmd[0]);
+		perror(cmd[0]);
 		free(path);
-		ft_strfree(s_cmd);
+		ft_strfree(cmd);
 		exit(126);
 	}
 }
+
+// void	exec_cmd(char **s_cmd, char **envp)
+// {
+// 	char	*path;
+// 	char	*error_msg;
+
+// 	path = get_path(s_cmd[0]);
+// 	if (!path)
+// 	{
+// 		error_msg = ft_strjoin(*s_cmd, ": command not found\n");
+// 		ft_putstr_fd(error_msg, 2);
+// 		ft_strfree(s_cmd);
+// 		free(error_msg);
+// 		exit(127);
+// 	}
+// 	if (execve(path, s_cmd, envp) == -1)
+// 	{
+// 		perror(s_cmd[0]);
+// 		free(path);
+// 		ft_strfree(s_cmd);
+// 		exit(126);
+// 	}
+// }

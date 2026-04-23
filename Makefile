@@ -9,10 +9,10 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -I$(INCDIR) -I$(LIBFT_DIR)
 SRC = main.c \
       historer.c \
-      execution/here_doc.c \
+	  execution/multi_pipe.c \
+	  execution/here_doc.c \
+	  execution/closer.c \
       execution/utils.c \
-      execution/multi_pipe.c \
-      execution/closer.c \
 	  parsing/parser.c \
 	  parsing/lexer.c \
 	  parsing/tokens.c \
@@ -51,7 +51,7 @@ all: $(NAME) libft/
 	@$(MAKE) --silent -C libft/ all
 
 $(NAME): $(OBJ) $(LIBFT)
-	@$(CC) $(CFLAGS) -L$(LIBFT_DIR) $(OBJ) $(LIBFT) -lreadline -lncurses -o $(NAME)
+	@$(CC) $(CFLAGS) -L$(LIBFT_DIR) $(OBJ) $(LIBFT) -fPIE -lreadline -lncurses -fsanitize=address -o $(NAME)
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)/execution $(OBJDIR)/parsing $(OBJDIR)/builtins
