@@ -32,6 +32,7 @@ void	historer(t_shell *shell)
 	char	*b;
 	int		fd;
 
+	shell->historian = ft_strdup("");
 	fd = open(".minishell_history", O_RDONLY);
 	if (!fd)
 		return ;
