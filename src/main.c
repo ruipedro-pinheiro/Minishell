@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:33 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/23 18:09:37 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/04/23 18:27:33 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,73 +79,81 @@ int	pipex(int ac, char **av, t_shell *shell)
 	return (pipe_setup(shell));
 }
 
-// void	singlecmd(char **argv, int *wread, char **env)
-// {
-// 	int	fd;
-// 	int	fd2;
+void	singlecmd(t_shell *shell, int *wread, char **env)
+{
+	int	fd;
+	int	fd2;
 
-// 	fd = open(argv[1], O_RDONLY, 0);
-// 	if (fd == -1)
-// 		exit(1);
-// 	fd2 = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0644);
-// 	dup2(fd, STDIN_FILENO);
-// 	dup2(fd2, STDOUT_FILENO);
-// 	close(fd);
-// 	close(fd2);
-// 	exec_cmd(argv, env);
-// }
+	fd = open(argv[1], O_RDONLY, 0);
+	if (fd == -1)
+		exit(1);
+	if (shell->cmds->redirections)
+		fd2 = open(argv[4], O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else
+		fd2 = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd == -1)
+		exit(1);
+	dup2(fd, STDIN_FILENO);
+	dup2(fd2, STDOUT_FILENO);
+	close(fd);
+	close(fd2);
+	exec_cmd(argv, env);
+}
 
-// void	startno(char **argv, int *wread, char **env)
-// {
-// 	dup2(wread[1], STDOUT_FILENO);
-// 	close(wread[0]);
-// 	close(wread[1]);
-// 	exec_cmd(argv, env);
-// }
+void	startno(t_shell *shell, int *wread, char **env)
+{
+	dup2(wread[1], STDOUT_FILENO);
+	close(wread[0]);
+	close(wread[1]);
+	exec_cmd(argv, env);
+}
 
-// void	endno(char **argv, int *wread, char **env)
-// {
-// 	dup2(wread[0], STDIN_FILENO);
-// 	close(wread[0]);
-// 	close(wread[1]);
-// 	exec_cmd(argv, env);
-// }
+void	endno(t_shell *shell, int *wread, char **env)
+{
+	dup2(wread[0], STDIN_FILENO);
+	close(wread[0]);
+	close(wread[1]);
+	exec_cmd(argv, env);
+}
 
-// void	middle(char **argv, int *wread, char **env)
-// {
-// 	dup2(wread[0], STDIN_FILENO);
-// 	dup2(wread[1], STDOUT_FILENO);
-// 	close(wread[0]);
-// 	close(wread[1]);
-// 	exec_cmd(argv, env);
-// }
+void	middle(t_shell *shell, int *wread, char **env)
+{
+	dup2(wread[0], STDIN_FILENO);
+	dup2(wread[1], STDOUT_FILENO);
+	close(wread[0]);
+	close(wread[1]);
+	exec_cmd(argv, env);
+}
 
-// void	startinf(char **argv, int *wread, char **env)
-// {
-// 	int	fd;
+void	startinf(t_shell *shell, int *wread, char **env)
+{
+	int	fd;
 
-// 	fd = open(argv[1], O_RDONLY, 0);
-// 	if (fd == -1)
-// 		exit(1);
-// 	dup2(fd, STDIN_FILENO);
-// 	dup2(wread[1], STDOUT_FILENO);
-// 	close(fd);
-// 	close(wread[0]);
-// 	close(wread[1]);
-// 	exec_cmd(argv, env);
-// }
+	fd = open(argv[1], O_RDONLY, 0);
+	if (fd == -1)
+		exit(1);
+	dup2(fd, STDIN_FILENO);
+	dup2(wread[1], STDOUT_FILENO);
+	close(fd);
+	close(wread[0]);
+	close(wread[1]);
+	exec_cmd(argv, env);
+}
 
-// void	endoutf(char **argv, int *wread, char **env)
-// {
-// 	int	fd;
+void	endoutf(t_shell *shell, int *wread, char **env)
+{
+	int	fd;
 
-// 	fd = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0644);
-// 	if (fd == -1)
-// 		exit(1);
-// 	dup2(wread[0], STDIN_FILENO);
-// 	dup2(fd, STDOUT_FILENO);
-// 	close(fd);
-// 	close(wread[0]);
-// 	close(wread[1]);
-// 	exec_cmd(argv, env);
-// }
+	if (shell->cmds->redirections)
+		fd = open(argv[4], O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else
+		fd = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd == -1)
+		exit(1);
+	dup2(wread[0], STDIN_FILENO);
+	dup2(fd, STDOUT_FILENO);
+	close(fd);
+	close(wread[0]);
+	close(wread[1]);
+	exec_cmd(argv, env);
+}
