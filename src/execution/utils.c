@@ -84,7 +84,7 @@ char	*get_path(char *cmd)
 //	}
 //}
 
-void	exec_cmd(char **cmd, char **envp)
+//void	exec_cmd(char **cmd, char **envp)
 // removed strfree, it is already freed by free_cmds in the main
 void	exec_cmd(char **s_cmd, char **envp)
 {
@@ -100,17 +100,17 @@ void	exec_cmd(char **s_cmd, char **envp)
 	path = get_path(s_cmd[0]);
 	if (!path)
 	{
-		error_msg = ft_strjoin(*cmd, ": command not found\n");
+		error_msg = ft_strjoin(*s_cmd, ": command not found\n");
 		ft_putstr_fd(error_msg, 2);
-		ft_strfree(cmd);
+		ft_strfree(s_cmd);
 		free(error_msg);
 		exit(127);
 	}
-	if (execve(path, cmd, envp) == -1)
+	if (execve(path, s_cmd, envp) == -1)
 	{
-		perror(cmd[0]);
+		perror(s_cmd[0]);
 		free(path);
-		ft_strfree(cmd);
+		ft_strfree(s_cmd);
 		exit(126);
 	}
 }

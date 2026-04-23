@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:25:56 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/20 17:42:56 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/04/17 16:41:11 by rpinheir         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../include/minishell.h"
