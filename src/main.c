@@ -36,9 +36,8 @@ void	set_prompt(t_shell *shell)
 			if (pid == 0)
 				exec_cmd(shell->cmds->cmd_args, shell->env);
 			waitpid(pid, &status, 0);
-
-			free(prompt);
 		}
+		free(prompt);
 	}
 }
 

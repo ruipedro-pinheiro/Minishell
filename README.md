@@ -2,12 +2,12 @@
 
 # Description
 **Minishell** is a 42 group project where the main goal is to build a simplified shell, in comparison with bash.
-In global we must execute programs from PATH variable, code ourselves builtins programs like cd, echo or env.
+In global we must execute programs from PATH variable, code ourselves built-ins programs like cd, echo or env.
 Within the scope, we manage pipes, redirections, Posix signals like SIGINT (CTRL+C), build history based on recent inputs.
 There is also a environment cloning where we must manage environment variables, and so also using '$?' to get the exit status of the most recent execution and be able to expand variables with character '$'.
 
 There is also a less visible task is to build, how we manage the prompt (the user inputs).
-The manner we've decided to do is the following the following:
+The manner we've decided to do is the following:
 Input -> readline() -> lexer -> tokens -> parser -> struct with linked lists -> execution.
 Technical details will be listed later.
 
