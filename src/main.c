@@ -43,6 +43,7 @@ int	main(int ac, char **av, char **env)
 {
 	t_shell	shell;
 
+	historer(&shell);
 	shell.historian = ft_strdup("");
 	shell.env = env;
 	shell.exit_status = 0;
@@ -50,7 +51,6 @@ int	main(int ac, char **av, char **env)
 	if (ac > 1)
 		return (pipex(ac, av, &shell));
 	set_prompt(&shell);
-	historer(&shell);
 	if (shell.cmds)
 		free_cmds(shell.cmds);
 	free(shell.historian);

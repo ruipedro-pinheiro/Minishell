@@ -26,8 +26,8 @@ void	exiter(t_shell *shell)
 {
 	int	fd;
 
-	fd = open(".minishell_history", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	ft_putstr_fd("test", fd);
+	fd = open(".minishell_history", O_APPEND | O_WRONLY | O_CREAT, 0644);
+	ft_putstr_fd(shell->historian, fd);
 	destroyer(shell);
 	exit(shell->exit_status);
 }
