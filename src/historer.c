@@ -32,15 +32,16 @@ void	historer(t_shell *shell)
 	char	*b;
 	int		fd;
 
-	shell->historian = ft_strdup("");
 	fd = open(".minishell_history", O_RDONLY);
 	if (!fd)
 		return ;
 	a = " ";
-	while (read(fd, a, 0))
+	while (true)
 	{
 		a = get_next_line(fd);
 		b = ft_strjoin(shell->historian, a);
+		if (!a)
+			break;
 		free(shell->historian);
 		shell->historian = b;
 		free(a);
