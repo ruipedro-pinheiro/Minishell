@@ -5,7 +5,7 @@ OBJDIR = .obj
 INCDIR = include
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
-CC = cc
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror -I$(INCDIR) -I$(LIBFT_DIR)
 SRC = main.c \
       historer.c \
@@ -73,7 +73,7 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 	@$(MAKE) --silent -C $(LIBFT_DIR) fclean
-
+	@./cclean.sh
 re: fclean all
 
 run: re all

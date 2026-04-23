@@ -47,7 +47,7 @@ t_token	*lexer(char *line, t_shell *shell)
 	{
 		while (line[i] == ' ' || line[i] == '\t')
 			i++;
-		if (ft_strnstr(line, "exit", ft_strlen(line)))
+		if (ft_strnstr(line, "exit", 4))
 			exiter(shell);
 		if (!line[i])
 			break ;

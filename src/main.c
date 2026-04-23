@@ -22,9 +22,7 @@ void	set_prompt(t_shell *shell)
 	{
 		prompt = readline("$: ");
 		if (!prompt)
-		{
 			break;
-		}
 		else if (prompt[0])
 		{
 			debug_cmds(shell->cmds);
@@ -46,13 +44,13 @@ int	main(int ac, char **av, char **env)
 	t_shell	shell;
 
 	shell.historian = ft_strdup("");
-	historer(&shell);
 	shell.env = env;
 	shell.exit_status = 0;
 	shell.cmds = NULL;
 	if (ac > 1)
 		return (pipex(ac, av, &shell));
 	set_prompt(&shell);
+	historer(&shell);
 	if (shell.cmds)
 		free_cmds(shell.cmds);
 	free(shell.historian);
