@@ -43,6 +43,7 @@ int	main(int ac, char **av, char **env)
 {
 	t_shell	shell;
 
+	shell.historian = ft_strdup("");
 	shell.env = env;
 	shell.exit_status = 0;
 	shell.cmds = NULL;
