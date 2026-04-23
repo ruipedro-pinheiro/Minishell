@@ -23,8 +23,8 @@ void	free_cmds(t_cmd *cmds)
 	{
 		next_cmd = cmds->next;
 		i = 0;
-		while (cmds->cmd_args && cmds->cmd_args[i++])
-			free(cmds->cmd_args[i]);
+		while (cmds->cmd_args && cmds->cmd_args[i])
+			free(cmds->cmd_args[i++]);
 		free(cmds->cmd_args);
 		redir = cmds->redirections;
 		while (redir)

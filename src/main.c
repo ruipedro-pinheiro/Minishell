@@ -12,43 +12,33 @@
 
 #include "../include/minishell.h"
 
-void	execute(t_shell *shell, char **env)
-{
-	int	pid;
-	int	i;
-
-	i = 0;
-	pid = 0;
-	if (pid == 0)
-		exec_cmd(shell->cmds->cmd_args, env);
-}
-
 void	set_prompt(t_shell *shell)
 {
 	int		pid;
 	int		status;
 	char	*prompt;
 
-	prompt = "";
 	while (true)
 	{
-		if (prompt[0])
-		{
-			debug_cmds(shell->cmds);
-			pid = fork();
-			if (pid == 0)
-				execute(shell, shell->env);
-			waitpid(pid, &status, 0);
-		}
 		prompt = readline("$: ");
 		if (!prompt)
-			break ;
-		scribe(shell, prompt);
-		if (shell->cmds)
-			free_cmds(shell->cmds);
-		shell->cmds = parse(prompt, shell);
-		free(prompt);
-		//exiter is now on parser. if prompt contains exit in it, it will exit
+		{
+			break;
+		}
+		else if (prompt[0])
+		{
+			debug_cmds(shell->cmds);
+			scribe(shell, prompt);
+			if (shell->cmds)
+				free_cmds(shell->cmds);
+			shell->cmds = parse(prompt, shell);
+			pid = fork();
+			if (pid == 0)
+				exec_cmd(shell->cmds->cmd_args, shell->env);
+			waitpid(pid, &status, 0);
+
+			free(prompt);
+		}
 	}
 }
 
