@@ -47,7 +47,7 @@ char	*get_path(char *cmd)
 	int		i;
 
 	i = 0;
-	paths =  ft_split(getenv("PATH"), ':');
+	paths = ft_split(getenv("PATH"), ':');
 	if (!paths)
 		exit(0);
 	while (paths[i])
@@ -67,30 +67,37 @@ char	*get_path(char *cmd)
 	return (NULL);
 }
 
-static void	trimmer(char **a)
-{
-	int		x;
-	char	*b;
-
-	x = 0;
-	while (a[x])
-	{
-		if (a[x][0] == '\'')
-		{
-			b = ft_strtrim(a[x], "\'");
-			a[x] = b;
-		}
-		x++;
-	}
-}
+//static void	trimmer(char **a)
+//{
+//	int		x;
+//	char	*b;
+//
+//	x = 0;
+//	while (a[x])
+//	{
+//		if (a[x][0] == '\'')
+//		{
+//			b = ft_strtrim(a[x], "\'");
+//			a[x] = b;
+//		}
+//		x++;
+//	}
+//}
 
 void	exec_cmd(char **cmd, char **envp)
+// removed strfree, it is already freed by free_cmds in the main
+void	exec_cmd(char **s_cmd, char **envp)
 {
 	char	*path;
 	char	*error_msg;
 
-	trimmer(cmd);
-	path = get_path(cmd[0]);
+	if (!s_cmd || !s_cmd[0])
+	{
+		ft_putstr_fd(s_cmd[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		exit(127);
+	}
+	path = get_path(s_cmd[0]);
 	if (!path)
 	{
 		error_msg = ft_strjoin(*cmd, ": command not found\n");

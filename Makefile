@@ -5,8 +5,9 @@ OBJDIR = .obj
 INCDIR = include
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
-CC = cc
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror -I$(INCDIR) -I$(LIBFT_DIR)
+ASAN_FLAGS = -fsanitize=address -fno-omit-frame-pointer -Wno-format-security
 SRC = main.c \
       historer.c \
 	  execution/multi_pipe.c \
@@ -17,6 +18,8 @@ SRC = main.c \
 	  parsing/lexer.c \
 	  parsing/tokens.c \
 	  parsing/redirections.c \
+	  parsing/debug_cmd.c \
+	  parsing/debug_redir.c \
 
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
@@ -51,7 +54,7 @@ all: $(NAME) libft/
 	@$(MAKE) --silent -C libft/ all
 
 $(NAME): $(OBJ) $(LIBFT)
-	@$(CC) $(CFLAGS) -L$(LIBFT_DIR) $(OBJ) $(LIBFT) -fPIE -lreadline -lncurses -fsanitize=address -o $(NAME)
+	@$(CC) $(CFLAGS) -L$(LIBFT_DIR) $(OBJ) $(LIBFT) $(ASAN_FLAGS) -lreadline -lncurses -o $(NAME)
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)/execution $(OBJDIR)/parsing $(OBJDIR)/builtins
@@ -71,7 +74,12 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 	@$(MAKE) --silent -C $(LIBFT_DIR) fclean
-
+	@rm -f debug.log minishell .minishell_history
 re: fclean all
+
+run: re all
+	./$(NAME)
+norm:
+	norminette | grep "Error"
 
 .PHONY: all clean fclean re

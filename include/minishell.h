@@ -117,18 +117,24 @@ void			scribe(t_shell *shell, char *prompt);
 void			historer(t_shell *shell);
 
 /**			---     PARSING			---		*/
-t_cmd			*parse(char *line);
-t_token			*lexer(char *line);
+t_cmd			*parse(char *line, t_shell *shell);
+t_token			*lexer(char *line, t_shell *shell);
+void			free_cmds(t_cmd *cmds);
 
 /**			---     TOKENS			---		*/
 t_token			*new_token(t_token_type token_type, char *value);
 void			add_token(t_token **head, t_token **last, t_token *new_token);
+void			free_tokens(t_token *tokens);
+
+/**			---		DEBUG					*/
+void			debug_tokens(t_token *tokens, char *line);
+void			debug_cmds(t_cmd *cmds);
+void			debug_redirs(t_cmd *cmd, int fd);
 
 /**			---     REDIRECTIONS	---		*/
 void			handle_operator(char *line, int *i, t_token **head,
 					t_token **last);
 bool			is_redir(t_token *tokens);
-void			free_tokens(t_token *tokens);
 void			append_redir(t_redir **head, t_redir_type type, char *file);
 t_redir_type	token_to_redir_type(t_token_type token_type);
 #endif

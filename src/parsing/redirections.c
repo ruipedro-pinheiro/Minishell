@@ -9,45 +9,41 @@
 /*   Updated: 2026/04/20 17:42:56 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../include/minishell.h"
 
-t_redir_type	set_redir_type(t_token *tokens)
+void	append_redir(t_redir **head, t_redir_type type, char *file)
 {
-	if (tokens->type == TOKEN_REDIR_APPEND)
-		return (REDIR_APPEND);
-	else if (tokens->type == TOKEN_REDIR_HEREDOC)
-		return (REDIR_HEREDOC);
-	else if (tokens->type == TOKEN_REDIR_IN)
-		return (REDIR_IN);
-	else if (tokens->type == TOKEN_REDIR_OUT)
-		return (REDIR_OUT);
-	return ((t_redir_type)0);
+	t_redir	*node;
+	t_redir	*tail;
+
+	node = malloc(sizeof(t_redir));
+	if (!node)
+		return ;
+	node->type = type;
+	node->file = ft_strdup(file);
+	node->next = NULL;
+	if (!*head)
+	{
+		*head = node;
+		return ;
+	}
+	tail = *head;
+	while (tail->next)
+		tail = tail->next;
+	tail->next = node;
 }
 
-t_redir	*build_redirs(t_token *tokens)
+t_redir_type	token_to_redir_type(t_token_type token_type)
 {
-	t_redir	*head;
-	t_redir	*node;
-
-	head = malloc(sizeof(t_redir));
-	if (!head)
-		return (NULL);
-	head->type = set_redir_type(tokens);
-	while (tokens)
-	{
-		if (is_redir(tokens))
-		{
-			node = head;
-			node->next = malloc(sizeof(t_redir));
-			if (!node)
-				return (NULL);
-			head->type = set_redir_type(tokens);
-			head->file = ft_strdup(tokens->next->value);
-		}
-		tokens = tokens->next;
-	}
-	return (head);
+	if (token_type == TOKEN_REDIR_APPEND)
+		return (REDIR_APPEND);
+	else if (token_type == TOKEN_REDIR_HEREDOC)
+		return (REDIR_HEREDOC);
+	else if (token_type == TOKEN_REDIR_IN)
+		return (REDIR_IN);
+	else if (token_type == TOKEN_REDIR_OUT)
+		return (REDIR_OUT);
+	return ((t_redir_type)0);
 }
 
 void	input_redirs(char *line, int *i, t_token **head, t_token **last)
