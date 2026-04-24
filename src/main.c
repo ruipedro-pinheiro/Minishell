@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:33 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/23 18:27:33 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/04/24 18:08:59 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	set_prompt(t_shell *shell)
 			shell->cmds = parse(prompt, shell);
 			pid = fork();
 			if (pid == 0)
-				exec_cmd(shell->cmds->cmd_args, shell->env);
+				pipex(shell, shell->cmds);
 			waitpid(pid, &status, 0);
 		}
 		free(prompt);
@@ -48,8 +48,9 @@ int	main(int ac, char **av, char **env)
 	shell.env = env;
 	shell.exit_status = 0;
 	shell.cmds = NULL;
-	if (ac > 1)
-		return (pipex(ac, av, &shell));
+	useless(ac, av); // useless, just here to silence the unused av and ac warning
+	// if (ac > 1)
+	// 	return (pipex(&shell, &shell->cmd));
 	set_prompt(&shell);
 	if (shell.cmds)
 		free_cmds(shell.cmds);
@@ -57,103 +58,130 @@ int	main(int ac, char **av, char **env)
 	return (0);
 }
 
-void	twoarginfile(char **cmd_args, char **env)
+void useless(int ac, char **av)
 {
-	int	fd;
+	ac = 1;
+	if (ac == 1)
+		av[0] = "hey";
+	
+}
+// void	twoarginfile(char **cmd_args, char **env)
+// {
+// 	int	fd;
 
-	fd = open(cmd_args[2], O_RDONLY);
-	if (fd == -1)
-		exit(1);
-	dup2(fd, STDIN_FILENO);
-	close(fd);
-	exec_cmd(&cmd_args[2], env);
+// 	fd = open(cmd_args[2], O_RDONLY);
+// 	if (fd == -1)
+// 		exit(1);
+// 	dup2(fd, STDIN_FILENO);
+// 	close(fd);
+// 	exec_cmd(&cmd_args[2], env);
+// }
+static int	edgex(t_shell *shell, t_cmd *cmds)
+{
+	if (cmds->redirections == NULL)
+		exec_cmd(cmds->cmd_args, shell->env);
+	if (cmds->redirections)
+		singlecmd(shell);
+	return (0);
 }
 
-int	pipex(int ac, char **av, t_shell *shell)
+int	pipex(t_shell *shell, t_cmd *cmds)
 {
-	exec_cmd(shell->cmds->cmd_args, shell->env);
-	twoarginfile(shell->cmds->cmd_args, shell->env);
-		if (ft_strncmp(av[1], "here_doc", 9) == 0 && ac < 6)
-			return (ft_putstr_fd("Error: bad arguments\n", 2), 1);
-		init_pipex(shell, ac, av, shell->env);
-	return (pipe_setup(shell));
+	if (cmds->next == NULL)
+	{
+		edgex(shell, cmds);
+		return (0);
+	}
+	// while (shell->cmds != NULL)
+	// {
+	// 	if ()
+	// }
+	return (0);
 }
 
-void	singlecmd(t_shell *shell, int *wread, char **env)
+void	singlecmd(t_shell *shell)
 {
 	int	fd;
 	int	fd2;
 
-	fd = open(argv[1], O_RDONLY, 0);
-	if (fd == -1)
-		exit(1);
-	if (shell->cmds->redirections)
-		fd2 = open(argv[4], O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else
-		fd2 = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (fd == -1)
-		exit(1);
-	dup2(fd, STDIN_FILENO);
-	dup2(fd2, STDOUT_FILENO);
-	close(fd);
-	close(fd2);
-	exec_cmd(argv, env);
+	if (shell->cmds->redirections->type == REDIR_IN)
+	{
+		fd = open(shell->cmds->redirections->file, O_RDONLY, 0);
+		if (fd == -1)
+			exit(1);
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+		if (shell->cmds->redirections->next)
+		shell->cmds->redirections = shell->cmds->redirections->next;
+	}
+	if (shell->cmds->redirections->type == REDIR_OUT || shell->cmds->redirections->type == REDIR_APPEND)
+	{
+		if (shell->cmds->redirections->type == REDIR_APPEND)
+			fd2 = open(shell->cmds->redirections->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		else
+			fd2 = open(shell->cmds->redirections->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		if (fd == -1)
+			exit(1);
+		dup2(fd2, STDOUT_FILENO);
+		close(fd2);
+	}
+	exec_cmd(shell->cmds->cmd_args, shell->env);
 }
 
-void	startno(t_shell *shell, int *wread, char **env)
-{
-	dup2(wread[1], STDOUT_FILENO);
-	close(wread[0]);
-	close(wread[1]);
-	exec_cmd(argv, env);
-}
+// void	startno(t_shell *shell, int *wread, char **env)
+// {
+// 	dup2(wread[1], STDOUT_FILENO);
+// 	close(wread[0]);
+// 	close(wread[1]);
+// 	exec_cmd(argv, shell->env);
+// }
 
-void	endno(t_shell *shell, int *wread, char **env)
-{
-	dup2(wread[0], STDIN_FILENO);
-	close(wread[0]);
-	close(wread[1]);
-	exec_cmd(argv, env);
-}
+// void	endno(t_shell *shell, int *wread, char **env)
+// {
+// 	dup2(wread[0], STDIN_FILENO);
+// 	close(wread[0]);
+// 	close(wread[1]);
+// 	exec_cmd(argv, shell->env);
+// }
 
-void	middle(t_shell *shell, int *wread, char **env)
-{
-	dup2(wread[0], STDIN_FILENO);
-	dup2(wread[1], STDOUT_FILENO);
-	close(wread[0]);
-	close(wread[1]);
-	exec_cmd(argv, env);
-}
+// void	middle(t_shell *shell, int *wread, char **env)
+// {
+// 	dup2(wread[0], STDIN_FILENO);
+// 	dup2(wread[1], STDOUT_FILENO);
+// 	close(wread[0]);
+// 	close(wread[1]);
+// 	exec_cmd(argv, shell->env);
+// }
 
-void	startinf(t_shell *shell, int *wread, char **env)
-{
-	int	fd;
+// void	startinf(t_shell *shell, int *wread, char **env)
+// {
+// 	int	fd;
 
-	fd = open(argv[1], O_RDONLY, 0);
-	if (fd == -1)
-		exit(1);
-	dup2(fd, STDIN_FILENO);
-	dup2(wread[1], STDOUT_FILENO);
-	close(fd);
-	close(wread[0]);
-	close(wread[1]);
-	exec_cmd(argv, env);
-}
+// 	fd = open(argv[1], O_RDONLY, 0);
+// 	if (fd == -1)
+// 		exit(1);
+// 	dup2(fd, STDIN_FILENO);
+// 	dup2(wread[1], STDOUT_FILENO);
+// 	close(fd);
+// 	close(wread[0]);
+// 	close(wread[1]);
+// 	exec_cmd(argv, shell->env);
+// }
 
-void	endoutf(t_shell *shell, int *wread, char **env)
-{
-	int	fd;
+// void	endoutf(t_shell *shell, int *wread, char **env)
+// {
+// 	int	fd;
 
-	if (shell->cmds->redirections)
-		fd = open(argv[4], O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else
-		fd = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (fd == -1)
-		exit(1);
-	dup2(wread[0], STDIN_FILENO);
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
-	close(wread[0]);
-	close(wread[1]);
-	exec_cmd(argv, env);
-}
+// 	if (shell->cmds->redirections)
+// 		fd = open(argv[4], O_WRONLY | O_CREAT | O_APPEND, 0644);
+// 	else
+// 		fd = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+// 	if (fd == -1)
+// 		exit(1);
+// 	dup2(wread[0], STDIN_FILENO);
+// 	dup2(fd, STDOUT_FILENO);
+// 	close(fd);
+// 	close(wread[0]);
+// 	close(wread[1]);
+// 	exec_cmd(argv, shell->env);
+// }

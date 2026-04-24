@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/23 17:54:29 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/04/24 17:35:22 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void			child_end(t_shell *shell, int prev_fd);
 int				here_doc_input(t_shell *shell);
 int				pipe_setup(t_shell *shell);
 void			init_pipex(t_shell *shell, int argc, char **argv, char **envp);
-int				pipex(int ac, char **av, t_shell *shell);
+int				pipex(t_shell *shell, t_cmd *cmds);
 char			*get_path(char *cmd);
 void			exiter(t_shell *shell);
 void			scribe(t_shell *shell, char *prompt);
@@ -138,4 +138,8 @@ void			handle_operator(char *line, int *i, t_token **head,
 bool			is_redir(t_token *tokens);
 void			append_redir(t_redir **head, t_redir_type type, char *file);
 t_redir_type	token_to_redir_type(t_token_type token_type);
+
+/**			---			EXEC	---			 */
+void useless(int ac, char **av); // delete later
+void	singlecmd(t_shell *shell);
 #endif
