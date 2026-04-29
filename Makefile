@@ -5,13 +5,11 @@ OBJDIR = .obj
 INCDIR = include
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror -I$(INCDIR) -I$(LIBFT_DIR)
 ASAN_FLAGS = -fsanitize=address -fno-omit-frame-pointer -Wno-format-security
 SRC = main.c \
       historer.c \
-	  execution/multi_pipe.c \
-	  execution/here_doc.c \
 	  execution/closer.c \
       execution/utils.c \
 	  parsing/parser.c \
@@ -20,6 +18,8 @@ SRC = main.c \
 	  parsing/redirections.c \
 	  parsing/debug_cmd.c \
 	  parsing/debug_redir.c \
+	  ##execution/here_doc.c \
+	  execution/multi_pipe.c \
 
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
@@ -54,7 +54,8 @@ all: $(NAME) libft/
 	@$(MAKE) --silent -C libft/ all
 
 $(NAME): $(OBJ) $(LIBFT)
-	@$(CC) $(CFLAGS) -L$(LIBFT_DIR) $(OBJ) $(LIBFT) $(ASAN_FLAGS) -lreadline -lncurses -o $(NAME) 
+	@$(CC) $(CFLAGS) -L$(LIBFT_DIR) $(OBJ) $(LIBFT) -lreadline -lncurses -o $(NAME) 
+#$(ASAN_FLAGS)
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)/execution $(OBJDIR)/parsing $(OBJDIR)/builtins

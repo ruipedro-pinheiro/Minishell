@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:33 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/24 18:25:03 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/04/29 18:59:30 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,13 @@ void	historer(t_shell *shell)
 	while (true)
 	{
 		a = get_next_line(fd);
-		b = ft_strjoin(shell->historian, a);
 		if (!a)
 			break ;
+		b = ft_strjoin(shell->historian, a);
 		free(shell->historian);
 		shell->historian = b;
 		free(a);
 	}
-	close(fd);
+	if (fd > -1)
+		close(fd);
 }

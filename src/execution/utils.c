@@ -6,32 +6,32 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 12:00:38 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/20 18:14:09 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/04/29 18:20:37 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	init_pipex(t_shell *shell, int argc, char **argv, char **envp)
-{
-	shell->env = envp;
-	shell->limiter = NULL;
-	if (ft_strncmp(argv[1], "here_doc", 9) == 0)
-	{
-		shell->limiter = argv[2];
-		shell->cmds->cmd_args = &argv[3];
-		shell->cmd_count = argc - 4;
-		shell->infile = NULL;
-	}
-	else
-	{
-		shell->cmds->cmd_args = &argv[2];
-		shell->cmd_count = argc - 3;
-		shell->infile = argv[1];
-	}
-	shell->outfile = argv[argc - 1];
-	shell->pids = NULL;
-}
+// void	init_pipex(t_shell *shell, int argc, char **argv, char **envp)
+// {
+// 	shell->env = envp;
+// 	shell->limiter = NULL;
+// 	if (ft_strncmp(argv[1], "here_doc", 9) == 0)
+// 	{
+// 		shell->limiter = argv[2];
+// 		shell->cmds->cmd_args = &argv[3];
+// 		shell->cmd_count = argc - 4;
+// 		shell->infile = NULL;
+// 	}
+// 	else
+// 	{
+// 		shell->cmds->cmd_args = &argv[2];
+// 		shell->cmd_count = argc - 3;
+// 		shell->infile = argv[1];
+// 	}
+// 	shell->outfile = argv[argc - 1];
+// 	shell->pids = NULL;
+// }
 
 int	error_handler(char *msg)
 {
