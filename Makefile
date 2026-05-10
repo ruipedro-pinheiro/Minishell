@@ -12,14 +12,16 @@ SRC = main.c \
       historer.c \
 	  execution/closer.c \
       execution/utils.c \
+	  execution/pipex.c \
 	  parsing/parser.c \
 	  parsing/lexer.c \
 	  parsing/tokens.c \
 	  parsing/redirections.c \
 	  parsing/debug_cmd.c \
 	  parsing/debug_redir.c \
-	  ##execution/here_doc.c \
 	  execution/multi_pipe.c \
+	  execution/here_doc.c \
+	  
 
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 

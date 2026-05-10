@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/29 18:35:59 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/05/08 17:38:09 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,9 @@ typedef struct s_cmd
 
 typedef struct s_shell
 {
+	pid_t	hereid;
 	int		prevfd;
+	int		wread[2];
 	int		cmd_count;
 	pid_t	*pids;
 	t_cmd	*cmds;
@@ -106,8 +108,9 @@ int				error_handler(char *msg);
 void			child_start(t_shell *shell, int *pipe_fd);
 void			child_process(t_shell *shell, int i, int prev_fd, int *pipe_fd);
 void			child_end(t_shell *shell, int prev_fd);
-int				here_doc_input(t_shell *shell);
 int				pipe_setup(t_shell *shell);
+int				here_doc_input(t_shell *shell);
+int				ft_strcmp(char *s1, char *s2);
 // void			init_pipex(t_shell *shell, int argc, char **argv, char **envp);
 int				pipex(t_shell *shell, t_cmd *cmds);
 char			*get_path(char *cmd);
@@ -140,4 +143,8 @@ t_redir_type	token_to_redir_type(t_token_type token_type);
 /**			---			EXEC	---			 */
 void useless(int ac, char **av); // delete later
 void	singlecmd(t_shell *shell);
+void	here_doc_read(t_shell *shell, int *wread);
+int		init_pipes(t_shell *shell);
+int 	parent_update(int prev_fd, int *wread, t_shell *shell);
+int	wait_children(t_shell *shell, int count);
 #endif

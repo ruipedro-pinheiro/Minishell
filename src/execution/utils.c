@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 12:00:38 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/29 18:20:37 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/05/07 18:15:21 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,20 @@ void	exec_cmd(char **s_cmd, char **envp)
 		ft_strfree(s_cmd);
 		exit(126);
 	}
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	x;
+
+	x = 0;
+	while (s1[x] || s2[x])
+	{
+		if (s1[x] != s2[x])
+			return (s1[x] - s2[x]);
+		x++;
+	}
+	return (0);
 }
 
 // void	exec_cmd(char **s_cmd, char **envp)
