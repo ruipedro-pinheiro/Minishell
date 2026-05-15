@@ -5,7 +5,7 @@ OBJDIR = .obj
 INCDIR = include
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
-CC = cc
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror -I$(INCDIR) -I$(LIBFT_DIR)
 ASAN_FLAGS = -fsanitize=address -fno-omit-frame-pointer -Wno-format-security
 SRC = main.c \

@@ -12,32 +12,36 @@
 
 #include "../../include/minishell.h"
 
-// void	here_doc_read(t_shell *shell, int *shell->wread)
-// {
-// 	char	*line;
-// 	int		len;
+void	here_doc_read(t_shell *shell, int *wread)
+{
+	char	*line;
+	int		limsize;
 
-// 	close(shell->wread[0]);
-// 	len = ft_strlen(shell->cmds->redirections->file);
-// 	line = get_next_line(0);
-// 	while (line)
-// 	{
-// 		if (ft_strncmp(line, shell->cmds->redirections->file, len) == 0 || line[len] == '\0')
-// 			break ;
-// 		write(shell->wread[1], line, ft_strlen(line));
-// 		free(line);
-// 		line = get_next_line(0);
-// 	}
-// 	free(line);
-// 	close(shell->wread[1]);
-// 	free(shell->pids);
-// 	close(0);
-// 	get_next_line(0);
-// 	exit(0);
-// }
+	close(wread[0]);
+	limsize = ft_strlen(shell->cmds->redirections->file);
+	write(1, "heredoc> ", ft_strlen("heredoc> "));
+	line = get_next_line(0);
+	while (line)
+	{
+		if (ft_strncmp(line, shell->cmds->redirections->file, limsize) == 0 
+			&& ft_strlen(line) == limsize + 1 
+			&& line[ft_strlen(line) - 1] == '\n')
+			break ;
+		write(wread[1], line, ft_strlen(line));
+		free(line);
+		write(1, "heredoc> ", ft_strlen("heredoc> "));
+		line = get_next_line(0);
+	}
+	free(line);
+	close(wread[1]);
+	close(0);
+	get_next_line(0);
+	exit(0);
+}
 
 int	here_doc_input(t_shell *shell)
 {
+	int status;
 
 	if (pipe(shell->wread) == -1)
 		exit(1);
@@ -49,6 +53,7 @@ int	here_doc_input(t_shell *shell)
 	close(shell->wread[1]);
 	if (shell->cmds->redirections->next)
 		shell->cmds->redirections = shell->cmds->redirections->next;
+	waitpid(shell->hereid, &status, 0);
 	return (shell->wread[0]);
 }
 
