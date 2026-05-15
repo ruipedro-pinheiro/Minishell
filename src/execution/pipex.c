@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 17:08:45 by saouissi          #+#    #+#             */
-/*   Updated: 2026/05/10 18:33:35 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/05/13 18:46:50 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	here_doc_read(t_shell *shell, int *wread)
 	int		pid;
 	int		status;
 
+	// dup2(wread[0], STDIN_FILENO);
 	close(wread[0]);
 	// dup2(wread[1], STDOUT_FILENO);
 	while (true)
@@ -28,7 +29,7 @@ void	here_doc_read(t_shell *shell, int *wread)
 		else if (prompt[0])
 		{
 			if (ft_strcmp(prompt, shell->cmds->redirections->file) == 0)
-				break ;
+				return ;
 			pid = fork();
 			if (pid == 0)
 				write(wread[1], prompt, ft_strlen(prompt));
@@ -37,60 +38,6 @@ void	here_doc_read(t_shell *shell, int *wread)
 		free(prompt);
 	}
 	close(wread[1]);
-}
-
-static void	startinf(t_shell *shell, int *wread)
-{
-	int	fd;
-
-	if (shell->cmds->redirections)
-	{
-		if (shell->cmds->redirections->type == REDIR_IN)
-		{
-			fd = open(shell->cmds->redirections->file, O_RDONLY, 0);
-			if (fd == -1)
-				exit(1);
-			dup2(fd, STDIN_FILENO);
-			close(fd);
-		}
-	}
-	dup2(wread[1], STDOUT_FILENO);
-	close(wread[0]);
-	close(wread[1]);
-	exec_cmd(shell->cmds->cmd_args, shell->env);
-}
-
-static void	middle(t_shell *shell, int *wread)
-{
-	dup2(shell->prevfd, STDIN_FILENO);
-	dup2(wread[1], STDOUT_FILENO);
-	close(wread[0]);
-	close(wread[1]);
-	exec_cmd(shell->cmds->cmd_args, shell->env);
-}
-
-static void	endoutf(t_shell *shell, int *wread)
-{
-	int	fd;
-
-	if (shell->cmds->redirections)
-	{
-		if (shell->cmds->redirections->type == REDIR_OUT || shell->cmds->redirections->type == REDIR_APPEND)
-		{
-			if (shell->cmds->redirections->type == REDIR_APPEND)
-				fd = open(shell->cmds->redirections->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-			else
-				fd = open(shell->cmds->redirections->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-			if (fd == -1)
-				exit(1);
-			dup2(fd, STDOUT_FILENO);
-			close(fd);
-		}
-	}
-	dup2(shell->prevfd, STDIN_FILENO);
-	close(wread[0]);
-	close(wread[1]);
-	exec_cmd(shell->cmds->cmd_args, shell->env);
 }
 
 static int	cmdlen(t_cmd *cmd)
@@ -139,7 +86,7 @@ int	pipex(t_shell *shell, t_cmd *cmds)
 	x = 0;
 	shell->prevfd = init_pipes(shell);
 	waitpid(shell->hereid, NULL, 0);
-	if (shell->cmds->next == NULL && shell->cmds->redirections->type != REDIR_HEREDOC)
+	if (shell->cmds->next == NULL && shell->prevfd == -1)
 		return (singlecmd(shell), 0);
 	while (1)
 	{
@@ -158,33 +105,4 @@ int	pipex(t_shell *shell, t_cmd *cmds)
 	}
 	(close(shell->wread[0]), close(shell->wread[1]));
 	return (wait_children(shell, shell->cmd_count));
-}
-
-void	singlecmd(t_shell *shell)
-{
-	int	fd;
-	int	fd2;
-
-	if (!shell->cmds->redirections)
-		return (exec_cmd(shell->cmds->cmd_args, shell->env));
-	if (shell->cmds->redirections->type == REDIR_IN)
-	{
-		fd = open(shell->cmds->redirections->file, O_RDONLY, 0);
-		if (fd == -1)
-			exit(1);
-		(dup2(fd, STDIN_FILENO), close(fd));
-		if (shell->cmds->redirections->next)
-			shell->cmds->redirections = shell->cmds->redirections->next;
-	}
-	if (shell->cmds->redirections->type == REDIR_OUT || shell->cmds->redirections->type == REDIR_APPEND)
-	{
-		if (shell->cmds->redirections->type == REDIR_APPEND)
-			fd2 = open(shell->cmds->redirections->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		else
-			fd2 = open(shell->cmds->redirections->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		if (fd == -1)
-			exit(1);
-		(dup2(fd2, STDOUT_FILENO), close(fd2));
-	}
-	exec_cmd(shell->cmds->cmd_args, shell->env);
 }

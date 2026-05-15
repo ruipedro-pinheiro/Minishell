@@ -21,6 +21,7 @@ SRC = main.c \
 	  parsing/debug_redir.c \
 	  execution/multi_pipe.c \
 	  execution/here_doc.c \
+	  execution/lib.c \
 	  
 
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))

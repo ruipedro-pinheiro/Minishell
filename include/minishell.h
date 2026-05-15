@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/05/08 17:38:09 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/05/13 18:47:51 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,4 +147,7 @@ void	here_doc_read(t_shell *shell, int *wread);
 int		init_pipes(t_shell *shell);
 int 	parent_update(int prev_fd, int *wread, t_shell *shell);
 int	wait_children(t_shell *shell, int count);
+void	endoutf(t_shell *shell, int *wread);
+void	middle(t_shell *shell, int *wread);
+void	startinf(t_shell *shell, int *wread);
 #endif
