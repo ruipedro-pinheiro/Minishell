@@ -6,7 +6,7 @@
 /*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 12:29:13 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/17 16:52:48 by rpinheir         ###   ########.ch       */
+/*   Updated: 2026/05/11 13:10:05 by rpinheir         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,27 @@ void	handle_word(char *line, int *i, t_token **head, t_token **last)
 	free(value);
 }
 
-t_token	*lexer(char *line, t_shell *shell)
+bool	handle_quote(char *line)
+{
+	char	quote;
+	int		i;
+
+	quote = '\0';
+	i = 0;
+	while (line[i])
+	{
+		if ((line[i] == '\'' || line[i] == '\"' ) && quote == '\0')
+			quote = line[i];
+		else if (line[i] && line[i] == quote)
+			quote = '\0';
+		i++;
+	}
+	if (quote == '\0')
+		return (true);
+	return (false);
+}
+
+t_token	*lexer(char *line)
 {
 	int		i;
 	t_token	*head;
@@ -43,12 +63,16 @@ t_token	*lexer(char *line, t_shell *shell)
 	head = NULL;
 	last = NULL;
 	i = 0;
+	if (!handle_quote(line))
+	{
+		ft_putstr_fd("minishell: syntax error", 2);
+		ft_putendl_fd(" unclosed quotes are not permitted", 2);
+		return (NULL);
+	}
 	while (line[i])
 	{
 		while (line[i] == ' ' || line[i] == '\t')
 			i++;
-		if (ft_strnstr(line, "exit", 4))
-			exiter(shell);
 		if (!line[i])
 			break ;
 		if (line[i] == '|' || line[i] == '<' || line[i] == '>')

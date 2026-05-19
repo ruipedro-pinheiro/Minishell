@@ -34,6 +34,8 @@ t_token	*new_token(t_token_type token_type, char *value)
 		return (NULL);
 	token->type = token_type;
 	token->value = ft_strdup(value);
+	token->is_var = false;
+	token->concat_next = false;
 	token->next = NULL;
 	return (token);
 }
