@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main copy.c                                        :+:      :+:    :+:   */
+/*   historer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:33 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/17 18:06:25 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/04/30 17:26:45 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	scribe(t_shell *shell, char *prompt)
 {
 	char	*a;
 
+	add_history(prompt);
 	a = ft_strjoin(shell->historian, prompt);
 	free(shell->historian);
 	shell->historian = a;
@@ -26,6 +27,7 @@ void	scribe(t_shell *shell, char *prompt)
 
 // read(fd, a, 0); is for testing only if the file is readable.
 // it might not be safe.
+
 void	historer(t_shell *shell)
 {
 	char	*a;
@@ -39,9 +41,12 @@ void	historer(t_shell *shell)
 	while (true)
 	{
 		a = get_next_line(fd);
-		b = ft_strjoin(shell->historian, a);
+		if (shell->historian)
+			b = ft_strjoin(shell->historian, a);
+		else
+			b = a;
 		if (!a)
-			break;
+			break ;
 		free(shell->historian);
 		shell->historian = b;
 		free(a);

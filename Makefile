@@ -6,7 +6,7 @@ INCDIR = include
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I$(INCDIR) -I$(LIBFT_DIR) # -Wshadow -Wstrict-prototypes -Wmissing-prototypes -Wformat=2 -Wpointer-arith -Wwrite-strings
+CFLAGS = -Wall -Wextra -Werror -I$(INCDIR) -I$(LIBFT_DIR) -Wshadow -Wstrict-prototypes -Wpointer-arith 
 VAL_FLAGS  = -g3 -O0
 ASAN_FLAGS = -fsanitize=address,undefined -fno-omit-frame-pointer
 SRC = main.c \
@@ -16,8 +16,9 @@ SRC = main.c \
 	  execution/closer.c \
       execution/utils.c \
 	  execution/pipex.c \
-	  execution/multi_pipe.c \
 	  execution/here_doc.c \
+	  execution/multi_pipe.c \
+	  execution/lib.c \
 	  parsing/parser.c \
 	  parsing/lexer.c \
 	  parsing/tokens.c \
@@ -27,8 +28,7 @@ SRC = main.c \
 	  parsing/validation.c \
 	  parsing/expansion.c \
 	  parsing/build_cmds.c \
-	  execution/lib.c \
-	  builtins/exit.c
+	  builtins/exit.c \
 
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 

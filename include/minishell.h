@@ -26,6 +26,7 @@
 # include <sys/wait.h>
 # include <signal.h>
 
+
 /*  TOKEN_TYPES
 
 	TOKEN_WORD			=  "cat" or "grep"
@@ -109,6 +110,7 @@ typedef struct s_shell
 }			t_shell;
 
 /**			---			EXEC	---			 */
+
 void			singlecmd(t_shell *shell);
 void			here_doc_read(t_shell *shell, int *wread);
 int				init_pipes(t_shell *shell);
@@ -166,5 +168,4 @@ bool			validation(t_token *head);
 
 /**			---		EXPANSION		---		*/
 bool			expansion(t_token *head, t_shell *shell);
-
 #endif
