@@ -6,7 +6,7 @@
 /*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:25:56 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/17 16:41:11 by rpinheir         ###   ########.ch       */
+/*   Updated: 2026/05/05 16:55:40 by rpinheir         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../include/minishell.h"

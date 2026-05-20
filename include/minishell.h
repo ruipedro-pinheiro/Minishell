@@ -6,28 +6,25 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/05/17 17:35:44 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/05/20 18:00:39 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
+# define EXIT_SIGNAL_BASE 128
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
-# include "unistd.h"
 # include <errno.h>
 # include <fcntl.h>
-# include <stdio.h>
 # include <sys/types.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdbool.h>
 # include <sys/wait.h>
-# include <signal.h> // usefull for handling keypresses like CTRL+ C
-//    signal(SIGINT, intHandler);
+# include <signal.h>
 
 /*  TOKEN_TYPES
 
@@ -64,9 +61,18 @@ typedef enum e_redir_type
 	REDIR_HEREDOC
 }				t_redir_type;
 
+typedef enum e_signal_modes
+{
+	INTERACTIVE,
+	EXECUTION,
+	FORKED,
+}				t_signal_modes;
+
 typedef struct s_token
 {
 	t_token_type	type;
+	bool			is_var;
+	bool			concat_next;
 	char			*value;
 	struct s_token	*next;
 }				t_token;
@@ -94,6 +100,9 @@ typedef struct s_shell
 	pid_t	hereid;
 	int		prevfd;
 	int		wread[2];
+	pid_t	hereid;
+	int		prevfd;
+	int		wread[2];
 	int		cmd_count;
 	pid_t	*pids;
 	t_cmd	*cmds;
@@ -102,11 +111,18 @@ typedef struct s_shell
 	char	*historian;
 }			t_shell;
 
+/**			---			EXEC	---			 */
+void			singlecmd(t_shell *shell);
+void			here_doc_read(t_shell *shell, int *wread);
+int				init_pipes(t_shell *shell);
+int				parent_update(int prev_fd, int *wread, t_shell *shell);
+int				wait_children(t_shell *shell, int count);
 void			exec_cmd(char **s_cmd, char **envp);
 int				error_handler(char *msg);
 void			child_start(t_shell *shell, int *pipe_fd);
 void			child_process(t_shell *shell, int i, int prev_fd, int *pipe_fd);
 void			child_end(t_shell *shell, int prev_fd);
+int				pipe_setup(t_shell *shell);
 int				pipe_setup(t_shell *shell);
 int				here_doc_input(t_shell *shell);
 int				ft_strcmp(char *s1, char *s2);
@@ -116,10 +132,20 @@ char			*get_path(char *cmd);
 void			exiter(t_shell *shell);
 void			scribe(t_shell *shell, char *prompt);
 void			historer(t_shell *shell);
+void			exit_minishell(t_shell *shell);
+void			endoutf(t_shell *shell, int *wread);
+void			middle(t_shell *shell, int *wread);
+void			startinf(t_shell *shell, int *wread);
+
+void			set_signal_mode(t_signal_modes mode);
+
+/**			---		PROMPT			---		*/
+void			set_prompt(t_shell *shell);
 
 /**			---     PARSING			---		*/
 t_cmd			*parse(char *line, t_shell *shell);
-t_token			*lexer(char *line, t_shell *shell);
+t_token			*lexer(char *line);
+t_cmd			*build_cmds(t_token *tokens);
 void			free_cmds(t_cmd *cmds);
 
 /**			---     TOKENS			---		*/

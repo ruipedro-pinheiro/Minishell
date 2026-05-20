@@ -6,22 +6,29 @@ INCDIR = include
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I$(INCDIR) -I$(LIBFT_DIR)
-ASAN_FLAGS = -fsanitize=address -fno-omit-frame-pointer -Wno-format-security
+CFLAGS = -Wall -Wextra -Werror -I$(INCDIR) -I$(LIBFT_DIR) # -Wshadow -Wstrict-prototypes -Wmissing-prototypes -Wformat=2 -Wpointer-arith -Wwrite-strings
+VAL_FLAGS  = -g3 -O0
+ASAN_FLAGS = -fsanitize=address,undefined -fno-omit-frame-pointer
 SRC = main.c \
       historer.c \
+	  shell.c \
+	  signals.c \
 	  execution/closer.c \
       execution/utils.c \
 	  execution/pipex.c \
+	  execution/multi_pipe.c \
+	  execution/here_doc.c \
 	  parsing/parser.c \
 	  parsing/lexer.c \
 	  parsing/tokens.c \
 	  parsing/redirections.c \
 	  parsing/debug_cmd.c \
 	  parsing/debug_redir.c \
-	  execution/multi_pipe.c \
+	  parsing/validation.c \
+	  parsing/expansion.c \
+	  parsing/build_cmds.c \
 	  execution/lib.c \
-	  
+	  builtins/exit.c
 
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
@@ -56,8 +63,7 @@ all: $(NAME) libft/
 	@$(MAKE) --silent -C libft/ all
 
 $(NAME): $(OBJ) $(LIBFT)
-	@$(CC) $(CFLAGS) -L$(LIBFT_DIR) $(OBJ) $(LIBFT) -lreadline -lncurses -o $(NAME) 
-#$(ASAN_FLAGS)
+	@$(CC) $(CFLAGS) -L$(LIBFT_DIR) $(OBJ) $(LIBFT) -lreadline -lncurses -o $(NAME)
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)/execution $(OBJDIR)/parsing $(OBJDIR)/builtins
@@ -80,9 +86,16 @@ fclean: clean
 	@rm -f debug.log minishell .minishell_history
 re: fclean all
 
-run: re all
+debug: CFLAGS += $(VAL_FLAGS)
+debug: re
+
+asan:  CFLAGS += $(VAL_FLAGS) $(ASAN_FLAGS)
+asan:  re
+
+run: re
 	./$(NAME)
+
 norm:
 	norminette | grep "Error"
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re debug asan

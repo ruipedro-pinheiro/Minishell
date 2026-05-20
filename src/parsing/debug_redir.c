@@ -40,7 +40,7 @@ void	debug_redirs(t_cmd *cmd, int fd)
 			ft_putstr_fd(redir->file, fd);
 		else
 			ft_putstr_fd("null", fd);
-		ft_putstr_fd("]", fd);
+		ft_putendl_fd("]", fd);
 		redir = redir->next;
 	}
 	if (!cmd->redirections)
