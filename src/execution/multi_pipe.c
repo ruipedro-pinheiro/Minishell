@@ -25,16 +25,6 @@ int	init_pipes(t_shell *shell)
 	return (-1);
 }
 
-// void	run_child(t_shell *shell, int i, int prev_fd, int *pipe_fd)
-// {
-// 	if (i == 0 && shell->cmds->redirections->type != REDIR_HEREDOC)
-// 		child_start(shell, pipe_fd);
-// 	else if (i == shell->cmd_count - 1)
-// 		child_end(shell, prev_fd);
-// 	else
-// 		child_process(shell, i, prev_fd, pipe_fd);
-// }
-
 int	parent_update(int prev_fd, int *wread, t_shell *shell)
 {
 	if (prev_fd != -1)
@@ -53,7 +43,6 @@ int	wait_children(t_shell *shell, int count)
 	int	status;
 
 	i = -1;
-	status = 0;
 	while (++i < count)
 		waitpid(shell->pids[i], &status, 0);
 	free(shell->pids);
@@ -61,26 +50,47 @@ int	wait_children(t_shell *shell, int count)
 	return (WEXITSTATUS(status));
 }
 
-// int	pipe_setup(t_shell *shell)
-// {
-// 	int	prev_fd;
-// 	int	i;
-// 	int	pipe_fd[2];
-// 	int	count; //
+void	here_doc_read(t_shell *shell, int *wread)
+{
+	char	*line;
+	int		limsize;
 
-// 	count = 0; //
-// 	prev_fd = init_pipes(shell);
-// 	i = -1;
-// 	while (++i < shell->cmd_count)
-// 	{
-// 		if (i < shell->cmd_count - 1 && pipe(pipe_fd) == -1)
-// 			exit(1);
-// 		shell->pids[i] = fork();
-// 		if (shell->pids[i] == -1)
-// 			exit(1);
-// 		if (shell->pids[i] == 0)
-// 			run_child(shell, i, prev_fd, pipe_fd);
-// 		prev_fd = parent_update(prev_fd, pipe_fd, i == shell->cmd_count - 1);
-// 	}
-// 	return (wait_children(shell, count)); //
-// }
+	close(wread[0]);
+	limsize = ft_strlen(shell->cmds->redirections->file);
+	write(1, "heredoc> ", ft_strlen("heredoc> "));
+	line = get_next_line(0);
+	while (line)
+	{
+		if (ft_strncmp(line, shell->cmds->redirections->file, limsize) == 0
+			&& ft_strlen(line) == limsize + 1
+			&& line[ft_strlen(line) - 1] == '\n')
+			break ;
+		write(wread[1], line, ft_strlen(line));
+		free(line);
+		write(1, "heredoc> ", ft_strlen("heredoc> "));
+		line = get_next_line(0);
+	}
+	free(line);
+	close(wread[1]);
+	close(0);
+	get_next_line(0);
+	exit(0);
+}
+
+int	here_doc_input(t_shell *shell)
+{
+	int	status;
+
+	if (pipe(shell->wread) == -1)
+		exit(1);
+	shell->hereid = fork();
+	if (shell->hereid == -1)
+		exit(1);
+	if (shell->hereid == 0)
+		here_doc_read(shell, shell->wread);
+	waitpid(shell->hereid, &status, 0);
+	close(shell->wread[1]);
+	if (shell->cmds->redirections->next)
+		shell->cmds->redirections = shell->cmds->redirections->next;
+	return (shell->wread[0]);
+}

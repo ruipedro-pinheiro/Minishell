@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:33 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/30 17:26:45 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/05/15 19:22:52 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	historer(t_shell *shell)
 		else
 			b = a;
 		if (!a)
-			break;
+			break ;
 		free(shell->historian);
 		shell->historian = b;
 		free(a);

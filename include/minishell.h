@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/05/13 18:47:51 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/05/17 17:35:44 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 # include <sys/wait.h>
 # include <signal.h> // usefull for handling keypresses like CTRL+ C
 //    signal(SIGINT, intHandler);
-
 
 /*  TOKEN_TYPES
 
@@ -112,7 +111,7 @@ int				pipe_setup(t_shell *shell);
 int				here_doc_input(t_shell *shell);
 int				ft_strcmp(char *s1, char *s2);
 // void			init_pipex(t_shell *shell, int argc, char **argv, char **envp);
-int				pipex(t_shell *shell, t_cmd *cmds);
+int				pipex(t_shell *shell);
 char			*get_path(char *cmd);
 void			exiter(t_shell *shell);
 void			scribe(t_shell *shell, char *prompt);
@@ -141,13 +140,13 @@ void			append_redir(t_redir **head, t_redir_type type, char *file);
 t_redir_type	token_to_redir_type(t_token_type token_type);
 
 /**			---			EXEC	---			 */
-void useless(int ac, char **av); // delete later
-void	singlecmd(t_shell *shell);
-void	here_doc_read(t_shell *shell, int *wread);
-int		init_pipes(t_shell *shell);
-int 	parent_update(int prev_fd, int *wread, t_shell *shell);
-int	wait_children(t_shell *shell, int count);
-void	endoutf(t_shell *shell, int *wread);
-void	middle(t_shell *shell, int *wread);
-void	startinf(t_shell *shell, int *wread);
+void			useless(int ac, char **av); // delete later
+void			singlecmd(t_shell *shell);
+void			here_doc_read(t_shell *shell, int *wread);
+int				init_pipes(t_shell *shell);
+int				parent_update(int prev_fd, int *wread, t_shell *shell);
+int				wait_children(t_shell *shell, int count);
+void			endoutf(t_shell *shell, int *wread);
+void			middle(t_shell *shell, int *wread);
+void			startinf(t_shell *shell, int *wread);
 #endif

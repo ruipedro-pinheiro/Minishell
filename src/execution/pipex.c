@@ -6,54 +6,26 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 17:08:45 by saouissi          #+#    #+#             */
-/*   Updated: 2026/05/15 17:58:02 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/05/17 18:19:56 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-// void	here_doc_read(t_shell *shell, int *wread)
-// {
-// 	char	*prompt;
-// 	int		pid;
-// 	int		status;
-
-// 	// dup2(wread[0], STDIN_FILENO);
-// 	close(wread[0]);
-// 	// dup2(wread[1], STDOUT_FILENO);
-// 	while (true)
-// 	{
-// 		prompt = readline("heredoc> ");
-// 		if (!prompt)
-// 			break;
-// 		else if (prompt[0])
-// 		{
-// 			if (ft_strcmp(prompt, shell->cmds->redirections->file) == 0)
-// 				return ;
-// 			pid = fork();
-// 			if (pid == 0)
-// 				write(wread[1], prompt, ft_strlen(prompt));
-// 			waitpid(pid, &status, 0);
-// 		}
-// 		free(prompt);
-// 	}
-// 	close(wread[1]);
-// }
-
-static int	cmdlen(t_cmd *cmd)
+static int	cmdlen(t_shell *shell)
 {
-	t_cmd *keep;
-	int	x;
+	t_cmd	*keep;
+	int		x;
 
 	x = 0;
-	keep = cmd;
-	while (cmd->next)
+	keep = shell->cmds;
+	while (shell->cmds->next)
 	{
-		cmd = cmd->next;
+		shell->cmds = shell->cmds->next;
 		x++;
 	}
 	x++;
-	cmd = keep;
+	shell->cmds = keep;
 	return (x);
 }
 
@@ -67,7 +39,7 @@ static void	forker(t_shell *shell, int *wread, int x)
 				endoutf(shell, wread);
 			else
 				middle(shell, wread);
-			return ;
+			exit(2);
 		}
 	}
 	if (x == 0)
@@ -76,16 +48,16 @@ static void	forker(t_shell *shell, int *wread, int x)
 		endoutf(shell, wread);
 	else if (x != 0)
 		middle(shell, wread);
+	exit(2);
 }
 
-int	pipex(t_shell *shell, t_cmd *cmds)
+int	pipex(t_shell *shell)
 {
-	int x;
+	int	x;
 
-	shell->cmd_count = cmdlen(cmds);
+	shell->cmd_count = cmdlen(shell);
 	x = 0;
 	shell->prevfd = init_pipes(shell);
-	// waitpid(shell->hereid, NULL, 0);
 	if (shell->cmds->next == NULL && shell->prevfd == -1)
 		return (singlecmd(shell), 0);
 	while (1)

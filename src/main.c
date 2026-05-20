@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:33 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/05/07 18:36:46 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/05/17 17:36:06 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	set_prompt(t_shell *shell)
 	{
 		prompt = readline("$: ");
 		if (!prompt)
-			break;
+			break ;
 		else if (prompt[0])
 		{
 			debug_cmds(shell->cmds);
@@ -32,7 +32,7 @@ void	set_prompt(t_shell *shell)
 			shell->cmds = parse(prompt, shell);
 			pid = fork();
 			if (pid == 0)
-				pipex(shell, shell->cmds);
+				pipex(shell);
 			waitpid(pid, &status, 0);
 		}
 		free(prompt);
@@ -48,9 +48,7 @@ int	main(int ac, char **av, char **env)
 	shell.env = env;
 	shell.exit_status = 0;
 	shell.cmds = NULL;
-	useless(ac, av); // useless, just here to silence the unused av and ac warning
-	// if (ac > 1)
-	// 	return (pipex(&shell, &shell->cmd));
+	useless(ac, av);
 	set_prompt(&shell);
 	if (shell.cmds)
 		free_cmds(shell.cmds);
@@ -58,7 +56,7 @@ int	main(int ac, char **av, char **env)
 	return (0);
 }
 
-void useless(int ac, char **av)
+void	useless(int ac, char **av)
 {
 	ac = 1;
 	if (ac == 1)
