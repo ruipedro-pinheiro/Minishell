@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 16:30:12 by saouissi          #+#    #+#             */
-/*   Updated: 2026/05/20 18:01:08 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/05/20 18:08:22 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	exiter(t_shell *shell)
 {
 	int	fd;
 
-	fd = open(".minishell_history", O_TRUNC | O_WRONLY | O_CREAT, 0644);
+	fd = open(".minishell_history", O_APPEND | O_WRONLY | O_CREAT, 0644);
 	ft_putstr_fd(shell->historian, fd);
 	destroyer(shell);
 	exit(shell->exit_status);
