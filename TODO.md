@@ -7,13 +7,13 @@ export $ls='ls -a'
 ```
 
 ```bash
-    $ls
+$ls
 ```
 
 Output: 
 A ls output with the argument (in this case, showing hidden files/folders)
 ```bash
-    . file.txt ...
+. file.txt ...
 ```
 
 ## Word splitting
