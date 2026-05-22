@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/05/20 18:06:57 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/05/20 18:10:43 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,9 @@ typedef enum e_signal_modes
 	FORKED,
 }				t_signal_modes;
 
-typedef enum e_signal_modes
-{
-	INTERACTIVE,
-	EXECUTION,
-	FORKED,
-}				t_signal_modes;
-
 typedef struct s_token
 {
 	t_token_type	type;
-	bool			is_var;
-	bool			concat_next;
 	bool			is_var;
 	bool			concat_next;
 	char			*value;
@@ -111,9 +102,6 @@ typedef struct s_shell
 	pid_t	hereid;
 	int		prevfd;
 	int		wread[2];
-	pid_t	hereid;
-	int		prevfd;
-	int		wread[2];
 	int		cmd_count;
 	pid_t	*pids;
 	t_cmd	*cmds;
@@ -136,10 +124,6 @@ int				parent_update(int prev_fd, int *wread, t_shell *shell);
 int				wait_children(t_shell *shell, int count);
 void			exec_cmd(char **s_cmd, char **envp);
 int				error_handler(char *msg);
-void			child_start(t_shell *shell, int *pipe_fd);
-void			child_process(t_shell *shell, int i, int prev_fd, int *pipe_fd);
-void			child_end(t_shell *shell, int prev_fd);
-int				pipe_setup(t_shell *shell);
 int				here_doc_input(t_shell *shell);
 int				ft_strcmp(char *s1, char *s2);
 // void			init_pipex(t_shell *shell, int argc, char **argv, char **envp);

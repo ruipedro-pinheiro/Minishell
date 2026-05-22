@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 12:00:38 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/05/15 19:22:11 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/05/22 18:26:03 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,24 @@ int	error_handler(char *msg)
 	exit(errno);
 }
 
+static char	*literaler(char *cmd)
+{
+	int		x;
+	int		y;
+	char	*all;
+
+	x = ft_strlen(cmd);
+	y = x;
+	all = ft_strdup(cmd);
+	free(cmd);
+	while (all[y] != '/')
+		y--;
+	cmd = malloc(sizeof(char) * (x - y));
+	cmd = ft_strrchr(all, '/');
+	cmd = ft_strtrim(cmd, "/");
+	return (all);
+}
+
 char	*get_path(char *cmd)
 {
 	char	**paths;
@@ -25,11 +43,13 @@ char	*get_path(char *cmd)
 	char	*path_part;
 	int		i;
 
-	i = 0;
+	if (cmd[0] == '/')
+		return (literaler(cmd));
+	i = -1;
 	paths = ft_split(getenv("PATH"), ':');
 	if (!paths)
 		exit(0);
-	while (paths[i])
+	while (paths[++i])
 	{
 		path_part = ft_strjoin(paths[i], "/");
 		exec = ft_strjoin(path_part, cmd);
@@ -40,7 +60,6 @@ char	*get_path(char *cmd)
 			return (exec);
 		}
 		free(exec);
-		i++;
 	}
 	ft_strfree(paths);
 	return (NULL);

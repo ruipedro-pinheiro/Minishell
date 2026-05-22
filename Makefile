@@ -17,7 +17,6 @@ SRC = main.c \
       execution/utils.c \
 	  execution/pipex.c \
 	  execution/multi_pipe.c \
-	  execution/here_doc.c \
 	  parsing/parser.c \
 	  parsing/lexer.c \
 	  parsing/tokens.c \
