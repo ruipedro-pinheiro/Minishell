@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 12:00:38 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/05/22 18:26:03 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/05/27 17:50:52 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char	*literaler(char *cmd)
 	return (all);
 }
 
-char	*get_path(char *cmd)
+char	*get_path(char *cmd, char **env)
 {
 	char	**paths;
 	char	*exec;
@@ -46,7 +46,7 @@ char	*get_path(char *cmd)
 	if (cmd[0] == '/')
 		return (literaler(cmd));
 	i = -1;
-	paths = ft_split(getenv("PATH"), ':');
+	paths = ft_split(env[33], ':');
 	if (!paths)
 		exit(0);
 	while (paths[++i])
@@ -76,7 +76,7 @@ void	exec_cmd(char **s_cmd, char **envp)
 		ft_putstr_fd(": command not found\n", 2);
 		exit(127);
 	}
-	path = get_path(s_cmd[0]);
+	path = get_path(s_cmd[0], envp);
 	if (!path)
 	{
 		error_msg = ft_strjoin(*s_cmd, ": command not found\n");

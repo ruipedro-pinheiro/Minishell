@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/05/20 18:10:43 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/05/27 17:51:32 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,19 +116,13 @@ void			here_doc_read(t_shell *shell, int *wread);
 int				init_pipes(t_shell *shell);
 int				parent_update(int prev_fd, int *wread, t_shell *shell);
 int				wait_children(t_shell *shell, int count);
-/**			---			EXEC	---			 */
-void			singlecmd(t_shell *shell);
-void			here_doc_read(t_shell *shell, int *wread);
-int				init_pipes(t_shell *shell);
-int				parent_update(int prev_fd, int *wread, t_shell *shell);
-int				wait_children(t_shell *shell, int count);
 void			exec_cmd(char **s_cmd, char **envp);
 int				error_handler(char *msg);
 int				here_doc_input(t_shell *shell);
 int				ft_strcmp(char *s1, char *s2);
 // void			init_pipex(t_shell *shell, int argc, char **argv, char **envp);
 int				pipex(t_shell *shell);
-char			*get_path(char *cmd);
+char			*get_path(char *cmd, char **env);
 void			exiter(t_shell *shell);
 void			scribe(t_shell *shell, char *prompt);
 void			historer(t_shell *shell);
@@ -181,5 +175,6 @@ bool			validation(t_token *head);
 
 /**			---		EXPANSION		---		*/
 bool			expansion(t_token *head, t_shell *shell);
+char			**enver(void);
 
 #endif
