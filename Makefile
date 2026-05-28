@@ -16,9 +16,7 @@ SRC = main.c \
 	  execution/closer.c \
       execution/utils.c \
 	  execution/pipex.c \
-	  execution/here_doc.c \
 	  execution/multi_pipe.c \
-	  execution/lib.c \
 	  parsing/parser.c \
 	  parsing/lexer.c \
 	  parsing/tokens.c \
@@ -28,7 +26,8 @@ SRC = main.c \
 	  parsing/validation.c \
 	  parsing/expansion.c \
 	  parsing/build_cmds.c \
-	  builtins/exit.c \
+	  execution/lib.c \
+	  builtins/exit.c
 
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 

@@ -13,6 +13,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # define EXIT_SIGNAL_BASE 128
+# define EXIT_SIGNAL_BASE 128
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -25,7 +26,7 @@
 # include <stdbool.h>
 # include <sys/wait.h>
 # include <signal.h>
-
+# include <signal.h>
 
 /*  TOKEN_TYPES
 
@@ -116,16 +117,18 @@ void			here_doc_read(t_shell *shell, int *wread);
 int				init_pipes(t_shell *shell);
 int				parent_update(int prev_fd, int *wread, t_shell *shell);
 int				wait_children(t_shell *shell, int count);
+/**			---			EXEC	---			 */
+void			singlecmd(t_shell *shell);
+void			here_doc_read(t_shell *shell, int *wread);
+int				init_pipes(t_shell *shell);
+int				parent_update(int prev_fd, int *wread, t_shell *shell);
+int				wait_children(t_shell *shell, int count);
 void			exec_cmd(char **s_cmd, char **envp);
 int				error_handler(char *msg);
-void			child_start(t_shell *shell, int *pipe_fd);
-void			child_process(t_shell *shell, int i, int prev_fd, int *pipe_fd);
-void			child_end(t_shell *shell, int prev_fd);
-int				pipe_setup(t_shell *shell);
 int				here_doc_input(t_shell *shell);
 int				ft_strcmp(char *s1, char *s2);
 // void			init_pipex(t_shell *shell, int argc, char **argv, char **envp);
-int				pipex(t_shell *shell, t_cmd *cmds);
+int				pipex(t_shell *shell);
 char			*get_path(char *cmd);
 void			exiter(t_shell *shell);
 void			scribe(t_shell *shell, char *prompt);
@@ -139,9 +142,20 @@ void			set_signal_mode(t_signal_modes mode);
 
 /**			---		PROMPT			---		*/
 void			set_prompt(t_shell *shell);
+void			exit_minishell(t_shell *shell);
+void			endoutf(t_shell *shell, int *wread);
+void			middle(t_shell *shell, int *wread);
+void			startinf(t_shell *shell, int *wread);
+
+void			set_signal_mode(t_signal_modes mode);
+
+/**			---		PROMPT			---		*/
+void			set_prompt(t_shell *shell);
 
 /**			---     PARSING			---		*/
 t_cmd			*parse(char *line, t_shell *shell);
+t_token			*lexer(char *line);
+t_cmd			*build_cmds(t_token *tokens);
 t_token			*lexer(char *line);
 t_cmd			*build_cmds(t_token *tokens);
 void			free_cmds(t_cmd *cmds);
