@@ -49,6 +49,7 @@ here_doc EOF "cat" "wc -l" outfile
 ### Parsing/Lexer Theory
 - [Intro to Parsing & Lexing](https://dev.to/elipie/intro-to-parsing-lexing-3g01) -- basics for beginners
 - [Shell parsing tips](https://shell.multun.net/parser.html) -- shell parser in detail
+- [Bash guide on expansion/substituition](https://thealternative.ch/en/bash)
 
 ### Videos
 - [Bash Shell Operation In Depth](https://youtube.com/watch?v=GGNzB_o4OiM) -- how bash processes a command
