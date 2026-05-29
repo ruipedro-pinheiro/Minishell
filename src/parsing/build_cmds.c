@@ -59,7 +59,7 @@ int	count_args(t_token *tokens)
 		}
 		else if (tokens->type == TOKEN_WORD)
 		{
-			n_args++;
+			n_args += count_fields(tokens->value);
 			tokens = tokens->next;
 		}
 	}
@@ -74,7 +74,7 @@ bool	builder_helper(t_token **tokens, t_cmd *cmd, int *i)
 		return (false);
 	}
 	if ((*tokens)->type == TOKEN_WORD)
-		cmd->cmd_args[(*i)++] = ft_strdup((*tokens)->value);
+		fill_fields((*tokens)->value, cmd->cmd_args, i);
 	else if (is_redir(*tokens) && (*tokens)->next)
 	{
 		append_redir(&cmd->redirections,

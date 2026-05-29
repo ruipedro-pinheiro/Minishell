@@ -24,6 +24,7 @@ SRC = main.c \
 	  parsing/validation.c \
 	  parsing/expansion.c \
 	  parsing/build_cmds.c \
+	  parsing/word_split.c \
 	  execution/lib.c \
 	  builtins/exit.c
 

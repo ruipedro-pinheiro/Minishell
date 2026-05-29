@@ -13,7 +13,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # define EXIT_SIGNAL_BASE 128
-# define EXIT_SIGNAL_BASE 128
+# define WS_SEP '\001'
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -165,11 +165,6 @@ t_token			*new_token(t_token_type token_type, char *value);
 void			add_token(t_token **head, t_token **last, t_token *new_token);
 void			free_tokens(t_token *tokens);
 
-/**			---		DEBUG					*/
-void			debug_tokens(t_token *tokens, char *line);
-void			debug_cmds(t_cmd *cmds);
-void			debug_redirs(t_cmd *cmd, int fd);
-
 /**			---     REDIRECTIONS	---		*/
 void			handle_operator(char *line, int *i, t_token **head,
 					t_token **last);
@@ -182,4 +177,10 @@ bool			validation(t_token *head);
 
 /**			---		EXPANSION		---		*/
 bool			expansion(t_token *head, t_shell *shell);
+char			*variable_expansion(char *name, t_shell *shell);
+void			fill_fields(char *value, char **cmd_args, int *i);
+
+/**			---		WORD SPLITTING	---		*/
+void			mark_range(char *s);
+int				count_fields(char *value);
 #endif
