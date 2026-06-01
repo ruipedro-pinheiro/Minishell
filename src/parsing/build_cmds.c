@@ -34,9 +34,9 @@ void	free_cmds(t_cmd *cmds)
 			free(redir);
 			redir = next_redir;
 		}
+		free(cmds);
 		cmds = next_cmd;
 	}
-	free(cmds);
 }
 
 int	count_args(t_token *tokens)

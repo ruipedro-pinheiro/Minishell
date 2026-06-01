@@ -41,12 +41,11 @@ void	fill_fields(char *value, char **cmd_args, int *i)
 	char	**fields;
 	int		k;
 
+	k = -1;
 	fields = ft_split(value, WS_SEP);
 	if (!fields)
 		return ;
-	k = -1;
 	while (fields[++k])
-	{
 		cmd_args[(*i)++] = fields[k];
-	}
+	free(fields);
 }

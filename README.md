@@ -1,4 +1,4 @@
-*This project has been created as part of the 42 curriculum by Saouissi, Rpinheir*
+*This project has been created as part of the 42 curriculum by saouissi, rpinheir*
 
 # Description
 **Minishell** is a 42 group project where the main goal is to build a simplified shell, in comparison with bash.

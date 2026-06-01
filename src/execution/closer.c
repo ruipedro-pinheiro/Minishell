@@ -17,6 +17,8 @@
 void	destroyer(t_shell *shell)
 {
 	free(shell->historian);
+	if (shell->cmds)
+		free_cmds(shell->cmds);
 }
 
 void	exiter(t_shell *shell)
