@@ -6,7 +6,7 @@ INCDIR = include
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I$(INCDIR) -I$(LIBFT_DIR) # -Wshadow -Wstrict-prototypes -Wmissing-prototypes -Wformat=2 -Wpointer-arith -Wwrite-strings
+CFLAGS = -Wall -Wextra -Werror -I$(INCDIR) -I$(LIBFT_DIR) -Wshadow -Wstrict-prototypes -Wpointer-arith 
 VAL_FLAGS  = -g3 -O0
 ASAN_FLAGS = -fsanitize=address,undefined -fno-omit-frame-pointer
 SRC = main.c \
@@ -17,16 +17,14 @@ SRC = main.c \
       execution/utils.c \
 	  execution/pipex.c \
 	  execution/multi_pipe.c \
-	  execution/here_doc.c \
 	  parsing/parser.c \
 	  parsing/lexer.c \
 	  parsing/tokens.c \
 	  parsing/redirections.c \
-	  parsing/debug_cmd.c \
-	  parsing/debug_redir.c \
 	  parsing/validation.c \
 	  parsing/expansion.c \
 	  parsing/build_cmds.c \
+	  parsing/word_split.c \
 	  execution/lib.c \
 	  builtins/exit.c
 

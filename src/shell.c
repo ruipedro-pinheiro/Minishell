@@ -27,7 +27,7 @@ void	executor(t_shell *shell)
 	if (pid == 0)
 	{
 		set_signal_mode(FORKED);
-		pipex(shell, shell->cmds);
+		pipex(shell);
 		exit(shell->exit_status);
 	}
 	waitpid(pid, &status, 0);
@@ -59,7 +59,6 @@ void	set_prompt(t_shell *shell)
 				free(prompt);
 				continue ;
 			}
-			debug_cmds(shell->cmds);
 			exit_minishell(shell);
 			executor(shell);
 		}

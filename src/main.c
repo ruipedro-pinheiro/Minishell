@@ -7,6 +7,7 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:33 by rpinheir          #+#    #+#             */
 /*   Updated: 2026/05/07 18:36:46 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/05/07 18:36:46 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +25,8 @@ int	main(int ac, char **av, char **env)
 	shell.exit_status = 0;
 	shell.cmds = NULL;
 	set_prompt(&shell);
+	free(shell.historian);
 	if (shell.cmds)
 		free_cmds(shell.cmds);
-	free(shell.historian);
 	return (0);
 }
