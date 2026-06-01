@@ -46,6 +46,7 @@ void	fill_fields(char *value, char **cmd_args, int *i)
 		return ;
 	k = -1;
 	while (fields[++k])
+	{
 		cmd_args[(*i)++] = fields[k];
-	free(fields);
+	}
 }

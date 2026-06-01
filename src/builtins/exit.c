@@ -15,6 +15,6 @@
 void	exit_minishell(t_shell *shell)
 {
 	if (shell->cmds->cmd_args[0]
-		&& ft_strncmp(shell->cmds->cmd_args[0], "exit", 5) == 0)
+		&& ft_strncmp(shell->cmds->cmd_args[0], "exit", 4) == 0)
 		exiter(shell);
 }

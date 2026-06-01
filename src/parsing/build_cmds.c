@@ -23,7 +23,7 @@ void	free_cmds(t_cmd *cmds)
 	{
 		next_cmd = cmds->next;
 		i = 0;
-		while (cmds->cmd_args && cmds->cmd_args[i])
+		while (cmds->cmd_args[i])
 			free(cmds->cmd_args[i++]);
 		free(cmds->cmd_args);
 		redir = cmds->redirections;
@@ -34,9 +34,9 @@ void	free_cmds(t_cmd *cmds)
 			free(redir);
 			redir = next_redir;
 		}
-		free(cmds);
 		cmds = next_cmd;
 	}
+	free(cmds);
 }
 
 int	count_args(t_token *tokens)
@@ -87,24 +87,24 @@ bool	builder_helper(t_token **tokens, t_cmd *cmd, int *i)
 
 t_cmd	*build_one_cmd(t_token **tokens)
 {
-	t_cmd	*cmd;
+	t_cmd	*cmds;
 	int		i;
 
 	i = 0;
-	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
+	cmds = malloc(sizeof(t_cmd));
+	if (!cmds)
 		return (NULL);
-	cmd->next = NULL;
-	cmd->redirections = NULL;
-	cmd->cmd_args = malloc(sizeof(char *) * (count_args(*tokens) + 1));
-	if (!cmd->cmd_args)
-		return (free(cmd), NULL);
+	cmds->next = NULL;
+	cmds->redirections = NULL;
+	cmds->cmd_args = malloc(sizeof(char *) * (count_args(*tokens) + 1));
+	if (!cmds->cmd_args)
+		return (free(cmds), NULL);
 	while (*tokens && (*tokens)->type != TOKEN_PIPE)
 	{
-		if (!builder_helper(tokens, cmd, &i))
+		if (!builder_helper(tokens, cmds, &i))
 			continue ;
 	}
-	return (cmd->cmd_args[i] = NULL, cmd);
+	return (cmds->cmd_args[i] = NULL, cmds);
 }
 
 t_cmd	*build_cmds(t_token *tokens)

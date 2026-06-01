@@ -25,8 +25,8 @@ int	main(int ac, char **av, char **env)
 	shell.exit_status = 0;
 	shell.cmds = NULL;
 	set_prompt(&shell);
+	free(shell.historian);
 	if (shell.cmds)
 		free_cmds(shell.cmds);
-	free(shell.historian);
 	return (0);
 }
