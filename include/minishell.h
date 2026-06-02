@@ -22,10 +22,8 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <unistd.h>
-# include <stdlib.h>
 # include <stdbool.h>
 # include <sys/wait.h>
-# include <signal.h>
 # include <signal.h>
 
 /*  TOKEN_TYPES
@@ -74,7 +72,6 @@ typedef struct s_token
 {
 	t_token_type	type;
 	bool			is_var;
-	bool			concat_next;
 	char			*value;
 	struct s_token	*next;
 }				t_token;
@@ -111,13 +108,6 @@ typedef struct s_shell
 }			t_shell;
 
 /**			---			EXEC	---			 */
-
-void			singlecmd(t_shell *shell);
-void			here_doc_read(t_shell *shell, int *wread);
-int				init_pipes(t_shell *shell);
-int				parent_update(int prev_fd, int *wread, t_shell *shell);
-int				wait_children(t_shell *shell, int count);
-/**			---			EXEC	---			 */
 void			singlecmd(t_shell *shell);
 void			here_doc_read(t_shell *shell, int *wread);
 int				init_pipes(t_shell *shell);
@@ -142,21 +132,9 @@ void			set_signal_mode(t_signal_modes mode);
 
 /**			---		PROMPT			---		*/
 void			set_prompt(t_shell *shell);
-void			exit_minishell(t_shell *shell);
-void			endoutf(t_shell *shell, int *wread);
-void			middle(t_shell *shell, int *wread);
-void			startinf(t_shell *shell, int *wread);
-void			debug_redirs(t_cmd *cmd, int fd);
-
-void			set_signal_mode(t_signal_modes mode);
-
-/**			---		PROMPT			---		*/
-void			set_prompt(t_shell *shell);
 
 /**			---     PARSING			---		*/
 t_cmd			*parse(char *line, t_shell *shell);
-t_token			*lexer(char *line);
-t_cmd			*build_cmds(t_token *tokens);
 t_token			*lexer(char *line);
 t_cmd			*build_cmds(t_token *tokens);
 void			free_cmds(t_cmd *cmds);
