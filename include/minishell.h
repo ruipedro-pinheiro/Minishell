@@ -127,7 +127,7 @@ void			exit_minishell(t_shell *shell);
 void			endoutf(t_shell *shell, int *wread);
 void			middle(t_shell *shell, int *wread);
 void			startinf(t_shell *shell, int *wread);
-
+void			destroyer(t_shell *shell);
 void			set_signal_mode(t_signal_modes mode);
 
 /**			---		PROMPT			---		*/

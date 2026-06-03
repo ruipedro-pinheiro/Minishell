@@ -11,12 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-/*
 
-*/
-
-// TODO: dispatch builtin parent/child before fork
-// (cd/export/unset can't modify parent state inside fork)
 void	executor(t_shell *shell)
 {
 	int	status;

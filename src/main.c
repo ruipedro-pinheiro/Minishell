@@ -12,8 +12,9 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+char **enver(char **env);
 
-int	main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **environ)
 {
 	t_shell	shell;
 
@@ -21,12 +22,35 @@ int	main(int ac, char **av, char **env)
 		return (ft_putendl_fd("Arguments are not permitted", 2), 0);
 	shell.historian = ft_strdup("");
 	historer(&shell);
-	shell.env = env;
+	shell.env = enver(environ);
 	shell.exit_status = 0;
 	shell.cmds = NULL;
 	set_prompt(&shell);
+	ft_strfree(shell.env);
 	free(shell.historian);
 	if (shell.cmds)
 		free_cmds(shell.cmds);
 	return (0);
+}
+
+char **enver(char **environ)
+{
+	char **env;
+	int	i;
+
+	i = -1;
+	while(environ[++i])
+		;
+	env = malloc(sizeof(char *) * (i + 1));
+	if (!env)
+		return (NULL);
+	i = -1;
+	while(environ[++i])
+	{
+		env[i] = ft_strdup(environ[i]);
+		if (!env[i])
+			return (ft_strfree(env), NULL);
+	}
+	env[i] = NULL;
+	return (env);
 }
