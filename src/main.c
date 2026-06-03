@@ -19,7 +19,7 @@ int	main(int ac, char **av, char **environ)
 	t_shell	shell;
 
 	if (ac > 1 && av[0])
-		return (ft_putendl_fd("Arguments are not permitted", 2), 0);
+		return (1);
 	shell.historian = ft_strdup("");
 	historer(&shell);
 	shell.env = enver(environ);
@@ -48,6 +48,7 @@ char **enver(char **environ)
 	while(environ[++i])
 	{
 		env[i] = ft_strdup(environ[i]);
+		fprintf(stderr, "%s\n", env[i]);
 		if (!env[i])
 			return (ft_strfree(env), NULL);
 	}

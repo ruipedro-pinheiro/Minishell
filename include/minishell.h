@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/05/18 18:17:23 by rpinheir         ###   ########.ch       */
+/*   Updated: 2026/06/03 19:22:34 by rpinheir         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,4 +162,7 @@ void			fill_fields(char *value, char **cmd_args, int *i);
 /**			---		WORD SPLITTING	---		*/
 void			mark_range(char *s);
 int				count_fields(char *value);
+
+
+void			exporter(t_shell *shell, char *name, char *value);
 #endif

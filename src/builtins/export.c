@@ -1,28 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/04 13:43:33 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/06/03 19:28:32 by rpinheir         ###   ########.ch       */
+/*   Created: 2026/06/03 18:40:55 by rpinheir          #+#    #+#             */
+/*   Updated: 2026/06/03 19:27:57 by rpinheir         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	exit_minishell(t_shell *shell)
+void	exporter(t_shell *shell, char *name, char *value)
 {
-	char *name;
-	char *value;
+	int	i;
+	int j;
+	int	k;
+	int end;
 
-	name = "testincode";
-	value= "done";
-	if (shell->cmds->cmd_args[0]
-		&& ft_strncmp(shell->cmds->cmd_args[0], "exit", 4) == 0)
-		exiter(shell);
-	if (shell->cmds->cmd_args[0]
-		&& ft_strncmp(shell->cmds->cmd_args[0], "export", 7) == 0)
-		exporter(shell, name, value);
+	end = -1;
+	j = 0;
+	i = 0;
+	k = 0;
+	while(shell->env[++end])
+		;
+	while(shell->env[i])
+	{
+		if (ft_strncmp(shell->env[i], name, ft_strlen(name)) == 0)
+		{
+			if (shell->env[i][j+1] == '=')
+			{
+				j+=2;
+				shell->env[i][j] = value[k];
+			}
+		}
+		shell->env[end] = ft_strjoin(name, "=");
+		shell->env[end] = ft_strjoin(shell->env[end], value);
+		i++;
+	}
 }

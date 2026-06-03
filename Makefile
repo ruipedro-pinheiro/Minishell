@@ -26,7 +26,8 @@ SRC = main.c \
 	  parsing/build_cmds.c \
 	  parsing/word_split.c \
 	  execution/lib.c \
-	  builtins/exit.c
+	  builtins/exit.c \
+	  builtins/export.c
 
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
