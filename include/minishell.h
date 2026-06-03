@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/05/27 17:51:32 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/06/03 18:42:14 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,13 +116,13 @@ void			here_doc_read(t_shell *shell, int *wread);
 int				init_pipes(t_shell *shell);
 int				parent_update(int prev_fd, int *wread, t_shell *shell);
 int				wait_children(t_shell *shell, int count);
-void			exec_cmd(char **s_cmd, char **envp);
+void			exec_cmd(char **s_cmd, char **envp, t_shell *shell);
 int				error_handler(char *msg);
 int				here_doc_input(t_shell *shell);
 int				ft_strcmp(char *s1, char *s2);
 // void			init_pipex(t_shell *shell, int argc, char **argv, char **envp);
 int				pipex(t_shell *shell);
-char			*get_path(char *cmd, char **env);
+char			*get_path(char *cmd, t_shell *shell);
 void			exiter(t_shell *shell);
 void			scribe(t_shell *shell, char *prompt);
 void			historer(t_shell *shell);
@@ -130,7 +130,7 @@ void			exit_minishell(t_shell *shell);
 void			endoutf(t_shell *shell, int *wread);
 void			middle(t_shell *shell, int *wread);
 void			startinf(t_shell *shell, int *wread);
-
+char			*variable_expansion(char *name, t_shell *shell);
 void			set_signal_mode(t_signal_modes mode);
 
 /**			---		PROMPT			---		*/
@@ -175,6 +175,12 @@ bool			validation(t_token *head);
 
 /**			---		EXPANSION		---		*/
 bool			expansion(t_token *head, t_shell *shell);
-char			**enver(void);
 
+// idk
+char			**enver(char **environ);
+
+/**			---		BUILTIN		---			*/
+void			envinator(t_shell *shell);
+void			pwder(t_shell *shell);
+void			builtex(t_shell *shell);
 #endif
