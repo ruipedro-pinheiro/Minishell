@@ -46,7 +46,7 @@ char	*get_path(char *cmd, t_shell *shell)
 	if (cmd[0] == '/' || cmd[0] == '.')
 		return (literaler(cmd));
 	i = -1;
-	paths = ft_split(variable_expansion("PATH", shell), ':');
+	paths = ft_split(value_extraction("PATH", shell), ':');
 	if (!paths)
 		exit(0);
 	while (paths[++i])

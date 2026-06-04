@@ -113,14 +113,12 @@ void			here_doc_read(t_shell *shell, int *wread);
 int				init_pipes(t_shell *shell);
 int				parent_update(int prev_fd, int *wread, t_shell *shell);
 int				wait_children(t_shell *shell, int count);
-void			exec_cmd(char **s_cmd, char **envp);
 /**			---			EXEC	---			 */
 void			singlecmd(t_shell *shell);
 void			here_doc_read(t_shell *shell, int *wread);
 int				init_pipes(t_shell *shell);
 int				parent_update(int prev_fd, int *wread, t_shell *shell);
 int				wait_children(t_shell *shell, int count);
-void			exec_cmd(char **s_cmd, char **envp);
 void			exec_cmd(char **s_cmd, char **envp, t_shell *shell);
 int				error_handler(char *msg);
 int				here_doc_input(t_shell *shell);
@@ -137,6 +135,10 @@ void			middle(t_shell *shell, int *wread);
 void			startinf(t_shell *shell, int *wread);
 void			destroyer(t_shell *shell);
 
+char			*value_extraction(char *name, t_shell *shell);
+int				count_fields(char *value);
+void			mark_range(char *s);
+void			exporter(t_shell *shell, char *name, char *value);
 void			set_signal_mode(t_signal_modes mode);
 
 /**			---		PROMPT			---		*/

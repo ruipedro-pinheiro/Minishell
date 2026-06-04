@@ -17,18 +17,16 @@ SRC = main.c \
       execution/utils.c \
 	  execution/pipex.c \
 	  execution/multi_pipe.c \
+	  parsing/expansion.c \
 	  parsing/parser.c \
 	  parsing/lexer.c \
 	  parsing/tokens.c \
 	  parsing/redirections.c \
 	  parsing/validation.c \
-	  parsing/expansion.c \
 	  parsing/build_cmds.c \
 	  parsing/word_split.c \
 	  execution/lib.c \
-	  builtins/exit.c \
-	  builtins/export.c
-	  builtins/exit.c
+	  builtins/export.c \
 	  builtins/exit.c\
 	  builtins/env.c\
 	  builtins/pwd.c\
