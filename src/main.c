@@ -47,7 +47,6 @@ char **enver(char **environ)
 	while(environ[++i])
 	{
 		env[i] = ft_strdup(environ[i]);
-		fprintf(stderr, "%s\n", env[i]);
 		if (!env[i])
 			return (ft_strfree(env), NULL);
 	}

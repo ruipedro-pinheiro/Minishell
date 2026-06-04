@@ -14,15 +14,7 @@
 
 void	exit_minishell(t_shell *shell)
 {
-	char	*name;
-	char	*value;
-
-	name = "testincode";
-	value = "done";
 	if (shell->cmds->cmd_args[0]
 		&& ft_strncmp(shell->cmds->cmd_args[0], "exit", 4) == 0)
 		exiter(shell);
-	if (shell->cmds->cmd_args[0]
-		&& ft_strncmp(shell->cmds->cmd_args[0], "export", 7) == 0)
-		exporter(shell, name, value);
 }

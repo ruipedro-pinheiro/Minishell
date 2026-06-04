@@ -26,6 +26,9 @@ void	builtex(t_shell *shell)
 	// if (shell->cmds->cmd_args[0]
 		// && ft_strncmp(shell->cmds->cmd_args[0], "export", 7) == 0)
 		// return (exiter(shell), exit(shell->exit_status));
+	if (shell->cmds->cmd_args[0]
+		&& ft_strncmp(shell->cmds->cmd_args[0], "export", 5) == 0)
+		return(exporter(shell, "nom", "valeur"), exit(shell->exit_status));
 	// if (shell->cmds->cmd_args[0]
 		// && ft_strncmp(shell->cmds->cmd_args[0], "unset", 6) == 0)
 		// return (exiter(shell), exit(shell->exit_status));

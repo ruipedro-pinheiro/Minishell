@@ -32,11 +32,13 @@ void	exporter(t_shell *shell, char *name, char *value)
 			if (shell->env[i][j+1] == '=')
 			{
 				j+=2;
-				shell->env[i][j] = value[k];
+				while (shell->env[i][j] || value[k])
+					shell->env[i][j++] = value[k++];
 			}
 		}
 		shell->env[end] = ft_strjoin(name, "=");
 		shell->env[end] = ft_strjoin(shell->env[end], value);
+		shell->env[end+1] = NULL;
 		i++;
 	}
 }
