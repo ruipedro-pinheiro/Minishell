@@ -87,10 +87,20 @@ int	here_doc_input(t_shell *shell)
 	if (shell->hereid == -1)
 		exit(1);
 	if (shell->hereid == 0)
+	{
+		set_signal_mode(FORKED);
 		here_doc_read(shell, shell->wread);
+	}
 	waitpid(shell->hereid, &status, 0);
 	close(shell->wread[1]);
 	if (shell->cmds->redirections->next)
 		shell->cmds->redirections = shell->cmds->redirections->next;
+	if (WIFSIGNALED(status))
+	{
+		shell->exit_status = EXIT_SIGNAL_BASE + WTERMSIG(status);
+		return (-2);
+	}
+	else
+		shell->exit_status = WEXITSTATUS(status);
 	return (shell->wread[0]);
 }

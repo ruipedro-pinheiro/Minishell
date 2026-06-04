@@ -51,15 +51,11 @@ static void	forker(t_shell *shell, int *wread, int x)
 	exit(2);
 }
 
-int	pipex(t_shell *shell)
+int	run_pipeline(t_shell *shell)
 {
 	int	x;
 
-	shell->cmd_count = cmdlen(shell);
 	x = 0;
-	shell->prevfd = init_pipes(shell);
-	if (shell->cmds->next == NULL && shell->prevfd == -1)
-		return (singlecmd(shell), 0);
 	while (1)
 	{
 		if (pipe(shell->wread) == -1)
@@ -77,4 +73,15 @@ int	pipex(t_shell *shell)
 	}
 	(close(shell->wread[0]), close(shell->wread[1]));
 	return (wait_children(shell, shell->cmd_count));
+}
+
+int	pipex(t_shell *shell)
+{
+	shell->cmd_count = cmdlen(shell);
+	shell->prevfd = init_pipes(shell);
+	if (shell->prevfd == -2)
+		return (0);
+	if (shell->cmds->next == NULL && shell->prevfd == -1)
+		return (singlecmd(shell), 0);
+	return (run_pipeline(shell));
 }

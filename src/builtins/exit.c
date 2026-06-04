@@ -14,11 +14,11 @@
 
 void	exit_minishell(t_shell *shell)
 {
-	char *name;
-	char *value;
+	char	*name;
+	char	*value;
 
 	name = "testincode";
-	value= "done";
+	value = "done";
 	if (shell->cmds->cmd_args[0]
 		&& ft_strncmp(shell->cmds->cmd_args[0], "exit", 4) == 0)
 		exiter(shell);
