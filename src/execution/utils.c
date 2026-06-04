@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 12:00:38 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/05/22 18:26:03 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/06/03 19:16:27 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,17 @@ static char	*literaler(char *cmd)
 	return (all);
 }
 
-char	*get_path(char *cmd)
+char	*get_path(char *cmd, t_shell *shell)
 {
 	char	**paths;
 	char	*exec;
 	char	*path_part;
 	int		i;
 
-	if (cmd[0] == '/')
+	if (cmd[0] == '/' || cmd[0] == '.')
 		return (literaler(cmd));
 	i = -1;
-	paths = ft_split(getenv("PATH"), ':');
+	paths = ft_split(variable_expansion("PATH", shell), ':');
 	if (!paths)
 		exit(0);
 	while (paths[++i])
@@ -65,7 +65,7 @@ char	*get_path(char *cmd)
 	return (NULL);
 }
 
-void	exec_cmd(char **s_cmd, char **envp)
+void	exec_cmd(char **s_cmd, char **envp, t_shell *shell)
 {
 	char	*path;
 	char	*error_msg;
@@ -76,7 +76,7 @@ void	exec_cmd(char **s_cmd, char **envp)
 		ft_putstr_fd(": command not found\n", 2);
 		exit(127);
 	}
-	path = get_path(s_cmd[0]);
+	path = get_path(s_cmd[0], shell);
 	if (!path)
 	{
 		error_msg = ft_strjoin(*s_cmd, ": command not found\n");

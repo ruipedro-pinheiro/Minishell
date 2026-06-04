@@ -6,7 +6,7 @@
 /*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/11 12:55:50 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/05/18 19:10:48 by rpinheir         ###   ########.ch       */
+/*   Updated: 2026/05/20 18:11:16 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@ void	executor(t_shell *shell)
 	int	pid;
 
 	set_signal_mode(EXECUTION);
+	
 	pid = fork();
 	if (pid == 0)
 	{
 		set_signal_mode(FORKED);
+		builtex(shell);
 		pipex(shell);
 		exit(shell->exit_status);
 	}

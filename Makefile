@@ -28,6 +28,11 @@ SRC = main.c \
 	  execution/lib.c \
 	  builtins/exit.c \
 	  builtins/export.c
+	  builtins/exit.c
+	  builtins/exit.c\
+	  builtins/env.c\
+	  builtins/pwd.c\
+	  builtins/builtex.c\
 
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 

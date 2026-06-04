@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 18:45:42 by saouissi          #+#    #+#             */
-/*   Updated: 2026/05/15 19:44:25 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/06/03 18:19:10 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	startinf(t_shell *shell, int *wread)
 	dup2(wread[1], STDOUT_FILENO);
 	close(wread[0]);
 	close(wread[1]);
-	exec_cmd(shell->cmds->cmd_args, shell->env);
+	exec_cmd(shell->cmds->cmd_args, shell->env, shell);
 }
 
 void	middle(t_shell *shell, int *wread)
@@ -39,7 +39,7 @@ void	middle(t_shell *shell, int *wread)
 	dup2(wread[1], STDOUT_FILENO);
 	close(wread[0]);
 	close(wread[1]);
-	exec_cmd(shell->cmds->cmd_args, shell->env);
+	exec_cmd(shell->cmds->cmd_args, shell->env, shell);
 }
 
 void	endoutf(t_shell *shell, int *wread)
@@ -66,7 +66,7 @@ void	endoutf(t_shell *shell, int *wread)
 	dup2(shell->prevfd, STDIN_FILENO);
 	close(wread[0]);
 	close(wread[1]);
-	exec_cmd(shell->cmds->cmd_args, shell->env);
+	exec_cmd(shell->cmds->cmd_args, shell->env, shell);
 }
 
 static void	test(t_shell *shell, int fd2)
@@ -89,7 +89,7 @@ void	singlecmd(t_shell *shell)
 
 	fd2 = -1;
 	if (!shell->cmds->redirections)
-		return (exec_cmd(shell->cmds->cmd_args, shell->env));
+		return (exec_cmd(shell->cmds->cmd_args, shell->env, shell));
 	if (shell->cmds->redirections->type == REDIR_IN)
 	{
 		fd = open(shell->cmds->redirections->file, O_RDONLY, 0);
@@ -102,5 +102,5 @@ void	singlecmd(t_shell *shell)
 	if (shell->cmds->redirections->type == REDIR_OUT
 		|| shell->cmds->redirections->type == REDIR_APPEND)
 		test(shell, fd2);
-	exec_cmd(shell->cmds->cmd_args, shell->env);
+	exec_cmd(shell->cmds->cmd_args, shell->env, shell);
 }
