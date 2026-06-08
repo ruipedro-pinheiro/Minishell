@@ -12,6 +12,12 @@
 
 #include "../../include/minishell.h"
 
+/*
+	TODO: remove parsing debug
+			1. drop debug_tokens(tokens, line) in parse()
+			2. delete debug_cmd.c / debug_redir.c (+ their calls)
+*/
+
 t_cmd	*parse(char *line, t_shell *shell)
 {
 	t_token	*tokens;

@@ -33,6 +33,12 @@ char	*value_extraction(char *name, t_shell *shell)
 	return ("");
 }
 
+/*
+	TODO: strip the $ in $"..." and $'...'
+			1. value_expand: if the char after $ is " or ', drop the $
+			2. keep the quoted text, quote removal does the rest
+*/
+
 char	*value_expand(char *value, int *i, t_shell *shell)
 {
 	char	*name;
@@ -91,6 +97,8 @@ char	*token_expand(char *value, t_shell *shell, bool	*is_var)
 	}
 	return (env);
 }
+
+
 
 bool	expansion(t_token *head, t_shell *shell)
 {

@@ -12,6 +12,14 @@
 
 #include "../../include/minishell.h"
 
+
+/*
+	TODO: remove exit() from builtins that are not forked
+					1. drop exit() when calling a built in
+					2. run the builtin, set shell->exit_status, return
+					3. keep exit() only when running inside a forked child
+*/
+
 void	builtex(t_shell *shell)
 {
 	int	i;
