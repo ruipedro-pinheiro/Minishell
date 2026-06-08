@@ -18,7 +18,7 @@ void	executor(t_shell *shell)
 	int	pid;
 
 	set_signal_mode(EXECUTION);
-	
+
 	pid = fork();
 	if (pid == 0)
 	{
@@ -56,6 +56,7 @@ void	set_prompt(t_shell *shell)
 				free(prompt);
 				continue ;
 			}
+			debug_cmds(shell->cmds);
 			exit_minishell(shell);
 			executor(shell);
 		}

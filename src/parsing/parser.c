@@ -20,6 +20,7 @@ t_cmd	*parse(char *line, t_shell *shell)
 	tokens = lexer(line);
 	if (!tokens)
 		return (NULL);
+	debug_tokens(tokens, line);
 	if (!validation(tokens))
 		return (free_tokens(tokens), NULL);
 	if (!expansion(tokens, shell))

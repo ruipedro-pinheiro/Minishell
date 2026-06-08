@@ -113,12 +113,6 @@ void			here_doc_read(t_shell *shell, int *wread);
 int				init_pipes(t_shell *shell);
 int				parent_update(int prev_fd, int *wread, t_shell *shell);
 int				wait_children(t_shell *shell, int count);
-/**			---			EXEC	---			 */
-void			singlecmd(t_shell *shell);
-void			here_doc_read(t_shell *shell, int *wread);
-int				init_pipes(t_shell *shell);
-int				parent_update(int prev_fd, int *wread, t_shell *shell);
-int				wait_children(t_shell *shell, int count);
 void			exec_cmd(char **s_cmd, char **envp, t_shell *shell);
 int				error_handler(char *msg);
 int				here_doc_input(t_shell *shell);
@@ -130,26 +124,13 @@ void			exiter(t_shell *shell);
 void			scribe(t_shell *shell, char *prompt);
 void			historer(t_shell *shell);
 void			exit_minishell(t_shell *shell);
-void			endoutf(t_shell *shell, int *wread);
-void			middle(t_shell *shell, int *wread);
-void			startinf(t_shell *shell, int *wread);
 void			destroyer(t_shell *shell);
 
 char			*value_extraction(char *name, t_shell *shell);
 int				count_fields(char *value);
 void			mark_range(char *s);
-void			exporter(t_shell *shell, char *name, char *value);
-void			set_signal_mode(t_signal_modes mode);
+void			exporter(t_shell *shell);
 
-/**			---		PROMPT			---		*/
-void			set_prompt(t_shell *shell);
-void			exit_minishell(t_shell *shell);
-void			endoutf(t_shell *shell, int *wread);
-void			middle(t_shell *shell, int *wread);
-void			startinf(t_shell *shell, int *wread);
-
-char			*variable_expansion(char *name, t_shell *shell);
-void			set_signal_mode(t_signal_modes mode);
 
 /**			---		PROMPT			---		*/
 void			set_prompt(t_shell *shell);
@@ -196,4 +177,9 @@ char			**enver(char **environ);
 void			envinator(t_shell *shell);
 void			pwder(t_shell *shell);
 void			builtex(t_shell *shell);
+
+/**			---		DEBUG					*/
+void			debug_tokens(t_token *tokens, char *line);
+void			debug_cmds(t_cmd *cmds);
+void			debug_redirs(t_cmd *cmd, int fd);
 #endif
