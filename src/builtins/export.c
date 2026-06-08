@@ -18,12 +18,15 @@ static char *get_value(t_shell *shell)
 	int	i;
 	int	j;
 
-	i = -1;
+	i = 0;
 	j = 0;
-	while(ft_strncmp(shell->cmds->cmd_args[i], "export", 7) == 0)
+	while(ft_strncmp(shell->cmds->cmd_args[i], "export", 7) == 0
+			&& shell->cmds->cmd_args[i])
 		i++;
 	while(shell->cmds->cmd_args[i][j] != '=')
 		j++;
+	if (i == 0)
+		return (NULL);
 	value = malloc(sizeof(char *) * j + 1);
 	if (!value)
 		return NULL;
@@ -43,9 +46,10 @@ static char	*get_name(t_shell *shell)
 	int	i;
 	int	j;
 
-	i = -1;
+	i = 0;
 	j = 0;
-	while(ft_strncmp(shell->cmds->cmd_args[i], "export", 7) == 0)
+	while(ft_strncmp(shell->cmds->cmd_args[i], "export", 7) == 0
+		&& shell->cmds->cmd_args[i])
 		i++;
 	while(shell->cmds->cmd_args[i][j] != '=')
 		j++;
@@ -60,6 +64,7 @@ static char	*get_name(t_shell *shell)
 	name[j] = '\0';
 	return (name);
 }
+
 /*
 	TODO: divide funtion into multiple functions
 			1. Display of environment with declare -x

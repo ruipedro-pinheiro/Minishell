@@ -37,6 +37,8 @@ void	historer(t_shell *shell)
 	fd = open(".minishell_history", O_RDONLY);
 	if (!fd)
 		return ;
+	if (fd == 1)
+		close(-1);
 	a = " ";
 	while (true)
 	{
