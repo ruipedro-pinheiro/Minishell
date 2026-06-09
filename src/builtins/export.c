@@ -12,24 +12,24 @@
 
 #include "../../include/minishell.h"
 
-static char *get_value(t_shell *shell)
+static char	*get_value(t_shell *shell)
 {
-	char *value;
-	int	i;
-	int	j;
+	char	*value;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
-	while(ft_strncmp(shell->cmds->cmd_args[i], "export", 7) == 0
-			&& shell->cmds->cmd_args[i])
+	while (ft_strncmp(shell->cmds->cmd_args[i], "export", 7) == 0
+		&& shell->cmds->cmd_args[i])
 		i++;
-	while(shell->cmds->cmd_args[i][j] != '=')
+	while (shell->cmds->cmd_args[i][j] != '=')
 		j++;
 	if (i == 0)
 		return (NULL);
 	value = malloc(sizeof(char *) * j + 1);
 	if (!value)
-		return NULL;
+		return (NULL);
 	j++;
 	while (shell->cmds->cmd_args[i][j])
 	{
@@ -42,20 +42,20 @@ static char *get_value(t_shell *shell)
 
 static char	*get_name(t_shell *shell)
 {
-	char *name;
-	int	i;
-	int	j;
+	char	*name;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
-	while(ft_strncmp(shell->cmds->cmd_args[i], "export", 7) == 0
+	while (ft_strncmp(shell->cmds->cmd_args[i], "export", 7) == 0
 		&& shell->cmds->cmd_args[i])
 		i++;
-	while(shell->cmds->cmd_args[i][j] != '=')
+	while (shell->cmds->cmd_args[i][j] != '=')
 		j++;
 	name = malloc(sizeof(char *) * j);
 	if (!name)
-		return NULL;
+		return (NULL);
 	while (shell->cmds->cmd_args[i][j] != '=')
 	{
 		name[j] = shell->cmds->cmd_args[i][j];
@@ -90,13 +90,12 @@ static char	*get_name(t_shell *shell)
 */
 void	exporter(t_shell *shell)
 {
-	int	i;
-	int j;
-	int	k;
-	int end;
-
-	char *name;
-	char *value;
+	int		i;
+	int		j;
+	int		k;
+	int		end;
+	char	*name;
+	char	*value;
 
 	name = get_name(shell);
 	if (!name)
@@ -108,22 +107,22 @@ void	exporter(t_shell *shell)
 	j = 0;
 	i = 0;
 	k = 0;
-	while(shell->env[++end])
+	while (shell->env[++end])
 		;
-	while(shell->env[i])
+	while (shell->env[i])
 	{
 		if (ft_strncmp(shell->env[i], name, ft_strlen(name)) == 0)
 		{
 			if (shell->env[i][ft_strlen(name)] == '=')
 			{
-				j+=2;
+				j += 2;
 				while (shell->env[i][j] || value[k])
 					shell->env[i][j++] = value[k++];
 			}
 		}
 		shell->env[end] = ft_strjoin(name, "=");
 		shell->env[end] = ft_strjoin(shell->env[end], value);
-		shell->env[end+1] = NULL;
+		shell->env[end + 1] = NULL;
 		i++;
 	}
 }
