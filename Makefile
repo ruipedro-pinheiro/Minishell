@@ -30,6 +30,7 @@ SRC = main.c \
 	  builtins/exit.c\
 	  builtins/env.c\
 	  builtins/pwd.c\
+	  builtins/cd.c\
 	  builtins/builtex.c\
 
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))

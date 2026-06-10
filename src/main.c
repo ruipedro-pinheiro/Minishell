@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:33 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/06/03 17:49:22 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/06/10 19:01:18 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char **enver(char **environ)
 
 	i = -1;
 	while(environ[++i])
-		;
+		i++;
 	env = malloc(sizeof(char *) * (i + 1));
 	if (!env)
 		return (NULL);

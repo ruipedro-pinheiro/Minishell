@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 18:31:38 by saouissi          #+#    #+#             */
-/*   Updated: 2026/06/03 18:43:42 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/06/10 18:16:40 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	builtex(t_shell *shell)
 {
-	// if (shell->cmds->cmd_args[0]
-		// && ft_strncmp(shell->cmds->cmd_args[0], "cd", 3) == 0)
-		// return (cder(shell), exit(shell->exit_status));
+	if (shell->cmds->cmd_args[0]
+		&& ft_strncmp(shell->cmds->cmd_args[0], "cd", 3) == 0)
+		return (cder(shell), exit(shell->exit_status));
 	if (shell->cmds->cmd_args[0]
 		&& ft_strncmp(shell->cmds->cmd_args[0], "env", 4) == 0)
 		return (envinator(shell), exit(shell->exit_status));
