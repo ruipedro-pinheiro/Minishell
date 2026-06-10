@@ -47,6 +47,8 @@ char	*value_expand(char *value, int *i, t_shell *shell)
 
 	if (value[*i + 1] == '?')
 		return (*i += 1, ft_itoa(shell->exit_status));
+	if (value[*i + 1] == '\'' || value[*i + 1] == '"')
+		(*i)++;
 	len = 0;
 	while (ft_isalnum(value[*i + 1 + len]) || value[*i + 1 + len] == '_')
 		len++;
@@ -97,8 +99,6 @@ char	*token_expand(char *value, t_shell *shell, bool	*is_var)
 	}
 	return (env);
 }
-
-
 
 bool	expansion(t_token *head, t_shell *shell)
 {

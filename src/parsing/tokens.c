@@ -35,6 +35,7 @@ t_token	*new_token(t_token_type token_type, char *value)
 	token->type = token_type;
 	token->value = ft_strdup(value);
 	token->is_var = false;
+	token->is_quoted = false;
 	token->next = NULL;
 	return (token);
 }

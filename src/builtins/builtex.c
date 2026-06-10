@@ -12,41 +12,22 @@
 
 #include "../../include/minishell.h"
 
-
-/*
-	TODO: remove exit() from builtins that are not forked
-					1. drop exit() when calling a built in
-					2. run the builtin, set shell->exit_status, return
-					3. keep exit() only when running inside a forked child
-*/
-
-void	builtex(t_shell *shell)
+int	builtex(t_shell *shell)
 {
 	int	i;
 
 	i = -1;
-	while(shell->cmds->cmd_args[++i])
+	while (shell->cmds->cmd_args[++i])
 	{
-		// if (shell->cmds->cmd_args[i]
-			// && ft_strncmp(shell->cmds->cmd_args[i], "cd", 3) == 0)
-			// return (cder(shell), exit(shell->exit_status));
 		if (shell->cmds->cmd_args[i]
 			&& ft_strncmp(shell->cmds->cmd_args[i], "env", 4) == 0)
-			return (envinator(shell), exit(shell->exit_status));
+			return (envinator(shell), shell->exit_status);
 		if (shell->cmds->cmd_args[i]
 			&& ft_strncmp(shell->cmds->cmd_args[i], "pwd", 4) == 0)
-			return (pwder(shell), exit(shell->exit_status));
-		// if (shell->cmds->cmd_args[i]
-			// && ft_strncmp(shell->cmds->cmd_args[i], "export", 7) == 0)
-			// return (exiter(shell), exit(shell->exit_status));
+			return (pwder(shell), shell->exit_status);
 		if (shell->cmds->cmd_args[i]
 			&& ft_strncmp(shell->cmds->cmd_args[i], "export", 7) == 0)
-			return(exporter(shell), exit(shell->exit_status));
-		// if (shell->cmds->cmd_args[i]
-			// && ft_strncmp(shell->cmds->cmd_args[i], "unset", 6) == 0)
-			// return (exiter(shell), exit(shell->exit_status));
-		// if (shell->cmds->cmd_args[i]
-			// && ft_strncmp(shell->cmds->cmd_args[i], "echo", 5) == 0)
-			// return (exiter(shell), exit(shell->exit_status));
+			return (exporter(shell), shell->exit_status);
 	}
+	return (shell->exit_status);
 }

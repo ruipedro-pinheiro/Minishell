@@ -72,6 +72,7 @@ typedef struct s_token
 {
 	t_token_type	type;
 	bool			is_var;
+	bool			is_quoted;
 	char			*value;
 	struct s_token	*next;
 }				t_token;
@@ -131,7 +132,6 @@ int				count_fields(char *value);
 void			mark_range(char *s);
 void			exporter(t_shell *shell);
 
-
 /**			---		PROMPT			---		*/
 void			set_prompt(t_shell *shell);
 void			exit_minishell(t_shell *shell);
@@ -176,7 +176,7 @@ char			**enver(char **environ);
 /**			---		BUILTIN		---			*/
 void			envinator(t_shell *shell);
 void			pwder(t_shell *shell);
-void			builtex(t_shell *shell);
+int				builtex(t_shell *shell);
 
 /**			---		DEBUG					*/
 void			debug_tokens(t_token *tokens, char *line);
