@@ -98,7 +98,6 @@ void	exporter(t_shell *shell, int arg_indx)
 	while (shell->cmds->cmd_args[arg_indx])
 	{
 		env_indx = find_env_var(shell->env, get_name(arg));
-		printf("ENV INDEX = %d \n", env_indx);
 		if (env_indx != 0)
 			modify_env(shell, env_indx, get_value(arg));
 		else if (env_indx == 0)
