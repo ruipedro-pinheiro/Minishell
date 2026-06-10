@@ -29,6 +29,7 @@ SRC = main.c \
 	  parsing/word_split.c \
 	  execution/lib.c \
 	  builtins/export.c \
+	  builtins/export_utils.c \
 	  builtins/exit.c\
 	  builtins/env.c\
 	  builtins/pwd.c\

@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/06/03 18:42:14 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/06/10 14:22:41 by rpinheir         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,10 @@ void			destroyer(t_shell *shell);
 char			*value_extraction(char *name, t_shell *shell);
 int				count_fields(char *value);
 void			mark_range(char *s);
-void			exporter(t_shell *shell);
-
+void			exporter(t_shell *shell, int i);
+int				find_env_var(char **env, char *name);
+char			*get_name(char *arg);
+char			*get_value(char *arg);
 /**			---		PROMPT			---		*/
 void			set_prompt(t_shell *shell);
 void			exit_minishell(t_shell *shell);

@@ -12,13 +12,15 @@
 
 #include "../include/minishell.h"
 
+// Trying to stop execution after a builtin being executed
 void	executor(t_shell *shell)
 {
 	int	status;
 	int	pid;
 
 	set_signal_mode(EXECUTION);
-	builtex(shell);
+	if (builtex(shell) != -1)
+		return ;
 	pid = fork();
 	if (pid == 0)
 	{

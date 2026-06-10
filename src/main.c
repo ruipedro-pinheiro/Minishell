@@ -11,7 +11,28 @@
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-char **enver(char **env);
+
+char	**enver(char **environ)
+{
+	char	**env;
+	int		i;
+
+	i = -1;
+	while (environ[++i])
+		;
+	env = malloc(sizeof(char *) * (i + 1));
+	if (!env)
+		return (NULL);
+	i = -1;
+	while (environ[++i])
+	{
+		env[i] = ft_strdup(environ[i]);
+		if (!env[i])
+			return (ft_strfree(env), NULL);
+	}
+	env[i] = NULL;
+	return (env);
+}
 
 int	main(int ac, char **av, char **environ)
 {
@@ -30,26 +51,4 @@ int	main(int ac, char **av, char **environ)
 	if (shell.cmds)
 		free_cmds(shell.cmds);
 	return (0);
-}
-
-char **enver(char **environ)
-{
-	char **env;
-	int	i;
-
-	i = -1;
-	while(environ[++i])
-		;
-	env = malloc(sizeof(char *) * (i + 1));
-	if (!env)
-		return (NULL);
-	i = -1;
-	while(environ[++i])
-	{
-		env[i] = ft_strdup(environ[i]);
-		if (!env[i])
-			return (ft_strfree(env), NULL);
-	}
-	env[i] = NULL;
-	return (env);
 }

@@ -27,7 +27,11 @@ int	builtex(t_shell *shell)
 			return (pwder(shell), shell->exit_status);
 		if (shell->cmds->cmd_args[i]
 			&& ft_strncmp(shell->cmds->cmd_args[i], "export", 7) == 0)
-			return (exporter(shell), shell->exit_status);
+			return (exporter(shell, i), shell->exit_status);
 	}
-	return (shell->exit_status);
+	return (-1);
 }
+
+// -1 = no builtin executed = no need to use exit_status = we can execute pipex
+//
+// TODO: find a way to make work builtins after pipes (in subshells/childs)
