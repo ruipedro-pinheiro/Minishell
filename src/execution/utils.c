@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 12:00:38 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/06/03 19:16:27 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/06/15 18:05:32 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,16 @@ int	error_handler(char *msg)
 	exit(errno);
 }
 
-static char	*literaler(char *cmd)
+static char	*pather(t_shell *shell, char *cmd)
 {
 	int		x;
 	int		y;
 	char	*all;
 
-	x = ft_strlen(cmd);
+	
+	all = dotter(shell, cmd);
+	x = ft_strlen(all);
 	y = x;
-	all = ft_strdup(cmd);
 	free(cmd);
 	while (all[y] != '/')
 		y--;
@@ -36,6 +37,20 @@ static char	*literaler(char *cmd)
 	return (all);
 }
 
+static int	literaler(char *cmd)
+{
+	int		x;
+
+	x = 0;
+	while (cmd[x])
+	{
+		if (cmd[x] == '/')
+			return (1);
+		x++;
+	}
+	return (0);
+}
+
 char	*get_path(char *cmd, t_shell *shell)
 {
 	char	**paths;
@@ -43,8 +58,8 @@ char	*get_path(char *cmd, t_shell *shell)
 	char	*path_part;
 	int		i;
 
-	if (cmd[0] == '/' || cmd[0] == '.')
-		return (literaler(cmd));
+	if (literaler(cmd) == 1)
+		return (pather(shell, cmd));
 	i = -1;
 	paths = ft_split(variable_expansion("PATH", shell), ':');
 	if (!paths)
@@ -92,18 +107,4 @@ void	exec_cmd(char **s_cmd, char **envp, t_shell *shell)
 		ft_strfree(s_cmd);
 		exit(126);
 	}
-}
-
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	x;
-
-	x = 0;
-	while (s1[x] || s2[x])
-	{
-		if (s1[x] != s2[x])
-			return (s1[x] - s2[x]);
-		x++;
-	}
-	return (0);
 }

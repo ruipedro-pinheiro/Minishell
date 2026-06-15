@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 18:11:38 by saouissi          #+#    #+#             */
-/*   Updated: 2026/06/10 18:51:14 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/06/15 18:28:08 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,20 @@ static int	nbe(char *name, t_shell *shell)
 	return (0);
 }
 
-static void	dotter(t_shell *shell, int z, int z2)
+char	*dotter(t_shell *shell, char *b)
 {
 	char	**splitdir;
 	char	*a;
 	int	x;
 
-	x = 1;
-	if (shell->cmds->cmd_args[1][0] == '/')
+	x = 0;
+	if (b[0] == '/')
 		a = ft_strdup("/");
-	else if (shell->cmds->cmd_args[1][0] == '~')
+	else if (b[0] == '~')
 		a = ft_strdup(shell->env[nbe("HOME", shell)]);
 	else
 		a = ft_strdup(shell->env[nbe("PWD", shell)]);
-	splitdir = ft_split(shell->cmds->cmd_args[1], '/');
+	splitdir = ft_split(b, '/');
 	while (splitdir[x])
 	{
 		if (ft_strncmp(splitdir[x], ".", 2) == 0)
@@ -71,10 +71,7 @@ static void	dotter(t_shell *shell, int z, int z2)
 			x++;
 		}
 	}
-	free(shell->env[z]);
-	shell->env[z] = ft_strjoin(ft_strdup("OLDPWD="), variable_expansion("PWD", shell));
-	free(shell->env[z2]);
-	shell->env[z2] = ft_strjoin(ft_strdup("PWD="), a);
+	return (a);
 }
 
 void	cder(t_shell *shell)
@@ -93,6 +90,6 @@ void	cder(t_shell *shell)
 		write(1, "ooo", 3);
 		return ;
 	}
-	dotter(shell, x, y);
+	// dotter(shell, shell->cmds->cmd_args[1]);
 }
 

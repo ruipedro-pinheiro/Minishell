@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/06/10 18:13:51 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/06/15 18:10:08 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ typedef struct s_shell
 }			t_shell;
 
 /**			---			EXEC	---			 */
+char			*dotter(t_shell *shell, char *b);
 void			singlecmd(t_shell *shell);
 void			here_doc_read(t_shell *shell, int *wread);
 int				init_pipes(t_shell *shell);
