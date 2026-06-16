@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 18:11:38 by saouissi          #+#    #+#             */
-/*   Updated: 2026/06/15 18:28:08 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/06/16 19:28:48 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	nbe(char *name, t_shell *shell)
 
 char	*dotter(t_shell *shell, char *b)
 {
-	char	**splitdir;
+	char	**split;
 	char	*a;
 	int	x;
 
@@ -51,26 +51,28 @@ char	*dotter(t_shell *shell, char *b)
 	if (b[0] == '/')
 		a = ft_strdup("/");
 	else if (b[0] == '~')
-		a = ft_strdup(shell->env[nbe("HOME", shell)]);
+		a = ft_strdup(variable_expansion("HOME", shell));
 	else
-		a = ft_strdup(shell->env[nbe("PWD", shell)]);
-	splitdir = ft_split(b, '/');
-	while (splitdir[x])
+		a = ft_strdup(variable_expansion("PWD", shell));
+	split = ft_split(b, '/');
+	while (split[x])
 	{
-		if (ft_strncmp(splitdir[x], ".", 2) == 0)
+		
+		if (ft_strncmp(split[x], ".", 2) == 0 && ft_strlen(split[x]) == 1)
 			x++;
 		else
 		{
-			if (ft_strncmp(splitdir[x], "..", 3) == 0)
+			if (ft_strncmp(split[x], "..", 3) == 0)
 				shredder(a);
 			else
 			{
 				a = ft_strjoin_char(a, '/');
-				a = ft_strjoin(a, splitdir[x]);
+				a = ft_strjoin(a, split[x]);
 			}
 			x++;
 		}
 	}
+	printf("%s", a);
 	return (a);
 }
 
