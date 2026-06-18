@@ -6,21 +6,11 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 18:11:38 by saouissi          #+#    #+#             */
-/*   Updated: 2026/06/16 19:28:48 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/06/18 18:50:58 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
-static void	shredder(char *a)
-{
-	int x;
-
-	x = ft_strlen(a);
-	while (a[x] != '/')
-		x--;
-	a = ft_substr(a, 0, x);
-}
 
 static int	nbe(char *name, t_shell *shell)
 {
@@ -39,41 +29,6 @@ static int	nbe(char *name, t_shell *shell)
 		i++;
 	}
 	return (0);
-}
-
-char	*dotter(t_shell *shell, char *b)
-{
-	char	**split;
-	char	*a;
-	int	x;
-
-	x = 0;
-	if (b[0] == '/')
-		a = ft_strdup("/");
-	else if (b[0] == '~')
-		a = ft_strdup(variable_expansion("HOME", shell));
-	else
-		a = ft_strdup(variable_expansion("PWD", shell));
-	split = ft_split(b, '/');
-	while (split[x])
-	{
-		
-		if (ft_strncmp(split[x], ".", 2) == 0 && ft_strlen(split[x]) == 1)
-			x++;
-		else
-		{
-			if (ft_strncmp(split[x], "..", 3) == 0)
-				shredder(a);
-			else
-			{
-				a = ft_strjoin_char(a, '/');
-				a = ft_strjoin(a, split[x]);
-			}
-			x++;
-		}
-	}
-	printf("%s", a);
-	return (a);
 }
 
 void	cder(t_shell *shell)
