@@ -137,15 +137,11 @@ char			*get_name(char *arg);
 char			*get_value(char *arg);
 /**			---		PROMPT			---		*/
 void			set_prompt(t_shell *shell);
-void			exit_minishell(t_shell *shell);
 void			endoutf(t_shell *shell, int *wread);
 void			middle(t_shell *shell, int *wread);
 void			startinf(t_shell *shell, int *wread);
 
 void			set_signal_mode(t_signal_modes mode);
-
-/**			---		PROMPT			---		*/
-void			set_prompt(t_shell *shell);
 
 /**			---     PARSING			---		*/
 t_cmd			*parse(char *line, t_shell *shell);
