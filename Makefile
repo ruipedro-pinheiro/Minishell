@@ -13,6 +13,7 @@ SRC = main.c \
       historer.c \
 	  shell.c \
 	  signals.c \
+	  director.c \
 	  execution/closer.c \
       execution/utils.c \
 	  execution/pipex.c \
@@ -33,6 +34,7 @@ SRC = main.c \
 	  builtins/exit.c\
 	  builtins/env.c\
 	  builtins/pwd.c\
+	  builtins/cd.c\
 	  builtins/builtex.c\
 
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))

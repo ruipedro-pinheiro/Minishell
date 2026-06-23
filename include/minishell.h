@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/06/10 14:22:41 by rpinheir         ###   ########.ch       */
+/*   Updated: 2026/06/15 18:10:08 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ typedef struct s_shell
 }			t_shell;
 
 /**			---			EXEC	---			 */
+char			*dotter(t_shell *shell, char *b);
 void			singlecmd(t_shell *shell);
 void			here_doc_read(t_shell *shell, int *wread);
 int				init_pipes(t_shell *shell);
@@ -169,7 +170,6 @@ bool			validation(t_token *head);
 
 /**			---		EXPANSION		---		*/
 bool			expansion(t_token *head, t_shell *shell);
-char			*variable_expansion(char *name, t_shell *shell);
 void			fill_fields(char *value, char **cmd_args, int *i);
 
 // idk
@@ -179,6 +179,7 @@ char			**enver(char **environ);
 void			envinator(t_shell *shell);
 void			pwder(t_shell *shell);
 int				builtex(t_shell *shell);
+void			cder(t_shell *shell);
 
 /**			---		DEBUG					*/
 void			debug_tokens(t_token *tokens, char *line);
