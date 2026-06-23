@@ -31,22 +31,28 @@ void	display_export(t_shell *shell)
 				1. free string
 				2. Move new string to the same address
  */
+// do i malloc a whole new string with variable=name ?
+// or do i change directly the string without malloc ?!
+// i need to see if there is any issues with overflow
+//		if new value is bigger than actual then yes -> overflow.
 
 void	modify_env(t_shell *shell, int index, char *value)
 {
-	(void)shell;
-	(void)index;
-	(void)value;
+	char	*name;
+	char	*new_var;
+
+	new_var = ft_strdup("");
+	if (!new_var)
+		return ;
+	name = get_name(shell->env[index]);
+	new_var = ft_strjoin(new_var, name);
+	new_var = ft_strjoin(new_var, "=");
+	new_var = ft_strjoin(new_var, value);
+	free(shell->env[index]);
+	free(name);
+	shell->env[index] = new_var;
 }
 
-/*
-		TODO: Add variable (if not existing already)
-			1. Count size of n
-			2. Malloc new array of n + 2
-			3. Copy pointers (no strdup)
-			4. case n = name=value (ft_strarg_indxoin), case n+1 = NULL
-			5. free array (not ft_strfree)
-*/
 void	add_to_env(t_shell *shell, char *name, char *value)
 {
 	char	**new_env;
@@ -61,8 +67,13 @@ void	add_to_env(t_shell *shell, char *name, char *value)
 	i = -1;
 	while (shell->env[++i])
 		new_env[i] = shell->env[i];
-	new_env[i] = ft_strjoin(name, "=");
-	new_env[i] = ft_strjoin(new_env[i], value);
+	if (!value)
+		new_env[i] = ft_strdup(name);
+	else
+	{
+		new_env[i] = ft_strjoin(name, "=");
+		new_env[i] = ft_strjoin(new_env[i], value);
+	}
 	i++;
 	new_env[i] = NULL;
 	free(shell->env);
@@ -88,7 +99,6 @@ void	exporter(t_shell *shell, int arg_indx)
 	char	*arg;
 
 	arg_indx++;
-	arg = shell->cmds->cmd_args[arg_indx];
 	env_indx = 0;
 	if (!shell->cmds->cmd_args[arg_indx])
 	{
@@ -97,6 +107,7 @@ void	exporter(t_shell *shell, int arg_indx)
 	}
 	while (shell->cmds->cmd_args[arg_indx])
 	{
+		arg = shell->cmds->cmd_args[arg_indx];
 		env_indx = find_env_var(shell->env, get_name(arg));
 		if (env_indx != 0)
 			modify_env(shell, env_indx, get_value(arg));

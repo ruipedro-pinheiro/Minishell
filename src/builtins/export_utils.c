@@ -18,7 +18,8 @@ int	find_env_var(char **env, char *name)
 	indx = 0;
 	while (env[indx])
 	{
-		if (ft_strncmp(env[indx], name, ft_strlen(name)) == 0)
+		if (ft_strncmp(env[indx], name, ft_strlen(name)) == 0
+			&& env[indx][ft_strlen(name)] == '=')
 			return (indx);
 		indx++;
 	}
@@ -32,7 +33,7 @@ char	*get_value(char *arg)
 	int		j;
 
 	i = 0;
-	while (arg[i] != '=')
+	while (arg[i] != '=' && arg[i])
 		i++;
 	if (arg[i] == '\0')
 		return (NULL);
@@ -64,12 +65,12 @@ char	*get_name(char *arg)
 
 	i = 0;
 	j = 0;
-	while (arg[i] != '=')
+	while (arg[i] != '=' && arg[i])
 		i++;
 	name = malloc(sizeof(char) * i + 1);
 	if (!name)
 		return (NULL);
-	while (arg[j] != '=')
+	while (arg[j] != '=' && arg[j])
 	{
 		name[j] = arg[j];
 		j++;
