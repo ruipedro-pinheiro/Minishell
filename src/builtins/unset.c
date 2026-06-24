@@ -1,0 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/24 12:00:00 by rpinheir          #+#    #+#             */
+/*   Updated: 2026/06/24 12:00:00 by rpinheir         ###   ########.ch       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../include/minishell.h"
+
+// TODO: unset
+//   - for each arg: locate the var via find_env_var
+//   - remove the entry from shell->env (free + compact)
+//   - silent if the var doesn't exist
+void	unset(t_shell *shell)
+{
+	(void)shell;
+}
