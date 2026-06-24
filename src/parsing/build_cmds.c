@@ -39,13 +39,6 @@ void	free_cmds(t_cmd *cmds)
 	}
 }
 
-/*
-	TODO: keep "$EMPTY" as an empty argument
-			1. carry a "was quoted" flag on the token (not just is_var)
-			2. count_args / builder_helper: drop the empty token only if it was UNquoted
-			3. if quoted -> cmd_args[(*i)++] = ft_strdup("")
-*/
-
 int	count_args(t_token *tokens)
 {
 	int		n_args;
