@@ -6,10 +6,59 @@
 /*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 14:18:31 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/06/10 14:24:42 by rpinheir         ###   ########.ch       */
+/*   Updated: 2026/06/24 12:04:38 by pedro            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../include/minishell.h"
+
+void	display_export(char **env)
+{
+	int		i;
+	char	*eq;
+
+	i = 0;
+	while (env[i])
+	{
+		eq = ft_strchr(env[i], '=');
+		ft_putstr_fd("declare -x ", 1);
+		if (!eq)
+			ft_putendl_fd(env[i], 1);
+		else
+		{
+			write(1, env[i], eq - env[i] + 1);
+			ft_putchar_fd('"', 1);
+			ft_putstr_fd(eq + 1, 1);
+			ft_putendl_fd("\"", 1);
+		}
+		i++;
+	}
+}
+
+void	sort_env(char **env)
+{
+	int		i;
+	char	*tmp;
+	bool	swapped;
+
+	swapped = true;
+	while (swapped)
+	{
+		swapped = false;
+		i = 0;
+		while (env[i + 1])
+		{
+			if (ft_strncmp(env[i], env[i + 1], ft_strlen(env[i] + 1)) > 0)
+			{
+				tmp = env[i];
+				env[i] = env[i + 1];
+				env[i + 1] = tmp;
+				swapped = true;
+			}
+			i++;
+		}
+	}
+	display_export(env);
+}
 
 int	find_env_var(char **env, char *name)
 {
@@ -23,7 +72,7 @@ int	find_env_var(char **env, char *name)
 			return (indx);
 		indx++;
 	}
-	return (0);
+	return (-1);
 }
 
 char	*get_value(char *arg)

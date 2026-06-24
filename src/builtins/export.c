@@ -6,7 +6,7 @@
 /*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 18:40:55 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/06/10 14:23:33 by rpinheir         ###   ########.ch       */
+/*   Updated: 2026/06/24 12:21:20 by pedro            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../include/minishell.h"
@@ -14,17 +14,27 @@
 /*
    TODO: Sort alphabetically all the env to display correctly
 */
-void	display_export(t_shell *shell)
+void	export_dup(t_shell *shell)
 {
-	int	i;
+	int		n;
+	int		i;
+	char	**tmp_env;
 
+	n = 0;
 	i = 0;
+	while (shell->env[n])
+		n++;
+	tmp_env = malloc(sizeof(char *) * (n + 1));
+	if (!tmp_env)
+		return ;
 	while (shell->env[i])
 	{
-		ft_putstr_fd("declare -x ", 1);
-		ft_putendl_fd(shell->env[i], 1);
+		tmp_env[i] = shell->env[i];
 		i++;
 	}
+	tmp_env[i] = NULL;
+	sort_env(tmp_env);
+	free(tmp_env);
 }
 /*
 		TODO: Remplace variable (already exists)
@@ -41,15 +51,10 @@ void	modify_env(t_shell *shell, int index, char *value)
 	char	*name;
 	char	*new_var;
 
-	new_var = ft_strdup("");
-	if (!new_var)
-		return ;
 	name = get_name(shell->env[index]);
-	new_var = ft_strjoin(new_var, name);
-	new_var = ft_strjoin(new_var, "=");
-	new_var = ft_strjoin(new_var, value);
+	new_var = ft_strapnd(name, "=");
+	new_var = ft_strapnd(new_var, value);
 	free(shell->env[index]);
-	free(name);
 	shell->env[index] = new_var;
 }
 
@@ -72,12 +77,29 @@ void	add_to_env(t_shell *shell, char *name, char *value)
 	else
 	{
 		new_env[i] = ft_strjoin(name, "=");
-		new_env[i] = ft_strjoin(new_env[i], value);
+		new_env[i] = ft_strapnd(new_env[i], value);
 	}
 	i++;
 	new_env[i] = NULL;
 	free(shell->env);
 	shell->env = new_env;
+}
+
+static void	export_one(t_shell *shell, char *arg)
+{
+	char	*name;
+	char	*value;
+	int		env_indx;
+
+	name = get_name(arg);
+	value = get_value(arg);
+	env_indx = find_env_var(shell->env, name);
+	if (env_indx != -1)
+		modify_env(shell, env_indx, value);
+	else
+		add_to_env(shell, name, value);
+	free(name);
+	free(value);
 }
 
 /*
@@ -95,24 +117,18 @@ TODO: Main exporter orchestration
 */
 void	exporter(t_shell *shell, int arg_indx)
 {
-	int		env_indx;
 	char	*arg;
 
 	arg_indx++;
-	env_indx = 0;
 	if (!shell->cmds->cmd_args[arg_indx])
 	{
-		display_export(shell);
+		export_dup(shell);
 		return ;
 	}
 	while (shell->cmds->cmd_args[arg_indx])
 	{
 		arg = shell->cmds->cmd_args[arg_indx];
-		env_indx = find_env_var(shell->env, get_name(arg));
-		if (env_indx != 0)
-			modify_env(shell, env_indx, get_value(arg));
-		else if (env_indx == 0)
-			add_to_env(shell, get_name(arg), get_value(arg));
+		export_one(shell, arg);
 		arg_indx++;
 	}
 }
