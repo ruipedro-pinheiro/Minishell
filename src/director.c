@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/18 18:49:57 by saouissi          #+#    #+#             */
-/*   Updated: 2026/06/18 19:26:03 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/06/18 19:33:06 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,5 @@ char	*dotter(t_shell *shell, char *b)
 			x++;
 		}
 	}
-	printf("%s", a);
 	return (a);
 }

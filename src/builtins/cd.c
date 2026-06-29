@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 18:11:38 by saouissi          #+#    #+#             */
-/*   Updated: 2026/06/18 18:50:58 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/06/29 19:23:56 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	cder(t_shell *shell)
 {
 	int	x;
 	int	y;
+	char	*a;
 
 	x = nbe("OLDPWD", shell);
 	y = nbe("PWD", shell);
@@ -47,6 +48,14 @@ void	cder(t_shell *shell)
 		write(1, "ooo", 3);
 		return ;
 	}
-	// dotter(shell, shell->cmds->cmd_args[1]);
+	if (shell->cmds->cmd_args[1] && shell->cmds->cmd_args[1][0] == '-')
+	{
+		a = variable_expansion("OLDPWD", shell);
+		shell->env[x] = ft_strjoin("OLDPWD=", variable_expansion("PWD", shell));
+		shell->env[y] = ft_strjoin("PWD=", a);
+		return ;
+	}
+	shell->env[x] = ft_strjoin("OLDPWD=", variable_expansion("PWD", shell));
+	shell->env[y] = ft_strjoin("PWD=", dotter(shell, shell->cmds->cmd_args[1]));
 }
 
