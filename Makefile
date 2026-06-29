@@ -31,12 +31,13 @@ SRC = main.c \
 	  execution/lib.c \
 	  builtins/export.c \
 	  builtins/export_utils.c \
-	  builtins/exit.c\
-	  builtins/env.c\
-	  builtins/pwd.c\
-	  builtins/cd.c\
-	  builtins/builtex.c\
-
+	  builtins/exit.c \
+	  builtins/env.c \
+	  builtins/pwd.c \
+	  builtins/cd.c \
+	  builtins/builtex.c \
+	  builtins/unset.c \
+	  builtins/env_utils.c
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
 ################################################################################

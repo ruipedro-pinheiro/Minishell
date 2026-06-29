@@ -31,6 +31,9 @@ int	builtex(t_shell *shell)
 		if (shell->cmds->cmd_args[i]
 			&& ft_strncmp(shell->cmds->cmd_args[i], "export", 7) == 0)
 			return (exporter(shell, i), shell->exit_status);
+		if (shell->cmds->cmd_args[i]
+			&& ft_strncmp(shell->cmds->cmd_args[i], "unset", 6) == 0)
+			return (unset(shell, i), shell->exit_status);
 	}
 	return (-1);
 }

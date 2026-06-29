@@ -6,10 +6,26 @@
 /*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 14:18:31 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/06/24 12:04:38 by pedro            ###   ########.ch       */
+/*   Updated: 2026/06/29 11:47:22 by pedro            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../include/minishell.h"
+
+bool	is_name_valid(char *arg)
+{
+	int	i;
+
+	i = 0;
+	if (!ft_isalpha(arg[i]) && arg[i] != '_')
+		return (false);
+	while (arg[i] && arg[i] != '=')
+	{
+		if (!ft_isalnum(arg[i]) && arg[i] != '_')
+			return (false);
+		i++;
+	}
+	return (true);
+}
 
 void	display_export(char **env)
 {
@@ -32,47 +48,6 @@ void	display_export(char **env)
 		}
 		i++;
 	}
-}
-
-void	sort_env(char **env)
-{
-	int		i;
-	char	*tmp;
-	bool	swapped;
-
-	swapped = true;
-	while (swapped)
-	{
-		swapped = false;
-		i = 0;
-		while (env[i + 1])
-		{
-			if (ft_strncmp(env[i], env[i + 1], ft_strlen(env[i] + 1)) > 0)
-			{
-				tmp = env[i];
-				env[i] = env[i + 1];
-				env[i + 1] = tmp;
-				swapped = true;
-			}
-			i++;
-		}
-	}
-	display_export(env);
-}
-
-int	find_env_var(char **env, char *name)
-{
-	int	indx;
-
-	indx = 0;
-	while (env[indx])
-	{
-		if (ft_strncmp(env[indx], name, ft_strlen(name)) == 0
-			&& env[indx][ft_strlen(name)] == '=')
-			return (indx);
-		indx++;
-	}
-	return (-1);
 }
 
 char	*get_value(char *arg)
@@ -104,8 +79,6 @@ char	*get_value(char *arg)
 	return (value);
 }
 
-// TODO: bash: export: `=novarname': not a valid identifier
-//		If there is no letters before = then there is no variable = error
 char	*get_name(char *arg)
 {
 	char	*name;

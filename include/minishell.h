@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/06/15 18:10:08 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/06/29 11:16:35 by pedro            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,4 +184,7 @@ void			debug_redirs(t_cmd *cmd, int fd);
 
 void			export_dup(t_shell *shell);
 void			sort_env(char **tmp_env);
+void			unset(t_shell *shell, int i);
+void			display_export(char **env);
+bool			is_name_valid(char *arg);
 #endif

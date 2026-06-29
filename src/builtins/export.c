@@ -6,7 +6,7 @@
 /*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 18:40:55 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/06/24 12:21:20 by pedro            ###   ########.ch       */
+/*   Updated: 2026/06/29 11:31:07 by pedro            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../include/minishell.h"
@@ -91,6 +91,13 @@ static void	export_one(t_shell *shell, char *arg)
 	char	*value;
 	int		env_indx;
 
+	if (!is_name_valid(arg))
+	{
+		ft_putstr_fd("minishell: export: `", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putendl_fd("': not a valid identifier", 2);
+		return ;
+	}
 	name = get_name(arg);
 	value = get_value(arg);
 	env_indx = find_env_var(shell->env, name);
