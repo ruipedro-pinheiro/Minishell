@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/27 18:06:19 by saouissi          #+#    #+#             */
-/*   Updated: 2026/07/03 17:53:44 by saouissi         ###   ########.fr       */
+/*   Created: 2026/07/03 17:40:30 by saouissi          #+#    #+#             */
+/*   Updated: 2026/07/03 17:40:39 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	pwder(t_shell *shell)
+// TODO: echo with -n
+//   - handle one or several leading -n (echo -n -n foo)
+//   - print remaining cmd_args separated by a space
+//   - trailing newline UNLESS -n
+void	echoer(t_shell *shell)
 {
-	printf("%s\n", variable_expansion("PWD", shell));
+	(void)shell;
 }

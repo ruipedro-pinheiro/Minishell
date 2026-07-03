@@ -6,7 +6,7 @@ INCDIR = include
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I$(INCDIR) -I$(LIBFT_DIR) # -Wshadow -Wstrict-prototypes -Wmissing-prototypes -Wformat=2 -Wpointer-arith -Wwrite-strings
+CFLAGS = -Wall -Wextra -Werror -I$(INCDIR) -I$(LIBFT_DIR) -Wshadow -Wstrict-prototypes -Wpointer-arith 
 VAL_FLAGS  = -g3 -O0
 ASAN_FLAGS = -fsanitize=address,undefined -fno-omit-frame-pointer
 SRC = main.c \
@@ -18,22 +18,26 @@ SRC = main.c \
       execution/utils.c \
 	  execution/pipex.c \
 	  execution/multi_pipe.c \
+	  parsing/expansion.c \
 	  parsing/parser.c \
+	  parsing/debug_cmd.c \
+	  parsing/debug_redir.c \
 	  parsing/lexer.c \
 	  parsing/tokens.c \
 	  parsing/redirections.c \
-	  parsing/debug_cmd.c \
-	  parsing/debug_redir.c \
 	  parsing/validation.c \
-	  parsing/expansion.c \
 	  parsing/build_cmds.c \
+	  parsing/word_split.c \
 	  execution/lib.c \
-	  builtins/exit.c\
-	  builtins/env.c\
-	  builtins/pwd.c\
-	  builtins/cd.c\
-	  builtins/builtex.c\
-
+	  builtins/export.c \
+	  builtins/export_utils.c \
+	  builtins/exit.c \
+	  builtins/env.c \
+	  builtins/pwd.c \
+	  builtins/cd.c \
+	  builtins/builtex.c \
+	  builtins/unset.c \
+	  builtins/env_utils.c
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
 ################################################################################
@@ -61,10 +65,9 @@ endef
 #                                   RULES                                      #
 ################################################################################
 
-all: $(NAME) libft/
+all: $(NAME)
 	@if [ $$(cat $(CNT)) -gt 0 ]; then printf "\n"; fi
 	@printf " $(C)✅ [$(NAME)] $(B)Build complete$(X)\n"
-	@$(MAKE) --silent -C libft/ all
 
 $(NAME): $(OBJ) $(LIBFT)
 	@$(CC) $(CFLAGS) -L$(LIBFT_DIR) $(OBJ) $(LIBFT) -lreadline -lncurses -o $(NAME)

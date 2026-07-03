@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_cmds.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro </var/spool/mail/pedro>              +#+  +:+       +#+        */
+/*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 12:34:47 by pedro             #+#    #+#             */
-/*   Updated: 2026/05/17 12:35:53 by pedro            ###   ########.ch       */
+/*   Updated: 2026/07/03 17:47:22 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	free_cmds(t_cmd *cmds)
 	{
 		next_cmd = cmds->next;
 		i = 0;
-		while (cmds->cmd_args && cmds->cmd_args[i])
+		while (cmds->cmd_args[i])
 			free(cmds->cmd_args[i++]);
 		free(cmds->cmd_args);
 		redir = cmds->redirections;
@@ -59,7 +59,7 @@ int	count_args(t_token *tokens)
 		}
 		else if (tokens->type == TOKEN_WORD)
 		{
-			n_args++;
+			n_args += count_fields(tokens->value);
 			tokens = tokens->next;
 		}
 	}
@@ -74,7 +74,7 @@ bool	builder_helper(t_token **tokens, t_cmd *cmd, int *i)
 		return (false);
 	}
 	if ((*tokens)->type == TOKEN_WORD)
-		cmd->cmd_args[(*i)++] = ft_strdup((*tokens)->value);
+		fill_fields((*tokens)->value, cmd->cmd_args, i);
 	else if (is_redir(*tokens) && (*tokens)->next)
 	{
 		append_redir(&cmd->redirections,
@@ -87,24 +87,24 @@ bool	builder_helper(t_token **tokens, t_cmd *cmd, int *i)
 
 t_cmd	*build_one_cmd(t_token **tokens)
 {
-	t_cmd	*cmd;
+	t_cmd	*cmds;
 	int		i;
 
 	i = 0;
-	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
+	cmds = malloc(sizeof(t_cmd));
+	if (!cmds)
 		return (NULL);
-	cmd->next = NULL;
-	cmd->redirections = NULL;
-	cmd->cmd_args = malloc(sizeof(char *) * (count_args(*tokens) + 1));
-	if (!cmd->cmd_args)
-		return (free(cmd), NULL);
+	cmds->next = NULL;
+	cmds->redirections = NULL;
+	cmds->cmd_args = malloc(sizeof(char *) * (count_args(*tokens) + 1));
+	if (!cmds->cmd_args)
+		return (free(cmds), NULL);
 	while (*tokens && (*tokens)->type != TOKEN_PIPE)
 	{
-		if (!builder_helper(tokens, cmd, &i))
+		if (!builder_helper(tokens, cmds, &i))
 			continue ;
 	}
-	return (cmd->cmd_args[i] = NULL, cmd);
+	return (cmds->cmd_args[i] = NULL, cmds);
 }
 
 t_cmd	*build_cmds(t_token *tokens)

@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/11 12:55:50 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/01 20:50:49 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/03 17:33:44 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,14 @@ void	executor(t_shell *shell)
 	int	pid;
 
 	set_signal_mode(EXECUTION);
-	
+	if (builtex(shell) != -1)
+		return ;
 	pid = fork();
 	if (pid == 0)
 	{
 		set_signal_mode(FORKED);
-		builtex(shell);
 		pipex(shell);
+		destroyer(shell);
 		exit(shell->exit_status);
 	}
 	waitpid(pid, &status, 0);
