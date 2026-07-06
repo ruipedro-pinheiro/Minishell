@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:33 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/05/20 18:07:37 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/06 19:07:25 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@ void	historer(t_shell *shell)
 	char	*b;
 	int		fd;
 
+	if (access(".minishell_history", F_OK) != 0)
+		return ;
 	fd = open(".minishell_history", O_RDONLY);
 	if (!fd)
 		return ;
-	a = ft_strdup("");
 	while (true)
 	{
 		a = get_next_line(fd);

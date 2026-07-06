@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 18:11:38 by saouissi          #+#    #+#             */
-/*   Updated: 2026/07/03 18:20:16 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/06 19:49:55 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ void	cder(t_shell *shell)
 	y = nbe("PWD", shell);
 	if (!shell->cmds->cmd_args[1])
 	{
+		// free(shell->env[x]);
 		shell->env[x] = ft_strjoin("OLDPWD=", variable_expansion("PWD", shell));
+		// free(shell->env[y]);
 		shell->env[y] = ft_strjoin("PWD=", variable_expansion("HOME", shell));
 		return ;
 	}
@@ -54,12 +56,12 @@ void	cder(t_shell *shell)
 	}
 	if (access(dotter(shell, shell->cmds->cmd_args[1]), F_OK) != 0)
 	{
-		printf("file nonexistent\n");
+		printf("cd: no such file or directory: %s\n", shell->cmds->cmd_args[1]);
 		return ;
 	}
 	if (access(dotter(shell, shell->cmds->cmd_args[1]), X_OK) != 0)
 	{
-		printf("no perms\n");
+		printf("cd: permission denied: %s\n", shell->cmds->cmd_args[1]);
 		return ;
 	}
 	shell->env[x] = ft_strjoin("OLDPWD=", variable_expansion("PWD", shell));
