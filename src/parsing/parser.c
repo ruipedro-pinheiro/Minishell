@@ -28,7 +28,7 @@ t_cmd	*parse(char *line, t_shell *shell)
 		return (NULL);
 	debug_tokens(tokens, line);
 	if (!validation(tokens))
-		return (free_tokens(tokens), NULL);
+		return (shell->exit_status = 2, free_tokens(tokens), NULL);
 	if (!expansion(tokens, shell))
 		return (free_tokens(tokens), NULL);
 	cmds = build_cmds(tokens);
