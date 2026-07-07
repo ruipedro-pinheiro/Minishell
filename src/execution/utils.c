@@ -24,7 +24,6 @@ static char	*pather(t_shell *shell, char *cmd)
 	int		y;
 	char	*all;
 
-	
 	all = dotter(shell, cmd);
 	x = ft_strlen(all);
 	y = x;

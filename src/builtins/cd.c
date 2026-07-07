@@ -40,13 +40,12 @@ void	cder(t_shell *shell)
 	y = nbe("PWD", shell);
 	if (!shell->cmds->cmd_args[1])
 	{
-		// free(shell->env[x]);
+		free(shell->env[x]);
 		shell->env[x] = ft_strjoin("OLDPWD=", value_extraction("PWD", shell));
-		// free(shell->env[y]);
+		free(shell->env[y]);
 		shell->env[y] = ft_strjoin("PWD=", value_extraction("HOME", shell));
 		write(1, "ooo", 3);
 		return ;
 	}
-	// dotter(shell, shell->cmds->cmd_args[1]);
+	dotter(shell, shell->cmds->cmd_args[1]);
 }
-

@@ -14,30 +14,22 @@
 
 int	builtex(t_shell *shell)
 {
-	int	i;
+	char	*cmd;
 
-	i = -1;
-	while (shell->cmds->cmd_args[++i])
-	{
-		if (shell->cmds->cmd_args[i]
-			&& ft_strncmp(shell->cmds->cmd_args[i], "cd", 3) == 0)
-			return (cder(shell), shell->exit_status);
-		if (shell->cmds->cmd_args[i]
-			&& ft_strncmp(shell->cmds->cmd_args[i], "env", 4) == 0)
-			return (envinator(shell), shell->exit_status);
-		if (shell->cmds->cmd_args[i]
-			&& ft_strncmp(shell->cmds->cmd_args[i], "pwd", 4) == 0)
-			return (pwder(shell), shell->exit_status);
-		if (shell->cmds->cmd_args[i]
-			&& ft_strncmp(shell->cmds->cmd_args[i], "export", 7) == 0)
-			return (exporter(shell, i), shell->exit_status);
-		if (shell->cmds->cmd_args[i]
-			&& ft_strncmp(shell->cmds->cmd_args[i], "unset", 6) == 0)
-			return (unset(shell, i), shell->exit_status);
-	}
+	cmd = shell->cmds->cmd_args[0];
+	if (!cmd)
+		return (-1);
+	if (ft_strncmp(cmd, "cd", 3) == 0)
+		return (cder(shell), shell->exit_status);
+	if (ft_strncmp(cmd, "env", 4) == 0)
+		return (envinator(shell), shell->exit_status);
+	if (ft_strncmp(cmd, "pwd", 4) == 0)
+		return (pwder(shell), shell->exit_status);
+	if (ft_strncmp(cmd, "export", 7) == 0)
+		return (exporter(shell, 0), shell->exit_status);
+	if (ft_strncmp(cmd, "unset", 6) == 0)
+		return (unset(shell, 0), shell->exit_status);
+	if (ft_strncmp(cmd, "echo", 5) == 0)
+		return (echoer(shell, 0), shell->exit_status);
 	return (-1);
 }
-
-// -1 = no builtin executed = no need to use exit_status = we can execute pipex
-//
-// TODO: find a way to make work builtins after pipes (in subshells/childs)

@@ -187,4 +187,5 @@ void			sort_env(char **tmp_env);
 void			unset(t_shell *shell, int i);
 void			display_export(char **env);
 bool			is_name_valid(char *arg);
+void			echoer(t_shell *shell, int arg_indx);
 #endif

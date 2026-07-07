@@ -14,8 +14,8 @@
 
 static char	*shredder(char *a)
 {
-	int x;
-	char *b;
+	int		x;
+	char	*b;
 
 	x = ft_strlen(a);
 	while (a[x] != '/')
@@ -46,7 +46,7 @@ char	*dotter(t_shell *shell, char *b)
 {
 	char	**split;
 	char	*a;
-	int	x;
+	int		x;
 
 	a = asetter(shell, b[0]);
 	x = xsetter(b[0]);
@@ -61,13 +61,12 @@ char	*dotter(t_shell *shell, char *b)
 				a = shredder(a);
 			else
 			{
-				if (a[strlen(a) - 1] != '/')
+				if (a[ft_strlen(a) - 1] != '/')
 					a = ft_strjoin_char(a, '/');
 				a = ft_strjoin(a, split[x]);
 			}
 			x++;
 		}
 	}
-	printf("%s", a);
-	return (a);
+	return (printf("%s", a), a);
 }

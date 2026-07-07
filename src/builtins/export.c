@@ -102,7 +102,10 @@ static void	export_one(t_shell *shell, char *arg)
 	value = get_value(arg);
 	env_indx = find_env_var(shell->env, name);
 	if (env_indx != -1)
-		modify_env(shell, env_indx, value);
+	{
+		if (value)
+			modify_env(shell, env_indx, value);
+	}
 	else
 		add_to_env(shell, name, value);
 	free(name);
