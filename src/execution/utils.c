@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 12:00:38 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/06/15 18:05:32 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/08 19:09:44 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static char	*pather(t_shell *shell, char *cmd)
 	int		y;
 	char	*all;
 
-	
 	all = dotter(shell, cmd);
 	x = ft_strlen(all);
 	y = x;

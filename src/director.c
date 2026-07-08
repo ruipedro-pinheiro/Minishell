@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/18 18:49:57 by saouissi          #+#    #+#             */
-/*   Updated: 2026/06/18 19:33:06 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/08 19:09:17 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static char	*shredder(char *a)
 {
-	int x;
-	char *b;
+	int		x;
+	char	*b;
 
 	x = ft_strlen(a);
 	while (a[x] != '/')
@@ -46,7 +46,7 @@ char	*dotter(t_shell *shell, char *b)
 {
 	char	**split;
 	char	*a;
-	int	x;
+	int		x;
 
 	a = asetter(shell, b[0]);
 	x = xsetter(b[0]);

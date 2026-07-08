@@ -37,7 +37,8 @@ SRC = main.c \
 	  builtins/cd.c \
 	  builtins/builtex.c \
 	  builtins/unset.c \
-	  builtins/env_utils.c
+	  builtins/env_utils.c \
+	  builtins/echo.c
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
 ################################################################################

@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/03 17:41:17 by saouissi          #+#    #+#             */
-/*   Updated: 2026/07/03 17:42:29 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/08 19:36:12 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,10 @@ static void	export_one(t_shell *shell, char *arg)
 	value = get_value(arg);
 	env_indx = find_env_var(shell->env, name);
 	if (env_indx != -1)
-		modify_env(shell, env_indx, value);
+	{
+		if (value)
+			modify_env(shell, env_indx, value);
+	}
 	else
 		add_to_env(shell, name, value);
 	free(name);

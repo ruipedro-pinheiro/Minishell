@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/03 17:46:15 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/08 19:34:16 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,4 +187,5 @@ void			sort_env(char **tmp_env);
 void			unset(t_shell *shell, int i);
 void			display_export(char **env);
 bool			is_name_valid(char *arg);
+void			echoer(t_shell *shell, int arg_indx);
 #endif

@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 18:11:38 by saouissi          #+#    #+#             */
-/*   Updated: 2026/07/06 19:49:55 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/08 20:17:59 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,26 @@ static int	nbe(char *name, t_shell *shell)
 	return (0);
 }
 
-void	cder(t_shell *shell)
+static int	verif(t_shell *shell)
 {
-	int	x;
-	int	y;
+	if (access(dotter(shell, shell->cmds->cmd_args[1]), F_OK) != 0)
+	{
+		printf("cd: no such file or directory: %s\n", shell->cmds->cmd_args[1]);
+		return (1);
+	}
+	if (access(dotter(shell, shell->cmds->cmd_args[1]), X_OK) != 0)
+	{
+		printf("cd: permission denied: %s\n", shell->cmds->cmd_args[1]);
+		return (1);
+	}
+	return (0);
+}
+
+static void	earlier(int x, int y, t_shell *shell, int mode)
+{
 	char	*a;
 
-	x = nbe("OLDPWD", shell);
-	y = nbe("PWD", shell);
-	if (!shell->cmds->cmd_args[1])
+	if (mode == 1)
 	{
 		// free(shell->env[x]);
 		shell->env[x] = ft_strjoin("OLDPWD=", variable_expansion("PWD", shell));
@@ -47,24 +58,28 @@ void	cder(t_shell *shell)
 		shell->env[y] = ft_strjoin("PWD=", variable_expansion("HOME", shell));
 		return ;
 	}
-	if (shell->cmds->cmd_args[1] && shell->cmds->cmd_args[1][0] == '-')
+	if (mode == 2)
 	{
 		a = variable_expansion("OLDPWD", shell);
 		shell->env[x] = ft_strjoin("OLDPWD=", variable_expansion("PWD", shell));
 		shell->env[y] = ft_strjoin("PWD=", a);
 		return ;
 	}
-	if (access(dotter(shell, shell->cmds->cmd_args[1]), F_OK) != 0)
-	{
-		printf("cd: no such file or directory: %s\n", shell->cmds->cmd_args[1]);
+}
+
+void	cder(t_shell *shell)
+{
+	int		x;
+	int		y;
+
+	x = nbe("OLDPWD", shell);
+	y = nbe("PWD", shell);
+	if (!shell->cmds->cmd_args[1])
+		return (earlier(x, y, shell, 1));
+	if (shell->cmds->cmd_args[1] && shell->cmds->cmd_args[1][0] == '-')
+		return (earlier(x, y, shell, 2));
+	if (verif(shell) == 1)
 		return ;
-	}
-	if (access(dotter(shell, shell->cmds->cmd_args[1]), X_OK) != 0)
-	{
-		printf("cd: permission denied: %s\n", shell->cmds->cmd_args[1]);
-		return ;
-	}
 	shell->env[x] = ft_strjoin("OLDPWD=", variable_expansion("PWD", shell));
 	shell->env[y] = ft_strjoin("PWD=", dotter(shell, shell->cmds->cmd_args[1]));
 }
-
