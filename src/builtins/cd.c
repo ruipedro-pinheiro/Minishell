@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 18:11:38 by saouissi          #+#    #+#             */
-/*   Updated: 2026/07/08 20:17:59 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/11 18:43:00 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static void	earlier(int x, int y, t_shell *shell, int mode)
 		// free(shell->env[x]);
 		shell->env[x] = ft_strjoin("OLDPWD=", variable_expansion("PWD", shell));
 		// free(shell->env[y]);
+		chdir(variable_expansion("HOME", shell));
 		shell->env[y] = ft_strjoin("PWD=", variable_expansion("HOME", shell));
 		return ;
 	}
@@ -62,6 +63,7 @@ static void	earlier(int x, int y, t_shell *shell, int mode)
 	{
 		a = variable_expansion("OLDPWD", shell);
 		shell->env[x] = ft_strjoin("OLDPWD=", variable_expansion("PWD", shell));
+		chdir(a);
 		shell->env[y] = ft_strjoin("PWD=", a);
 		return ;
 	}
@@ -81,5 +83,6 @@ void	cder(t_shell *shell)
 	if (verif(shell) == 1)
 		return ;
 	shell->env[x] = ft_strjoin("OLDPWD=", variable_expansion("PWD", shell));
+	chdir(dotter(shell, shell->cmds->cmd_args[1]));
 	shell->env[y] = ft_strjoin("PWD=", dotter(shell, shell->cmds->cmd_args[1]));
 }

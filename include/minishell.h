@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/08 19:34:16 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/11 17:56:28 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ char			**enver(char **environ);
 void			envinator(t_shell *shell);
 void			pwder(t_shell *shell);
 int				builtex(t_shell *shell);
+int				bu2(t_shell *shell);
 void			cder(t_shell *shell);
 
 /**			---		DEBUG					*/

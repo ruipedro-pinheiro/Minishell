@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 12:00:38 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/08 19:09:44 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/11 18:33:33 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ void	exec_cmd(char **s_cmd, char **envp, t_shell *shell)
 	char	*path;
 	char	*error_msg;
 
+	if (bu2(shell) != -1)
+		return ;
 	if (!s_cmd || !s_cmd[0])
 	{
 		ft_putstr_fd(s_cmd[0], 2);
@@ -99,6 +101,7 @@ void	exec_cmd(char **s_cmd, char **envp, t_shell *shell)
 		free(error_msg);
 		exit(127);
 	}
+	printf("%s", envp[2]);
 	if (execve(path, s_cmd, envp) == -1)
 	{
 		perror(s_cmd[0]);
