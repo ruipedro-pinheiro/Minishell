@@ -12,17 +12,6 @@
 
 #include "../../include/minishell.h"
 
-/*
-	["hello"]			-> hello				OK
-	['hello']			-> hello				OK
-	['hello "there"']	-> hello "there"		OK
-	["hello 'there'"]	-> hello 'there'		OK
-	['hello $USER']		-> hello $USER			OK
-	["hello $USER"]		-> hello rpinheir		OK
-	["hello '$USER'"]	-> hello 'rpinheir'		OK
-	['hello "$USER"']	-> hello "$USER"		OK
-*/
-
 char	*variable_expansion(char *name, t_shell *shell)
 {
 	char	**env;
@@ -44,73 +33,71 @@ char	*variable_expansion(char *name, t_shell *shell)
 	return ("");
 }
 
-char	*exit_status_handler(int *i, char *new_value, t_shell *shell)
-{
-	char	*tmp;
-	char	*exit;
+/*
+	TODO: strip the $ in $"..." and $'...'
+			1. value_expand: if the char after $ is " or ', drop the $
+			2. keep the quoted text, quote removal does the rest
+*/
 
-	exit = ft_itoa(shell->exit_status);
-	tmp = ft_strjoin(new_value, exit);
-	free(new_value);
-	free(exit);
-	*i = *i + 1;
-	return (tmp);
+char	*value_expand(char *value, int *i, t_shell *shell)
+{
+	char	*name;
+	char	*val;
+	int		len;
+
+	if (value[*i + 1] == '?')
+		return (*i += 1, ft_itoa(shell->exit_status));
+	if (value[*i + 1] == '\'' || value[*i + 1] == '"')
+		(*i)++;
+	len = 0;
+	while (ft_isalnum(value[*i + 1 + len]) || value[*i + 1 + len] == '_')
+		len++;
+	if (len == 0)
+		return (ft_strdup("$"));
+	name = ft_substr(value, *i + 1, len);
+	val = ft_strdup(variable_expansion(name, shell));
+	free(name);
+	*i += len;
+	return (val);
 }
 
-char	*dollar_handler(char *new_value, char *value, int *i, t_shell *shell)
+char	*join_expand(char *env, char *value, bool is_dq, bool *is_var)
 {
-	char	*var_name;
-	char	*var_value;
-	int		length;
-	char	*tmp;
+	char	*res;
 
-	length = 0;
-	if (value[*i + 1] == '?')
-		return (exit_status_handler(i, new_value, shell));
-	while (ft_isalnum(value[*i + 1 + length]) || value[*i + 1 + length] == '_')
-		length++;
-	if (length == 0)
-	{
-		tmp = ft_strjoin(new_value, "$");
-		free(new_value);
-		new_value = tmp;
-		return (new_value);
-	}
-	var_name = ft_substr(value, *i + 1, length);
-	var_value = variable_expansion(var_name, shell);
-	tmp = ft_strjoin(new_value, var_value);
-	free(new_value);
-	free(var_name);
-	new_value = tmp;
-	return (*i = *i + length, new_value);
+	*is_var = true;
+	if (!is_dq)
+		mark_range(value);
+	res = ft_strjoin(env, value);
+	free(env);
+	free(value);
+	return (res);
 }
 
 char	*token_expand(char *value, t_shell *shell, bool	*is_var)
 {
-	char	*new_value;
-	bool	is_dquote;
-	bool	is_squote;
+	char	*env;
+	bool	is_dq;
+	bool	is_sq;
 	int		i;
 
-	new_value = ft_strdup("");
-	is_squote = false;
-	is_dquote = false;
+	env = ft_strdup("");
+	is_sq = false;
+	is_dq = false;
 	i = -1;
 	while (value[++i])
 	{
-		if (value[i] == '\'' && !is_dquote)
-			is_squote = !is_squote;
-		else if (value[i] == '"' && !is_squote)
-			is_dquote = !is_dquote;
-		else if (value[i] == '$' && !is_squote)
-		{
-			*is_var = true;
-			new_value = dollar_handler(new_value, value, &i, shell);
-		}
+		if (value[i] == '\'' && !is_dq)
+			is_sq = !is_sq;
+		else if (value[i] == '"' && !is_sq)
+			is_dq = !is_dq;
+		else if (value[i] == '$' && !is_sq)
+			env = join_expand(env, value_expand(value, &i, shell),
+					is_dq, is_var);
 		else
-			new_value = ft_strjoin_char(new_value, value[i]);
+			env = ft_strjoin_char(env, value[i]);
 	}
-	return (new_value);
+	return (env);
 }
 
 bool	expansion(t_token *head, t_shell *shell)

@@ -1,6 +1,9 @@
-*This project has been created as part of the 42 curriculum by Saouissi, Rpinheir*
+*This project has been created as part of the 42 curriculum by saouissi, rpinheir*
 
 # Description
+
+![Minishell project](https://github.com/ruipedro-pinheiro/Minishell/blob/Pedro/media/Minishell.png?raw=true "Title")
+
 **Minishell** is a 42 group project where the main goal is to build a simplified shell, in comparison with bash.
 In global we must execute programs from PATH variable, code ourselves built-ins programs like cd, echo or env.
 Within the scope, we manage pipes, redirections, Posix signals like SIGINT (CTRL+C), build history based on recent inputs.
@@ -49,6 +52,7 @@ here_doc EOF "cat" "wc -l" outfile
 ### Parsing/Lexer Theory
 - [Intro to Parsing & Lexing](https://dev.to/elipie/intro-to-parsing-lexing-3g01) -- basics for beginners
 - [Shell parsing tips](https://shell.multun.net/parser.html) -- shell parser in detail
+- [Bash guide on expansion/substituition](https://thealternative.ch/en/bash)
 
 ### Videos
 - [Bash Shell Operation In Depth](https://youtube.com/watch?v=GGNzB_o4OiM) -- how bash processes a command

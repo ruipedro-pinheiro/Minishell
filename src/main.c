@@ -6,30 +6,11 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:33 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/14 18:13:37 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/14 18:33:35 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int	main(int ac, char **av, char **environ)
-{
-	t_shell	shell;
-
-	if (ac > 1 && av[0])
-		return (0);
-	shell.historian = ft_strdup("");
-	historer(&shell);
-	shell.env = enver(environ);
-	shell.exit_status = 0;
-	shell.cmds = NULL;
-	print_banner();
-	set_prompt(&shell);
-	if (shell.cmds)
-		free_cmds(shell.cmds);
-	free(shell.historian);
-	return (0);
-}
 
 char	**enver(char **environ)
 {
@@ -51,4 +32,24 @@ char	**enver(char **environ)
 	}
 	env[i] = NULL;
 	return (env);
+}
+
+int	main(int ac, char **av, char **environ)
+{
+	t_shell	shell;
+
+	if (ac > 1 && av[0])
+		return (1);
+	shell.historian = ft_strdup("");
+	historer(&shell);
+	shell.env = enver(environ);
+	shell.exit_status = 0;
+	shell.cmds = NULL;
+	print_banner();
+	set_prompt(&shell);
+	ft_strfree(shell.env);
+	free(shell.historian);
+	if (shell.cmds)
+		free_cmds(shell.cmds);
+	return (0);
 }

@@ -12,6 +12,7 @@ ASAN_FLAGS = -fsanitize=address,undefined -fno-omit-frame-pointer
 SRC = main.c \
       historer.c \
 	  shell.c \
+	  shell_display.c \
 	  signals.c \
 	  director.c \
 	  execution/closer.c \
@@ -47,7 +48,7 @@ OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 #                                PROGRESS BAR                                  #
 ################################################################################
 
-CNT = /tmp/.mini_cnt
+CNT = ~/.tmp/.mini_cnt
 RESET := $(shell echo 0 > $(CNT))
 C = \033[1;36m
 Y = \033[1;33m
@@ -73,7 +74,7 @@ all: $(NAME)
 	@printf " $(C)✅ [$(NAME)] $(B)Build complete$(X)\n"
 
 $(NAME): $(OBJ) $(LIBFT)
-	@$(CC) $(CFLAGS) -L$(LIBFT_DIR) $(OBJ) $(LIBFT) -lreadline -lncurses -o $(NAME)
+	@$(CC) $(CFLAGS) -L$(LIBFT_DIR) $(OBJ) $(LIBFT) -lreadline -ltermcap -lncurses -o $(NAME)
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)/execution $(OBJDIR)/parsing $(OBJDIR)/builtins

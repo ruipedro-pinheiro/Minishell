@@ -6,13 +6,13 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/11 12:55:50 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/14 18:12:35 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/14 18:29:43 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-
+// Trying to stop execution after a builtin being executed
 void	executor(t_shell *shell)
 {
 	int	status;

@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:33 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/06 19:07:25 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/14 18:34:04 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	scribe(t_shell *shell, char *prompt)
 {
 	char	*a;
 
+	add_history(prompt);
 	a = ft_strjoin(shell->historian, prompt);
 	free(shell->historian);
 	shell->historian = a;

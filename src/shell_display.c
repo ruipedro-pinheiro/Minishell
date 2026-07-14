@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_display.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:27:24 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/14 18:10:22 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/14 17:28:54 by rpinheir         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 

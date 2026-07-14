@@ -12,11 +12,6 @@
 
 #include "../../include/minishell.h"
 
-// check if redir have:
-// 1. redir type = < or > ...
-// 2. file or fd = infile or outfile
-// valid: >> file or << file or < file or > file
-// invalid: redir without word or redir malformed like <> >< >|
 bool	redir_validation(t_token *token)
 {
 	if (token->type == TOKEN_REDIR_IN || token->type == TOKEN_REDIR_OUT
@@ -28,12 +23,12 @@ bool	redir_validation(t_token *token)
 			ft_putstr_fd("minishell: syntax error near unexpected token ", 2);
 			if ((token->next && token->next->value[0]))
 			{
-				ft_putstr_fd("'", 2);
+				ft_putstr_fd("`", 2);
 				ft_putstr_fd(token->next->value, 2);
 				ft_putendl_fd("'", 2);
 			}
 			else
-				ft_putendl_fd("'newline'", 2);
+				ft_putendl_fd("`newline'", 2);
 			return (false);
 		}
 	}
@@ -59,7 +54,7 @@ bool	pipe_validation(t_token *token)
 	if (token->next->type == TOKEN_PIPE)
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token ", 2);
-		ft_putstr_fd("'", 2);
+		ft_putstr_fd("`", 2);
 		ft_putstr_fd(token->next->value, 2);
 		ft_putendl_fd("'", 2);
 		return (false);
