@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 18:31:38 by saouissi          #+#    #+#             */
-/*   Updated: 2026/07/11 18:10:43 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/14 18:22:35 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,9 @@ int	builtex(t_shell *shell)
 		return (-1);
 	if (ft_strncmp(cmd, "cd", 3) == 0)
 		return (cder(shell), shell->exit_status);
-	// if (ft_strncmp(cmd, "env", 4) == 0)
-	// 	return (envinator(shell), shell->exit_status);
-	// if (ft_strncmp(cmd, "pwd", 4) == 0)
-	// 	return (pwder(shell), shell->exit_status);
 	if (ft_strncmp(cmd, "export", 7) == 0)
 		return (exporter(shell, 0), shell->exit_status);
 	if (ft_strncmp(cmd, "unset", 6) == 0)
 		return (unset(shell, 0), shell->exit_status);
-	// if (ft_strncmp(cmd, "echo", 5) == 0)
-	// 	return (echoer(shell, 0), shell->exit_status);
 	return (-1);
 }
