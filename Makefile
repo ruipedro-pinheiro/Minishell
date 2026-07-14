@@ -17,6 +17,7 @@ SRC = main.c \
 	  director.c \
 	  execution/closer.c \
       execution/utils.c \
+	  execution/pexiter.c \
 	  execution/pipex.c \
 	  execution/multi_pipe.c \
 	  parsing/expansion.c \

@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/14 18:38:04 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/14 19:07:16 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ typedef struct s_shell
 }			t_shell;
 
 /**			---			EXEC	---			 */
+void			pexiter(char **s_cmd, char *error_msg);
 char			*dotter(t_shell *shell, char *b);
 void			singlecmd(t_shell *shell);
 void			here_doc_read(t_shell *shell, int *wread);
