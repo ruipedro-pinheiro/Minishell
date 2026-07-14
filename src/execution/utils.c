@@ -83,15 +83,13 @@ void	exec_cmd(char **s_cmd, char **envp, t_shell *shell)
 {
 	char	*path;
 	char	*error_msg;
+	int		bu2_res;
 
-	if (bu2(shell) != -1)
-		return ;
+	bu2_res = bu2(shell);
+	if (bu2_res != -1)
+		exit(bu2_res);
 	if (!s_cmd || !s_cmd[0])
-	{
-		ft_putstr_fd(s_cmd[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
 		exit(127);
-	}
 	path = get_path(s_cmd[0], shell);
 	if (!path)
 	{
