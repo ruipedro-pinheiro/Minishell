@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/18 18:49:57 by saouissi          #+#    #+#             */
-/*   Updated: 2026/06/18 19:26:03 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/08 19:09:17 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,12 @@ static char	*shredder(char *a)
 	char	*b;
 
 	x = ft_strlen(a);
-	while (a[x] != '/')
+	while (x > 0 && a[x] != '/')
 		x--;
+	if (x == 0)
+		x = 1;
 	b = ft_substr(a, 0, x);
+	free(a);
 	return (b);
 }
 
@@ -29,9 +32,9 @@ static char	*asetter(t_shell *shell, char b)
 	if (b == '/')
 		return (ft_strdup("/"));
 	else if (b == '~')
-		return (ft_strdup(value_extraction("HOME", shell)));
+		return (ft_strdup(variable_expansion("HOME", shell)));
 	else
-		return (ft_strdup(value_extraction("PWD", shell)));
+		return (ft_strdup(variable_expansion("PWD", shell)));
 }
 
 static int	xsetter(char b)
@@ -61,12 +64,12 @@ char	*dotter(t_shell *shell, char *b)
 				a = shredder(a);
 			else
 			{
-				if (a[ft_strlen(a) - 1] != '/')
+				if (a[strlen(a) - 1] != '/')
 					a = ft_strjoin_char(a, '/');
-				a = ft_strjoin(a, split[x]);
+				a = ft_strapnd(a, split[x]);
 			}
 			x++;
 		}
 	}
-	return (printf("%s", a), a);
+	return (ft_strfree(split), a);
 }
