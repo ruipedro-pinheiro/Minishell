@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 12:00:38 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/11 18:33:33 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/14 19:02:06 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,8 @@ void	exec_cmd(char **s_cmd, char **envp, t_shell *shell)
 	{
 		error_msg = ft_strjoin(*s_cmd, ": command not found\n");
 		ft_putstr_fd(error_msg, 2);
-		ft_strfree(s_cmd);
-		free(error_msg);
-		exit(127);
+		pexiter(s_cmd, error_msg);
 	}
-	printf("%s", envp[2]);
 	if (execve(path, s_cmd, envp) == -1)
 	{
 		perror(s_cmd[0]);
