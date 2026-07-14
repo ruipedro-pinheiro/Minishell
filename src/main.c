@@ -42,6 +42,7 @@ int	main(int ac, char **av, char **environ)
 		return (1);
 	shell.historian = ft_strdup("");
 	historer(&shell);
+	shell.print_newline = true;
 	shell.env = enver(environ);
 	shell.exit_status = 0;
 	shell.cmds = NULL;

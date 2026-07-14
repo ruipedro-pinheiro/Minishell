@@ -30,15 +30,14 @@ bool	is_n_option(char *arg)
 void	echoer(t_shell *shell, int arg_indx)
 {
 	char	*arg;
-	bool	print_newline;
 
-	print_newline = true;
+	shell->print_newline = true;
 	arg_indx++;
 	while (shell->cmds->cmd_args[arg_indx])
 	{
 		arg = shell->cmds->cmd_args[arg_indx];
 		if (is_n_option(arg))
-			print_newline = false;
+			shell->print_newline = false;
 		else
 			break ;
 		arg_indx++;
@@ -50,6 +49,6 @@ void	echoer(t_shell *shell, int arg_indx)
 			ft_putstr_fd(" ", 1);
 		arg_indx++;
 	}
-	if (print_newline)
+	if (shell->print_newline)
 		ft_putendl_fd("", 1);
 }

@@ -117,6 +117,7 @@ typedef struct s_shell
 	int		cmd_count;
 	pid_t	*pids;
 	t_cmd	*cmds;
+	bool	print_newline;
 	char	**env;
 	int		exit_status;
 	char	*historian;
