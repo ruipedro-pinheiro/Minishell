@@ -60,7 +60,7 @@ char	*get_path(char *cmd, t_shell *shell)
 	if (literaler(cmd) == 1)
 		return (pather(shell, cmd));
 	i = -1;
-	paths = ft_split(value_extraction("PATH", shell), ':');
+	paths = ft_split(variable_expansion("PATH", shell), ':');
 	if (!paths)
 		exit(0);
 	while (paths[++i])

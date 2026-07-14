@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-char	*value_extraction(char *name, t_shell *shell)
+char	*variable_expansion(char *name, t_shell *shell)
 {
 	char	**env;
 	int		i;
@@ -55,7 +55,7 @@ char	*value_expand(char *value, int *i, t_shell *shell)
 	if (len == 0)
 		return (ft_strdup("$"));
 	name = ft_substr(value, *i + 1, len);
-	val = ft_strdup(value_extraction(name, shell));
+	val = ft_strdup(variable_expansion(name, shell));
 	free(name);
 	*i += len;
 	return (val);

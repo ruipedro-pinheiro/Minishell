@@ -128,7 +128,7 @@ void			historer(t_shell *shell);
 void			exit_minishell(t_shell *shell);
 void			destroyer(t_shell *shell);
 
-char			*value_extraction(char *name, t_shell *shell);
+char			*variable_expansion(char *name, t_shell *shell);
 int				count_fields(char *value);
 void			mark_range(char *s);
 void			exporter(t_shell *shell, int i);

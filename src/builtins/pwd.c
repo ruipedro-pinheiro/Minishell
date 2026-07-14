@@ -14,6 +14,6 @@
 
 void	pwder(t_shell *shell)
 {
-	printf("%s\n", value_extraction("PWD", shell));
+	printf("%s\n", variable_expansion("PWD", shell));
 	exit(0);
 }
