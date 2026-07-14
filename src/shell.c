@@ -6,17 +6,13 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/11 12:55:50 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/03 17:33:44 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/14 18:12:35 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-/*
 
-*/
 
-// TODO: dispatch builtin parent/child before fork
-// (cd/export/unset can't modify parent state inside fork)
 void	executor(t_shell *shell)
 {
 	int	status;
@@ -48,7 +44,7 @@ void	set_prompt(t_shell *shell)
 	set_signal_mode(INTERACTIVE);
 	while (true)
 	{
-		prompt = readline("$: ");
+		prompt = readline("\n" SKY "╭─Minishell──\n╰─❯ " RESET "");
 		if (!prompt)
 			break ;
 		else if (prompt[0])
