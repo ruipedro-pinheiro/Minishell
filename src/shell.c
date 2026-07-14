@@ -44,7 +44,7 @@ void	set_prompt(t_shell *shell)
 	set_signal_mode(INTERACTIVE);
 	while (true)
 	{
-		prompt = readline("$: ");
+		prompt = readline("\n" SKY "╭─Minishell──\n╰─❯ " RESET "");
 		if (!prompt)
 			break ;
 		else if (prompt[0])

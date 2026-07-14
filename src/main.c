@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:33 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/06/10 19:01:18 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/14 17:29:36 by rpinheir         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	main(int ac, char **av, char **environ)
 	shell.env = enver(environ);
 	shell.exit_status = 0;
 	shell.cmds = NULL;
+	print_banner();
 	set_prompt(&shell);
 	ft_strfree(shell.env);
 	free(shell.historian);
