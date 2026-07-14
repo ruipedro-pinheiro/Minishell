@@ -6,28 +6,27 @@
 /*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/11 12:55:50 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/05/18 19:10:48 by rpinheir         ###   ########.ch       */
+/*   Updated: 2026/05/20 18:11:16 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-/*
 
-*/
-
-// TODO: dispatch builtin parent/child before fork
-// (cd/export/unset can't modify parent state inside fork)
+// Trying to stop execution after a builtin being executed
 void	executor(t_shell *shell)
 {
 	int	status;
 	int	pid;
 
 	set_signal_mode(EXECUTION);
+	if (builtex(shell) != -1)
+		return ;
 	pid = fork();
 	if (pid == 0)
 	{
 		set_signal_mode(FORKED);
 		pipex(shell);
+		destroyer(shell);
 		exit(shell->exit_status);
 	}
 	waitpid(pid, &status, 0);
@@ -59,6 +58,7 @@ void	set_prompt(t_shell *shell)
 				free(prompt);
 				continue ;
 			}
+			debug_cmds(shell->cmds);
 			exit_minishell(shell);
 			executor(shell);
 		}

@@ -13,28 +13,39 @@ SRC = main.c \
       historer.c \
 	  shell.c \
 	  signals.c \
+	  director.c \
 	  execution/closer.c \
       execution/utils.c \
 	  execution/pipex.c \
 	  execution/multi_pipe.c \
+	  parsing/expansion.c \
 	  parsing/parser.c \
+	  parsing/debug_cmd.c \
+	  parsing/debug_redir.c \
 	  parsing/lexer.c \
 	  parsing/tokens.c \
 	  parsing/redirections.c \
 	  parsing/validation.c \
-	  parsing/expansion.c \
 	  parsing/build_cmds.c \
 	  parsing/word_split.c \
 	  execution/lib.c \
-	  builtins/exit.c
-
+	  builtins/export.c \
+	  builtins/export_utils.c \
+	  builtins/exit.c \
+	  builtins/env.c \
+	  builtins/pwd.c \
+	  builtins/cd.c \
+	  builtins/builtex.c \
+	  builtins/unset.c \
+	  builtins/env_utils.c \
+	  builtins/echo.c
 OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
 ################################################################################
 #                                PROGRESS BAR                                  #
 ################################################################################
 
-CNT = /tmp/.mini_cnt
+CNT = ~/.tmp/.mini_cnt
 RESET := $(shell echo 0 > $(CNT))
 C = \033[1;36m
 Y = \033[1;33m
@@ -55,10 +66,9 @@ endef
 #                                   RULES                                      #
 ################################################################################
 
-all: $(NAME) libft/
+all: $(NAME)
 	@if [ $$(cat $(CNT)) -gt 0 ]; then printf "\n"; fi
 	@printf " $(C)✅ [$(NAME)] $(B)Build complete$(X)\n"
-	@$(MAKE) --silent -C libft/ all
 
 $(NAME): $(OBJ) $(LIBFT)
 	@$(CC) $(CFLAGS) -L$(LIBFT_DIR) $(OBJ) $(LIBFT) -lreadline -lncurses -o $(NAME)

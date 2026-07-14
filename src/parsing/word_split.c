@@ -27,6 +27,8 @@ int	count_fields(char *value)
 	char	**fields;
 	int		k;
 
+	if (value[0] == '\0')
+		return (1);
 	fields = ft_split(value, WS_SEP);
 	if (!fields)
 		return (0);
@@ -42,6 +44,12 @@ void	fill_fields(char *value, char **cmd_args, int *i)
 	int		k;
 
 	k = -1;
+	if (value[0] == '\0')
+	{
+		cmd_args[(*i)] = ft_strdup("");
+		(*i)++;
+		return ;
+	}
 	fields = ft_split(value, WS_SEP);
 	if (!fields)
 		return ;

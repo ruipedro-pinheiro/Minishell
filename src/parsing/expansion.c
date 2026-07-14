@@ -12,26 +12,32 @@
 
 #include "../../include/minishell.h"
 
-char	*value_extraction(char *name, t_shell *shell)
+char	*variable_expansion(char *name, t_shell *shell)
 {
-	char	**new_value;
+	char	**env;
 	int		i;
 
 	i = -1;
-	new_value = shell->env;
-	while (new_value[++i])
+	env = shell->env;
+	while (env[++i])
 	{
-		if (ft_strncmp(new_value[i], name, ft_strlen(name)) == 0)
+		if (ft_strncmp(env[i], name, ft_strlen(name)) == 0)
 		{
-			if (new_value[i][ft_strlen(name)] == '=')
+			if (env[i][ft_strlen(name)] == '=')
 			{
-				name = &new_value[i][ft_strlen(name) + 1];
+				name = &env[i][ft_strlen(name) + 1];
 				return (name);
 			}
 		}
 	}
 	return ("");
 }
+
+/*
+	TODO: strip the $ in $"..." and $'...'
+			1. value_expand: if the char after $ is " or ', drop the $
+			2. keep the quoted text, quote removal does the rest
+*/
 
 char	*value_expand(char *value, int *i, t_shell *shell)
 {
@@ -41,39 +47,41 @@ char	*value_expand(char *value, int *i, t_shell *shell)
 
 	if (value[*i + 1] == '?')
 		return (*i += 1, ft_itoa(shell->exit_status));
+	if (value[*i + 1] == '\'' || value[*i + 1] == '"')
+		(*i)++;
 	len = 0;
 	while (ft_isalnum(value[*i + 1 + len]) || value[*i + 1 + len] == '_')
 		len++;
 	if (len == 0)
 		return (ft_strdup("$"));
 	name = ft_substr(value, *i + 1, len);
-	val = ft_strdup(value_extraction(name, shell));
+	val = ft_strdup(variable_expansion(name, shell));
 	free(name);
 	*i += len;
 	return (val);
 }
 
-char	*join_expand(char *new_value, char *value, bool is_dq, bool *is_var)
+char	*join_expand(char *env, char *value, bool is_dq, bool *is_var)
 {
 	char	*res;
 
 	*is_var = true;
 	if (!is_dq)
 		mark_range(value);
-	res = ft_strjoin(new_value, value);
-	free(new_value);
+	res = ft_strjoin(env, value);
+	free(env);
 	free(value);
 	return (res);
 }
 
 char	*token_expand(char *value, t_shell *shell, bool	*is_var)
 {
-	char	*new_value;
+	char	*env;
 	bool	is_dq;
 	bool	is_sq;
 	int		i;
 
-	new_value = ft_strdup("");
+	env = ft_strdup("");
 	is_sq = false;
 	is_dq = false;
 	i = -1;
@@ -84,12 +92,12 @@ char	*token_expand(char *value, t_shell *shell, bool	*is_var)
 		else if (value[i] == '"' && !is_sq)
 			is_dq = !is_dq;
 		else if (value[i] == '$' && !is_sq)
-			new_value = join_expand(new_value, value_expand(value, &i, shell),
+			env = join_expand(env, value_expand(value, &i, shell),
 					is_dq, is_var);
 		else
-			new_value = ft_strjoin_char(new_value, value[i]);
+			env = ft_strjoin_char(env, value[i]);
 	}
-	return (new_value);
+	return (env);
 }
 
 bool	expansion(t_token *head, t_shell *shell)
