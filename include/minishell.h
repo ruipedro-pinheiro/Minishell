@@ -26,6 +26,13 @@
 # include <stdbool.h>
 # include <sys/wait.h>
 # include <signal.h>
+# include <term.h>
+
+# define MAUVE "\001\033[38;2;203;166;247m\002"
+# define PEACH "\001\033[38;2;250;179;135m\002"
+# define GREY  "\001\033[38;2;166;173;200m\002"
+# define SKY   "\001\033[38;2;180;195;254m\002"
+# define RESET "\001\033[0m\002"
 
 # define MAUVE "\001\033[38;2;203;166;247m\002"
 # define PEACH "\001\033[38;2;250;179;135m\002"
@@ -196,4 +203,6 @@ void			unset(t_shell *shell, int i);
 void			display_export(char **env);
 bool			is_name_valid(char *arg);
 void			echoer(t_shell *shell, int arg_indx);
+
+void			print_banner(void);
 #endif

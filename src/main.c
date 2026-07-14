@@ -45,6 +45,7 @@ int	main(int ac, char **av, char **environ)
 	shell.env = enver(environ);
 	shell.exit_status = 0;
 	shell.cmds = NULL;
+	print_banner();
 	set_prompt(&shell);
 	ft_strfree(shell.env);
 	free(shell.historian);
