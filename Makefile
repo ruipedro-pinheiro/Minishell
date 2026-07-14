@@ -45,7 +45,7 @@ OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 #                                PROGRESS BAR                                  #
 ################################################################################
 
-CNT = /tmp/.mini_cnt
+CNT = ~/.tmp/.mini_cnt
 RESET := $(shell echo 0 > $(CNT))
 C = \033[1;36m
 Y = \033[1;33m
