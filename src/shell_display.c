@@ -31,7 +31,6 @@ static void	clean_screen(void)
 		printf("\e[1;1H\e[2J");
 		return ;
 	}
-	ft_putendl_fd("Found term", 1);
 	area = capbuf;
 	cl = tgetstr("cl", &area);
 	if (cl)
