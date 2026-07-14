@@ -6,10 +6,11 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 14:18:31 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/14 18:32:16 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/14 18:36:42 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../include/minishell.h"
 
 bool	is_name_valid(char *arg)
 {

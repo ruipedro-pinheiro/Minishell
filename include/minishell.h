@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/14 18:29:28 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/14 18:38:04 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@
 # include <stdbool.h>
 # include <sys/wait.h>
 # include <signal.h>
+
+# define MAUVE "\001\033[38;2;203;166;247m\002"
+# define PEACH "\001\033[38;2;250;179;135m\002"
+# define GREY  "\001\033[38;2;166;173;200m\002"
+# define SKY   "\001\033[38;2;180;195;254m\002"
+# define RESET "\001\033[0m\002"
 
 /*  TOKEN_TYPES
 
