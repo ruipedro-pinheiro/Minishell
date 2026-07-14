@@ -20,12 +20,15 @@ void	executor(t_shell *shell)
 
 	set_signal_mode(EXECUTION);
 	if (builtex(shell) != -1)
+	{
+		set_signal_mode(INTERACTIVE);
 		return ;
+	}
 	pid = fork();
 	if (pid == 0)
 	{
 		set_signal_mode(FORKED);
-		pipex(shell);
+		shell->exit_status = pipex(shell);
 		destroyer(shell);
 		exit(shell->exit_status);
 	}
