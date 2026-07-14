@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 17:38:48 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/04/17 16:47:11 by rpinheir         ###   ########.ch       */
+/*   Updated: 2026/07/03 17:48:41 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

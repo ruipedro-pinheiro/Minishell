@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   word_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 12:00:00 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/05/28 12:00:00 by rpinheir         ###   ########.ch       */
+/*   Updated: 2026/07/14 18:31:50 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

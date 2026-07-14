@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/03 18:40:55 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/06/29 11:31:07 by pedro            ###   ########.ch       */
+/*   Updated: 2026/07/14 18:32:08 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../include/minishell.h"
+
 
 /*
    TODO: Sort alphabetically all the env to display correctly

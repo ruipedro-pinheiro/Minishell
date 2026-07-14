@@ -36,6 +36,7 @@ SRC = main.c \
 	  builtins/pwd.c \
 	  builtins/cd.c \
 	  builtins/builtex.c \
+	  builtins/bu2.c \
 	  builtins/unset.c \
 	  builtins/env_utils.c \
 	  builtins/echo.c

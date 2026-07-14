@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/10 14:18:31 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/06/29 11:47:22 by pedro            ###   ########.ch       */
+/*   Updated: 2026/07/14 18:32:16 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../include/minishell.h"
+
 
 bool	is_name_valid(char *arg)
 {

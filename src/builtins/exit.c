@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 13:43:33 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/06/03 19:28:32 by rpinheir         ###   ########.ch       */
+/*   Updated: 2026/07/14 18:32:18 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

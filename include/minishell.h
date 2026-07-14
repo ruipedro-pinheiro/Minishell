@@ -6,13 +6,14 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/06/29 11:16:35 by pedro            ###   ########.ch       */
+/*   Updated: 2026/07/14 18:29:28 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # define EXIT_SIGNAL_BASE 128
+# define WS_SEP '\001'
 # define WS_SEP '\001'
 # include <stdio.h>
 # include <readline/readline.h>
@@ -175,6 +176,7 @@ char			**enver(char **environ);
 void			envinator(t_shell *shell);
 void			pwder(t_shell *shell);
 int				builtex(t_shell *shell);
+int				bu2(t_shell *shell);
 void			cder(t_shell *shell);
 
 /**			---		DEBUG					*/
