@@ -83,6 +83,17 @@ static void	earlier(int x, int y, t_shell *shell, int mode)
 	}
 }
 
+static bool	too_many_args(t_shell *shell)
+{
+	if (shell->cmds->cmd_args[2])
+	{
+		ft_putendl_fd("minishell: cd: too many arguments", 2);
+		shell->exit_status = 2;
+		return (true);
+	}
+	return (false);
+}
+
 void	cder(t_shell *shell)
 {
 	int		x;
@@ -92,7 +103,7 @@ void	cder(t_shell *shell)
 
 	x = nbe("OLDPWD", shell);
 	y = nbe("PWD", shell);
-	if (x == -1 || y == -1)
+	if (too_many_args(shell) || x == -1 || y == -1)
 		return ;
 	shell->exit_status = 0;
 	if (!shell->cmds->cmd_args[1])
