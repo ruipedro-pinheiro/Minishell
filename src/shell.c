@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/11 12:55:50 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/14 18:29:43 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/15 15:09:05 by pedro            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	set_prompt(t_shell *shell)
 	set_signal_mode(INTERACTIVE);
 	while (true)
 	{
-		prompt = readline("" SKY "╭─Minishell──\n╰─❯ " RESET "");
+		prompt = prompt_readline(shell);
 		if (!prompt)
 			break ;
 		else if (prompt[0])

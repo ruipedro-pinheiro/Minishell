@@ -47,6 +47,8 @@ int	wait_children(t_shell *shell, int count)
 		waitpid(shell->pids[i], &status, 0);
 	free(shell->pids);
 	waitpid(-1, NULL, 0);
+	if (WIFSIGNALED(status))
+		return (EXIT_SIGNAL_BASE + WTERMSIG(status));
 	return (WEXITSTATUS(status));
 }
 

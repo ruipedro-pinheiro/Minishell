@@ -18,21 +18,11 @@ int	error_handler(char *msg)
 	exit(errno);
 }
 
-static char	*pather(t_shell *shell, char *cmd)
+static char	*pather(char *cmd)
 {
-	int		x;
-	int		y;
 	char	*all;
 
-	all = dotter(shell, cmd);
-	x = ft_strlen(all);
-	y = x;
-	free(cmd);
-	while (all[y] != '/')
-		y--;
-	cmd = malloc(sizeof(char) * (x - y));
-	cmd = ft_strrchr(all, '/');
-	cmd = ft_strtrim(cmd, "/");
+	all = ft_strdup(cmd);
 	return (all);
 }
 
@@ -58,7 +48,7 @@ char	*get_path(char *cmd, t_shell *shell)
 	int		i;
 
 	if (literaler(cmd) == 1)
-		return (pather(shell, cmd));
+		return (pather(cmd));
 	i = -1;
 	paths = ft_split(variable_expansion("PATH", shell), ':');
 	if (!paths)

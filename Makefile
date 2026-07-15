@@ -13,6 +13,7 @@ SRC = main.c \
       historer.c \
 	  shell.c \
 	  shell_display.c \
+	  prompt.c \
 	  signals.c \
 	  director.c \
 	  execution/closer.c \
