@@ -19,7 +19,7 @@ char	**enver(char **environ)
 
 	i = -1;
 	while (environ[++i])
-		i++;
+		;
 	env = malloc(sizeof(char *) * (i + 1));
 	if (!env)
 		return (NULL);
