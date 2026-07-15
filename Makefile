@@ -21,6 +21,7 @@ SRC = main.c \
 	  execution/pexiter.c \
 	  execution/pipex.c \
 	  execution/multi_pipe.c \
+	  execution/redir_exec.c \
 	  parsing/expansion.c \
 	  parsing/parser.c \
 	  parsing/debug_cmd.c \

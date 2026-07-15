@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/15 18:02:42 by pedro            ###   ########.ch       */
+/*   Updated: 2026/07/15 19:39:37 by pedro            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ void			historer(t_shell *shell);
 void			exit_minishell(t_shell *shell);
 void			destroyer(t_shell *shell);
 
+int				apply_redirs(t_shell *shell);
 char			*variable_expansion(char *name, t_shell *shell);
 int				count_fields(char *value);
 void			mark_range(char *s);
