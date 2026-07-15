@@ -97,6 +97,7 @@ static void	export_one(t_shell *shell, char *arg)
 		ft_putstr_fd("minishell: export: `", 2);
 		ft_putstr_fd(arg, 2);
 		ft_putendl_fd("': not a valid identifier", 2);
+		shell->exit_status = 1;
 		return ;
 	}
 	name = get_name(arg);
@@ -130,6 +131,7 @@ void	exporter(t_shell *shell, int arg_indx)
 {
 	char	*arg;
 
+	shell->exit_status = 0;
 	arg_indx++;
 	if (!shell->cmds->cmd_args[arg_indx])
 	{
