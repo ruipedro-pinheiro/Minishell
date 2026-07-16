@@ -14,13 +14,24 @@
 
 int	init_pipes(t_shell *shell)
 {
+	t_cmd	*ptr;
+	t_redir	*redir;
+
+	ptr = shell->cmds;
 	shell->pids = malloc(shell->cmd_count * sizeof(pid_t));
 	if (!shell->pids)
 		exit(1);
-	if (shell->cmds->redirections)
+	while (ptr)
 	{
-		if (shell->cmds->redirections->type == REDIR_HEREDOC)
-			return (here_doc_input(shell));
+		redir = ptr->redirections;
+		while (redir)
+		{
+			if (redir->type == REDIR_HEREDOC)
+				redir->heredoc_fd
+					= here_doc_input(shell, redir);
+			redir = redir->next;
+		}
+		ptr = ptr->next;
 	}
 	return (-1);
 }
@@ -46,30 +57,33 @@ int	wait_children(t_shell *shell, int count)
 	while (++i < count)
 		waitpid(shell->pids[i], &status, 0);
 	free(shell->pids);
+	shell->pids = NULL;
 	waitpid(-1, NULL, 0);
 	if (WIFSIGNALED(status))
 		return (EXIT_SIGNAL_BASE + WTERMSIG(status));
 	return (WEXITSTATUS(status));
 }
 
-void	here_doc_read(t_shell *shell, int *wread)
+void	here_doc_read(int *wread, t_redir *redir)
 {
 	char	*line;
 	int		limsize;
 
 	close(wread[0]);
-	limsize = ft_strlen(shell->cmds->redirections->file);
-	write(1, "heredoc> ", ft_strlen("heredoc> "));
+	limsize = ft_strlen(redir->file);
+	write(1, "\033[38;2;108;112;134m· \033[0m",
+		ft_strlen("\033[38;2;108;112;134m· \033[0m"));
 	line = get_next_line(0);
 	while (line)
 	{
-		if (ft_strncmp(line, shell->cmds->redirections->file, limsize) == 0
+		if (ft_strncmp(line, redir->file, limsize) == 0
 			&& ft_strlen(line) == limsize + 1
 			&& line[ft_strlen(line) - 1] == '\n')
 			break ;
 		write(wread[1], line, ft_strlen(line));
 		free(line);
-		write(1, "heredoc> ", ft_strlen("heredoc> "));
+		write(1, "\033[38;2;108;112;134m· \033[0m",
+			ft_strlen("\033[38;2;108;112;134m· \033[0m"));
 		line = get_next_line(0);
 	}
 	free(line);
@@ -79,7 +93,7 @@ void	here_doc_read(t_shell *shell, int *wread)
 	exit(0);
 }
 
-int	here_doc_input(t_shell *shell)
+int	here_doc_input(t_shell *shell, t_redir *redir)
 {
 	int	status;
 
@@ -91,12 +105,10 @@ int	here_doc_input(t_shell *shell)
 	if (shell->hereid == 0)
 	{
 		set_signal_mode(FORKED);
-		here_doc_read(shell, shell->wread);
+		here_doc_read(shell->wread, redir);
 	}
 	waitpid(shell->hereid, &status, 0);
 	close(shell->wread[1]);
-	if (shell->cmds->redirections->next)
-		shell->cmds->redirections = shell->cmds->redirections->next;
 	if (WIFSIGNALED(status))
 	{
 		shell->exit_status = EXIT_SIGNAL_BASE + WTERMSIG(status);

@@ -42,6 +42,12 @@ int	apply_redirs(t_shell *shell)
 	redir = shell->cmds->redirections;
 	while (redir)
 	{
+		if (redir->type == REDIR_HEREDOC)
+		{
+			dup2(redir->heredoc_fd, STDIN_FILENO);
+			redir = redir->next;
+			continue ;
+		}
 		fd = open_redir(redir);
 		if (fd == -1)
 			return (-1);
