@@ -17,6 +17,8 @@ void	print_prompt_sp(void)
 	struct winsize	ws;
 	int				i;
 
+	if (!isatty(0))
+		return ;
 	ioctl(1, TIOCGWINSZ, &ws);
 	write(1, "\033[7m%\033[0m", 9);
 	i = 1;
@@ -58,6 +60,8 @@ static void	clean_screen(void)
 
 void	print_banner(void)
 {
+	if (!isatty(0))
+		return ;
 	clean_screen();
 	ft_printf(""MAUVE"\
                     ╭───────────────────────╮\n\
