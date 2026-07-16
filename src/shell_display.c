@@ -6,11 +6,32 @@
 /*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 17:27:24 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/14 17:28:54 by rpinheir         ###   ########.ch       */
+/*   Updated: 2026/07/15 18:47:35 by pedro            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	print_prompt_sp(void)
+{
+	struct winsize	ws;
+	int				i;
+
+	if (!isatty(0))
+		return ;
+	ioctl(1, TIOCGWINSZ, &ws);
+	write(1, "\033[7m%\033[0m", 9);
+	i = 1;
+	while (i < ws.ws_col)
+	{
+		write(1, " ", 1);
+		i++;
+	}
+	write(1, "\r", 1);
+	write(1, " ", 1);
+	write(1, "\r", 1);
+	write(1, "\n", 1);
+}
 
 static int	ft_putchar_tc(int i)
 {
@@ -31,7 +52,6 @@ static void	clean_screen(void)
 		printf("\e[1;1H\e[2J");
 		return ;
 	}
-	ft_putendl_fd("Found term", 1);
 	area = capbuf;
 	cl = tgetstr("cl", &area);
 	if (cl)
@@ -40,6 +60,8 @@ static void	clean_screen(void)
 
 void	print_banner(void)
 {
+	if (!isatty(0))
+		return ;
 	clean_screen();
 	ft_printf(""MAUVE"\
                     ╭───────────────────────╮\n\

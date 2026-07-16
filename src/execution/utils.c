@@ -18,21 +18,11 @@ int	error_handler(char *msg)
 	exit(errno);
 }
 
-static char	*pather(t_shell *shell, char *cmd)
+static char	*pather(char *cmd)
 {
-	int		x;
-	int		y;
 	char	*all;
 
-	all = dotter(shell, cmd);
-	x = ft_strlen(all);
-	y = x;
-	free(cmd);
-	while (all[y] != '/')
-		y--;
-	cmd = malloc(sizeof(char) * (x - y));
-	cmd = ft_strrchr(all, '/');
-	cmd = ft_strtrim(cmd, "/");
+	all = ft_strdup(cmd);
 	return (all);
 }
 
@@ -58,7 +48,7 @@ char	*get_path(char *cmd, t_shell *shell)
 	int		i;
 
 	if (literaler(cmd) == 1)
-		return (pather(shell, cmd));
+		return (pather(cmd));
 	i = -1;
 	paths = ft_split(variable_expansion("PATH", shell), ':');
 	if (!paths)
@@ -83,15 +73,13 @@ void	exec_cmd(char **s_cmd, char **envp, t_shell *shell)
 {
 	char	*path;
 	char	*error_msg;
+	int		bu2_res;
 
-	if (bu2(shell) != -1)
-		return ;
+	bu2_res = bu2(shell);
+	if (bu2_res != -1)
+		clean_exit(shell, bu2_res);
 	if (!s_cmd || !s_cmd[0])
-	{
-		ft_putstr_fd(s_cmd[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
-		exit(127);
-	}
+		clean_exit(shell, 127);
 	path = get_path(s_cmd[0], shell);
 	if (!path)
 	{
@@ -103,7 +91,6 @@ void	exec_cmd(char **s_cmd, char **envp, t_shell *shell)
 	{
 		perror(s_cmd[0]);
 		free(path);
-		ft_strfree(s_cmd);
-		exit(126);
+		clean_exit(shell, 126);
 	}
 }

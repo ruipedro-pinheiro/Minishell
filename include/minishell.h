@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/14 19:09:26 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/16 17:58:14 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,13 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include <term.h>
+# include <sys/ioctl.h>
 
 # define MAUVE "\001\033[38;2;203;166;247m\002"
 # define PEACH "\001\033[38;2;250;179;135m\002"
 # define GREY  "\001\033[38;2;166;173;200m\002"
 # define SKY   "\001\033[38;2;180;195;254m\002"
-# define RESET "\001\033[0m\002"
-
-# define MAUVE "\001\033[38;2;203;166;247m\002"
-# define PEACH "\001\033[38;2;250;179;135m\002"
-# define GREY  "\001\033[38;2;166;173;200m\002"
-# define SKY   "\001\033[38;2;180;195;254m\002"
+# define RED   "\001\033[38;2;243;139;168m\002"
 # define RESET "\001\033[0m\002"
 
 /*  TOKEN_TYPES
@@ -96,6 +92,7 @@ typedef struct s_redir
 	t_redir_type	type;
 	char			*file;
 	struct s_redir	*next;
+	int				heredoc_fd;
 }				t_redir;
 
 // cat outfile =  {"cat", "outfile", NULL}
@@ -117,6 +114,7 @@ typedef struct s_shell
 	int		cmd_count;
 	pid_t	*pids;
 	t_cmd	*cmds;
+	bool	print_newline;
 	char	**env;
 	int		exit_status;
 	char	*historian;
@@ -124,15 +122,16 @@ typedef struct s_shell
 
 /**			---			EXEC	---			 */
 void			pexiter(char **s_cmd, char *error_msg);
+void			clean_exit(t_shell *shell, int code);
 char			*dotter(t_shell *shell, char *b);
 void			singlecmd(t_shell *shell);
-void			here_doc_read(t_shell *shell, int *wread);
+void			here_doc_read(int *wread, t_redir *redir);
 int				init_pipes(t_shell *shell);
 int				parent_update(int prev_fd, int *wread, t_shell *shell);
 int				wait_children(t_shell *shell, int count);
 void			exec_cmd(char **s_cmd, char **envp, t_shell *shell);
 int				error_handler(char *msg);
-int				here_doc_input(t_shell *shell);
+int				here_doc_input(t_shell *shell, t_redir *redir);
 int				ft_strcmp(char *s1, char *s2);
 // void			init_pipex(t_shell *shell, int argc, char **argv, char **envp);
 int				pipex(t_shell *shell);
@@ -143,6 +142,7 @@ void			historer(t_shell *shell);
 void			exit_minishell(t_shell *shell);
 void			destroyer(t_shell *shell);
 
+int				apply_redirs(t_shell *shell);
 char			*variable_expansion(char *name, t_shell *shell);
 int				count_fields(char *value);
 void			mark_range(char *s);
@@ -206,4 +206,6 @@ bool			is_name_valid(char *arg);
 void			echoer(t_shell *shell, int arg_indx);
 
 void			print_banner(void);
+char			*prompt_readline(t_shell *shell);
+void			print_prompt_sp(void);
 #endif

@@ -19,7 +19,7 @@ char	**enver(char **environ)
 
 	i = -1;
 	while (environ[++i])
-		i++;
+		;
 	env = malloc(sizeof(char *) * (i + 1));
 	if (!env)
 		return (NULL);
@@ -40,8 +40,10 @@ int	main(int ac, char **av, char **environ)
 
 	if (ac > 1 && av[0])
 		return (1);
+	shell.pids = NULL;
 	shell.historian = ft_strdup("");
 	historer(&shell);
+	shell.print_newline = true;
 	shell.env = enver(environ);
 	shell.exit_status = 0;
 	shell.cmds = NULL;

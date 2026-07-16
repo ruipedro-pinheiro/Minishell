@@ -23,10 +23,10 @@ int	bu2(t_shell *shell)
 		|| ft_strncmp(cmd, "export", 7) == 0)
 		return (shell->exit_status);
 	if (ft_strncmp(cmd, "env", 4) == 0)
-		return (envinator(shell), shell->exit_status);
+		return (envinator(shell), 0);
 	if (ft_strncmp(cmd, "pwd", 4) == 0)
-		return (pwder(shell), shell->exit_status);
+		return (pwder(shell), 0);
 	if (ft_strncmp(cmd, "echo", 5) == 0)
-		return (echoer(shell, 0), shell->exit_status);
+		return (echoer(shell, 0), 0);
 	return (-1);
 }

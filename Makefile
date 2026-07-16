@@ -13,6 +13,7 @@ SRC = main.c \
       historer.c \
 	  shell.c \
 	  shell_display.c \
+	  prompt.c \
 	  signals.c \
 	  director.c \
 	  execution/closer.c \
@@ -20,6 +21,7 @@ SRC = main.c \
 	  execution/pexiter.c \
 	  execution/pipex.c \
 	  execution/multi_pipe.c \
+	  execution/redir_exec.c \
 	  parsing/expansion.c \
 	  parsing/parser.c \
 	  parsing/debug_cmd.c \

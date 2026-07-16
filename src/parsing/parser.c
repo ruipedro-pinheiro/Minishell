@@ -12,11 +12,33 @@
 
 #include "../../include/minishell.h"
 
-/*
-	TODO: remove parsing debug
-			1. drop debug_tokens(tokens, line) in parse()
-			2. delete debug_cmd.c / debug_redir.c (+ their calls)
-*/
+t_cmd	*filter_null_cmds(t_cmd *cmds)
+{
+	t_cmd	*tmp;
+	t_cmd	*prev;
+
+	while (cmds && cmds->cmd_args[0] == NULL && !cmds->redirections)
+	{
+		tmp = cmds->next;
+		cmds->next = NULL;
+		free_cmds(cmds);
+		cmds = tmp;
+	}
+	prev = cmds;
+	while (prev && prev->next)
+	{
+		if (prev->next->cmd_args[0] == NULL && !prev->next->redirections)
+		{
+			tmp = prev->next;
+			prev->next = tmp->next;
+			tmp->next = NULL;
+			free_cmds(tmp);
+		}
+		else
+			prev = prev->next;
+	}
+	return (cmds);
+}
 
 t_cmd	*parse(char *line, t_shell *shell)
 {
@@ -33,5 +55,8 @@ t_cmd	*parse(char *line, t_shell *shell)
 		return (free_tokens(tokens), NULL);
 	cmds = build_cmds(tokens);
 	free_tokens(tokens);
+	cmds = filter_null_cmds(cmds);
+	if (!cmds)
+		shell->exit_status = 0;
 	return (cmds);
 }

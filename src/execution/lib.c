@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 18:45:42 by saouissi          #+#    #+#             */
-/*   Updated: 2026/06/03 18:19:10 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/15 19:53:18 by pedro            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,11 @@
 
 void	startinf(t_shell *shell, int *wread)
 {
-	int	fd;
-
-	if (shell->cmds->redirections)
-	{
-		if (shell->cmds->redirections->type == REDIR_IN)
-		{
-			fd = open(shell->cmds->redirections->file, O_RDONLY, 0);
-			if (fd == -1)
-				exit(1);
-			dup2(fd, STDIN_FILENO);
-			close(fd);
-		}
-	}
 	dup2(wread[1], STDOUT_FILENO);
 	close(wread[0]);
 	close(wread[1]);
+	if (apply_redirs(shell) == -1)
+		exit(1);
 	exec_cmd(shell->cmds->cmd_args, shell->env, shell);
 }
 
@@ -39,68 +28,26 @@ void	middle(t_shell *shell, int *wread)
 	dup2(wread[1], STDOUT_FILENO);
 	close(wread[0]);
 	close(wread[1]);
+	if (apply_redirs(shell) == -1)
+		exit(1);
 	exec_cmd(shell->cmds->cmd_args, shell->env, shell);
 }
 
 void	endoutf(t_shell *shell, int *wread)
 {
-	int	fd;
-
-	if (shell->cmds->redirections)
-	{
-		if (shell->cmds->redirections->type == REDIR_OUT
-			|| shell->cmds->redirections->type == REDIR_APPEND)
-		{
-			if (shell->cmds->redirections->type == REDIR_APPEND)
-				fd = open(shell->cmds->redirections->file, O_WRONLY
-						| O_CREAT | O_APPEND, 0644);
-			else
-				fd = open(shell->cmds->redirections->file, O_CREAT
-						| O_WRONLY | O_TRUNC, 0644);
-			if (fd == -1)
-				exit(1);
-			dup2(fd, STDOUT_FILENO);
-			close(fd);
-		}
-	}
 	dup2(shell->prevfd, STDIN_FILENO);
 	close(wread[0]);
 	close(wread[1]);
-	exec_cmd(shell->cmds->cmd_args, shell->env, shell);
-}
-
-static void	test(t_shell *shell, int fd2)
-{
-	if (shell->cmds->redirections->type == REDIR_APPEND)
-		fd2 = open(shell->cmds->redirections->file, O_WRONLY
-				| O_CREAT | O_APPEND, 0644);
-	else
-		fd2 = open(shell->cmds->redirections->file, O_CREAT
-				| O_WRONLY | O_TRUNC, 0644);
-	if (fd2 == -1)
+	if (apply_redirs(shell) == -1)
 		exit(1);
-	(dup2(fd2, STDOUT_FILENO), close(fd2));
+	exec_cmd(shell->cmds->cmd_args, shell->env, shell);
 }
 
 void	singlecmd(t_shell *shell)
 {
-	int	fd;
-	int	fd2;
-
-	fd2 = -1;
 	if (!shell->cmds->redirections)
 		return (exec_cmd(shell->cmds->cmd_args, shell->env, shell));
-	if (shell->cmds->redirections->type == REDIR_IN)
-	{
-		fd = open(shell->cmds->redirections->file, O_RDONLY, 0);
-		if (fd == -1)
-			exit(1);
-		(dup2(fd, STDIN_FILENO), close(fd));
-		if (shell->cmds->redirections->next)
-			shell->cmds->redirections = shell->cmds->redirections->next;
-	}
-	if (shell->cmds->redirections->type == REDIR_OUT
-		|| shell->cmds->redirections->type == REDIR_APPEND)
-		test(shell, fd2);
+	if (apply_redirs(shell) == -1)
+		exit(1);
 	exec_cmd(shell->cmds->cmd_args, shell->env, shell);
 }

@@ -31,17 +31,6 @@ static int	cmdlen(t_shell *shell)
 
 static void	forker(t_shell *shell, int *wread, int x)
 {
-	if (x == 0 && shell->cmds->redirections)
-	{
-		if (shell->cmds->redirections->type == REDIR_HEREDOC)
-		{
-			if (!shell->cmds->next)
-				endoutf(shell, wread);
-			else
-				middle(shell, wread);
-			exit(2);
-		}
-	}
 	if (x == 0)
 		startinf(shell, wread);
 	if (x != 0 && !shell->cmds->next)
