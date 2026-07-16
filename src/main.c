@@ -40,6 +40,7 @@ int	main(int ac, char **av, char **environ)
 
 	if (ac > 1 && av[0])
 		return (1);
+	shell.pids = NULL;
 	shell.historian = ft_strdup("");
 	historer(&shell);
 	shell.print_newline = true;

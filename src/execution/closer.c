@@ -12,13 +12,20 @@
 
 #include "../../include/minishell.h"
 
+void	clean_exit(t_shell *shell, int code)
+{
+	destroyer(shell);
+	exit(code);
+}
 // ft_strfree(shell->cmds->cmd_args);
 // purpose is to destroy all allocations within t_shell whenever exit
+
 void	destroyer(t_shell *shell)
 {
 	free(shell->historian);
 	if (shell->cmds)
 		free_cmds(shell->cmds);
+	free(shell->pids);
 	ft_strfree(shell->env);
 }
 

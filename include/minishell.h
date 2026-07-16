@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/15 18:02:42 by pedro            ###   ########.ch       */
+/*   Updated: 2026/07/15 19:39:37 by pedro            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct s_redir
 	t_redir_type	type;
 	char			*file;
 	struct s_redir	*next;
+	int				heredoc_fd;
 }				t_redir;
 
 // cat outfile =  {"cat", "outfile", NULL}
@@ -121,15 +122,16 @@ typedef struct s_shell
 
 /**			---			EXEC	---			 */
 void			pexiter(char **s_cmd, char *error_msg);
+void			clean_exit(t_shell *shell, int code);
 char			*dotter(t_shell *shell, char *b);
 void			singlecmd(t_shell *shell);
-void			here_doc_read(t_shell *shell, int *wread);
+void			here_doc_read(int *wread, t_redir *redir);
 int				init_pipes(t_shell *shell);
 int				parent_update(int prev_fd, int *wread, t_shell *shell);
 int				wait_children(t_shell *shell, int count);
 void			exec_cmd(char **s_cmd, char **envp, t_shell *shell);
 int				error_handler(char *msg);
-int				here_doc_input(t_shell *shell);
+int				here_doc_input(t_shell *shell, t_redir *redir);
 int				ft_strcmp(char *s1, char *s2);
 // void			init_pipex(t_shell *shell, int argc, char **argv, char **envp);
 int				pipex(t_shell *shell);
@@ -140,6 +142,7 @@ void			historer(t_shell *shell);
 void			exit_minishell(t_shell *shell);
 void			destroyer(t_shell *shell);
 
+int				apply_redirs(t_shell *shell);
 char			*variable_expansion(char *name, t_shell *shell);
 int				count_fields(char *value);
 void			mark_range(char *s);
