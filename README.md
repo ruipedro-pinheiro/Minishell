@@ -2,7 +2,7 @@ _This project has been created as part of the 42 curriculum by saouissi, rpinhei
 
 # Description
 
-![Minishell project](https://github.com/ruipedro-pinheiro/Minishell/blob/Pedro/media/Minishell.png?raw=true "Title")
+![Minishell project](https://github.com/ruipedro-pinheiro/Minishell/blob/Pedro/media/Example.png?raw=true "Title")
 
 **Minishell** is a 42 group project where the main goal is to build a simplified shell, in comparison with bash.
 In global we must execute programs from PATH variable, code ourselves built-ins programs like cd, echo or env.
