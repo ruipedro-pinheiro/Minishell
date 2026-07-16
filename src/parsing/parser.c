@@ -17,7 +17,7 @@ t_cmd	*filter_null_cmds(t_cmd *cmds)
 	t_cmd	*tmp;
 	t_cmd	*prev;
 
-	while (cmds && cmds->cmd_args[0] == NULL)
+	while (cmds && cmds->cmd_args[0] == NULL && !cmds->redirections)
 	{
 		tmp = cmds->next;
 		cmds->next = NULL;
@@ -27,7 +27,7 @@ t_cmd	*filter_null_cmds(t_cmd *cmds)
 	prev = cmds;
 	while (prev && prev->next)
 	{
-		if (prev->next->cmd_args[0] == NULL)
+		if (prev->next->cmd_args[0] == NULL && !prev->next->redirections)
 		{
 			tmp = prev->next;
 			prev->next = tmp->next;
