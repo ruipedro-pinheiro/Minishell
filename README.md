@@ -14,6 +14,8 @@ The manner we've decided to do is the following:
 Input -> readline() -> lexer -> tokens -> parser -> struct with linked lists -> execution.
 Technical details will be listed later.
 
+![Minishell project](https://github.com/ruipedro-pinheiro/Minishell/blob/Pedro/media/Example.png?raw=true "Title")
+
 # Instructions
 
 To build the project:
