@@ -77,9 +77,9 @@ void	exec_cmd(char **s_cmd, char **envp, t_shell *shell)
 
 	bu2_res = bu2(shell);
 	if (bu2_res != -1)
-		exit(bu2_res);
+		clean_exit(shell, bu2_res);
 	if (!s_cmd || !s_cmd[0])
-		exit(127);
+		clean_exit(shell, 127);
 	path = get_path(s_cmd[0], shell);
 	if (!path)
 	{
@@ -91,7 +91,6 @@ void	exec_cmd(char **s_cmd, char **envp, t_shell *shell)
 	{
 		perror(s_cmd[0]);
 		free(path);
-		ft_strfree(s_cmd);
-		exit(126);
+		clean_exit(shell, 126);
 	}
 }
