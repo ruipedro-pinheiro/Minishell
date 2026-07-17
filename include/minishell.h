@@ -6,14 +6,13 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/15 19:39:37 by pedro            ###   ########.ch       */
+/*   Updated: 2026/07/17 17:26:51 by pedro            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # define EXIT_SIGNAL_BASE 128
-# define WS_SEP '\001'
 # define WS_SEP '\001'
 # include <stdio.h>
 # include <readline/readline.h>
@@ -35,6 +34,7 @@
 # define SKY   "\001\033[38;2;180;195;254m\002"
 # define RED   "\001\033[38;2;243;139;168m\002"
 # define RESET "\001\033[0m\002"
+# define HD_MARK "\033[38;2;108;112;134m· \033[0m"
 
 /*  TOKEN_TYPES
 
@@ -93,6 +93,7 @@ typedef struct s_redir
 	char			*file;
 	struct s_redir	*next;
 	int				heredoc_fd;
+	bool			is_quoted;
 }				t_redir;
 
 // cat outfile =  {"cat", "outfile", NULL}
@@ -182,10 +183,11 @@ bool			validation(t_token *head);
 /**			---		EXPANSION		---		*/
 bool			expansion(t_token *head, t_shell *shell);
 void			fill_fields(char *value, char **cmd_args, int *i);
-
-// idk
+char			*strip_quotes(char *string);
+char			*resolve_redir_file(t_redir_type type,
+					char *file, bool *is_quoted);
 char			**enver(char **environ);
-
+char			*value_expand(char *value, int *i, t_shell *shell);
 /**			---		BUILTIN		---			*/
 void			envinator(t_shell *shell);
 void			pwder(t_shell *shell);

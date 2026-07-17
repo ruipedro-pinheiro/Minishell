@@ -6,7 +6,7 @@
 /*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/11 11:58:04 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/05/13 16:44:43 by rpinheir         ###   ########.ch       */
+/*   Updated: 2026/07/17 17:07:09 by pedro            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,6 @@ char	*variable_expansion(char *name, t_shell *shell)
 	}
 	return ("");
 }
-
-/*
-	TODO: strip the $ in $"..." and $'...'
-			1. value_expand: if the char after $ is " or ', drop the $
-			2. keep the quoted text, quote removal does the rest
-*/
 
 char	*value_expand(char *value, int *i, t_shell *shell)
 {
@@ -110,7 +104,9 @@ bool	expansion(t_token *head, t_shell *shell)
 	node = head;
 	while (node)
 	{
-		if (node->type == TOKEN_WORD)
+		if (node->type == TOKEN_REDIR_HEREDOC)
+			node = node->next;
+		else if (node->type == TOKEN_WORD)
 		{
 			node->is_var = false;
 			value = token_expand(node->value, shell, &node->is_var);

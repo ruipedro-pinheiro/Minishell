@@ -6,11 +6,45 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/28 12:00:00 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/14 18:31:50 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/17 17:17:58 by pedro            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+char	*resolve_redir_file(t_redir_type type, char *file, bool *is_quoted)
+{
+	if (type == REDIR_HEREDOC)
+	{
+		*is_quoted = (ft_strchr(file, '"') || ft_strchr(file, '\''));
+		return (strip_quotes(file));
+	}
+	*is_quoted = false;
+	return (ft_strdup(file));
+}
+
+char	*strip_quotes(char *string)
+{
+	char	*res;
+	bool	is_dq;
+	bool	is_sq;
+	int		i;
+
+	res = ft_strdup("");
+	is_sq = false;
+	is_dq = false;
+	i = -1;
+	while (string[++i])
+	{
+		if (string[i] == '\'' && !is_dq)
+			is_sq = !is_sq;
+		else if (string[i] == '"' && !is_sq)
+			is_dq = !is_dq;
+		else
+			res = ft_strjoin_char(res, string[i]);
+	}
+	return (res);
+}
 
 void	mark_range(char *s)
 {

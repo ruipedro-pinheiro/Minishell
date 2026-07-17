@@ -6,7 +6,7 @@
 /*   By: pedro </var/spool/mail/pedro>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/17 11:41:29 by pedro             #+#    #+#             */
-/*   Updated: 2026/07/17 14:17:39 by pedro            ###   ########.ch       */
+/*   Updated: 2026/07/17 17:29:41 by pedro            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,19 @@ void	here_doc_read(t_shell *shell, t_redir *redir)
 	line = "";
 	close(shell->wread[0]);
 	limsize = ft_strlen(redir->file);
-	write(1, "\033[38;2;108;112;134m· \033[0m",
-		ft_strlen("\033[38;2;108;112;134m· \033[0m"));
 	while (line)
 	{
-		line = heredoc_expand(shell);
+		write(1, HD_MARK, ft_strlen(HD_MARK));
+		if (redir->is_quoted)
+			line = get_next_line(0);
+		else
+			line = heredoc_expand(shell);
 		if (ft_strncmp(line, redir->file, limsize) == 0
 			&& ft_strlen(line) == limsize + 1
 			&& line[ft_strlen(line) - 1] == '\n')
 			break ;
 		write(shell->wread[1], line, ft_strlen(line));
 		free(line);
-		write(1, "\033[38;2;108;112;134m· \033[0m",
-			ft_strlen("\033[38;2;108;112;134m· \033[0m"));
 	}
 	free(line);
 	close(shell->wread[1]);
