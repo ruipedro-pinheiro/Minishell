@@ -125,7 +125,7 @@ void			pexiter(char **s_cmd, char *error_msg);
 void			clean_exit(t_shell *shell, int code);
 char			*dotter(t_shell *shell, char *b);
 void			singlecmd(t_shell *shell);
-void			here_doc_read(int *wread, t_redir *redir);
+void			here_doc_read(t_shell *shell, t_redir *redir);
 int				init_pipes(t_shell *shell);
 int				parent_update(int prev_fd, int *wread, t_shell *shell);
 int				wait_children(t_shell *shell, int count);
