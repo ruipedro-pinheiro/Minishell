@@ -195,11 +195,6 @@ int				builtex(t_shell *shell);
 int				bu2(t_shell *shell);
 void			cder(t_shell *shell);
 
-/**			---		DEBUG					*/
-void			debug_tokens(t_token *tokens, char *line);
-void			debug_cmds(t_cmd *cmds);
-void			debug_redirs(t_cmd *cmd, int fd);
-
 void			export_dup(t_shell *shell);
 void			sort_env(char **tmp_env);
 void			unset(t_shell *shell, int i);

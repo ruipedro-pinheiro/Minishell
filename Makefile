@@ -25,8 +25,6 @@ SRC = main.c \
 	  execution/redir_exec.c \
 	  parsing/expansion.c \
 	  parsing/parser.c \
-	  parsing/debug_cmd.c \
-	  parsing/debug_redir.c \
 	  parsing/lexer.c \
 	  parsing/tokens.c \
 	  parsing/redirections.c \
