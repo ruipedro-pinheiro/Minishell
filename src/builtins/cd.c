@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 18:11:38 by saouissi          #+#    #+#             */
-/*   Updated: 2026/07/11 18:43:00 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/20 19:00:46 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,25 @@ static void	earlier(int x, int y, t_shell *shell, int mode)
 	}
 }
 
+// static bool	too_many_args(t_shell *shell)
+// {
+// 	if (shell->cmds->cmd_args[2] != NULL)
+// 	{
+// 		ft_putendl_fd("minishell: cd: too many arguments", 2);
+// 		shell->exit_status = 2;
+// 		return (true);
+// 	}
+// 	return (false);
+// }
+
 static bool	too_many_args(t_shell *shell)
 {
-	if (shell->cmds->cmd_args[2])
+	int	x;
+
+	x = 0;
+	while (shell->cmds->cmd_args[x])
+		x++;
+	if (x > 2)
 	{
 		ft_putendl_fd("minishell: cd: too many arguments", 2);
 		shell->exit_status = 2;
