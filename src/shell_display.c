@@ -33,36 +33,11 @@ void	print_prompt_sp(void)
 	write(1, "\n", 1);
 }
 
-static int	ft_putchar_tc(int i)
-{
-	return (write(1, &i, 1));
-}
-
-static void	clean_screen(void)
-{
-	char	buf[1024];
-	char	capbuf[64];
-	char	*area;
-	char	*cl;
-	char	*term;
-
-	term = getenv("TERM");
-	if (!term || tgetent(buf, term) <= 0)
-	{
-		printf("\e[1;1H\e[2J");
-		return ;
-	}
-	area = capbuf;
-	cl = tgetstr("cl", &area);
-	if (cl)
-		tputs(cl, 1, ft_putchar_tc);
-}
-
 void	print_banner(void)
 {
 	if (!isatty(0))
 		return ;
-	clean_screen();
+	write(1, CLR_SCREEN, ft_strlen(CLR_SCREEN));
 	ft_printf(""MAUVE"\
                     ╭───────────────────────╮\n\
                     │   " PEACH "=== MINISHELL === " MAUVE "  │\n\

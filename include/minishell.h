@@ -26,9 +26,9 @@
 # include <stdbool.h>
 # include <sys/wait.h>
 # include <signal.h>
-# include <term.h>
 # include <sys/ioctl.h>
 
+# define CLR_SCREEN "\033[1;1H\033[2J"
 # define MAUVE "\001\033[38;2;203;166;247m\002"
 # define PEACH "\001\033[38;2;250;179;135m\002"
 # define GREY  "\001\033[38;2;166;173;200m\002"
