@@ -18,6 +18,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
+# include <limits.h>
 # include <errno.h>
 # include <fcntl.h>
 # include <sys/types.h>
@@ -109,16 +110,16 @@ typedef struct s_cmd
 
 typedef struct s_shell
 {
-	pid_t	hereid;
-	int		prevfd;
-	int		wread[2];
-	int		cmd_count;
-	pid_t	*pids;
-	t_cmd	*cmds;
-	bool	print_newline;
-	char	**env;
-	int		exit_status;
-	char	*historian;
+	pid_t			hereid;
+	int				prevfd;
+	int				wread[2];
+	int				cmd_count;
+	pid_t			*pids;
+	t_cmd			*cmds;
+	bool			print_newline;
+	char			**env;
+	long long		exit_status;
+	char			*historian;
 }			t_shell;
 
 /**			---			EXEC	---			 */
