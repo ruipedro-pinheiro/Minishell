@@ -61,7 +61,6 @@ void	set_prompt(t_shell *shell)
 				free(prompt);
 				continue ;
 			}
-			debug_cmds(shell->cmds);
 			exit_minishell(shell);
 			executor(shell);
 		}

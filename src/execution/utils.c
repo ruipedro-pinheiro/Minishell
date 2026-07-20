@@ -91,6 +91,6 @@ void	exec_cmd(char **s_cmd, char **envp, t_shell *shell)
 	{
 		perror(s_cmd[0]);
 		free(path);
-		clean_exit(shell, 126);
+		clean_exit(shell, errno);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 15:25:56 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/05/05 16:55:40 by rpinheir         ###   ########.ch       */
+/*   Updated: 2026/07/17 17:06:50 by pedro            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../include/minishell.h"
@@ -20,7 +20,7 @@ void	append_redir(t_redir **head, t_redir_type type, char *file)
 	if (!node)
 		return ;
 	node->type = type;
-	node->file = ft_strdup(file);
+	node->file = resolve_redir_file(type, file, &node->is_quoted);
 	node->next = NULL;
 	if (!*head)
 	{

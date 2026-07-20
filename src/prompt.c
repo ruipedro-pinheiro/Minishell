@@ -24,10 +24,19 @@ char	*add_git(void)
 		return (ft_strdup(""));
 	i = read(fd, buf, 63);
 	buf[i - 1] = '\0';
-	name = ft_strdup(" ");
-	name = ft_strapnd(name, ft_strrchr(buf, '/') + 1);
-	close(fd);
-	return (name);
+	if (ft_strrchr(buf, '/'))
+	{
+		name = ft_strdup(" ");
+		name = ft_strapnd(name, ft_strrchr(buf, '/') + 1);
+		close(fd);
+		return (name);
+	}
+	else
+	{
+		close(fd);
+		name = NULL;
+		return (name);
+	}
 }
 
 char	*add_home(char *path)
@@ -62,10 +71,12 @@ char	*prompt_display(t_shell *shell)
 	prompt = ft_strapnd(prompt, tmp);
 	free(tmp);
 	tmp = add_git();
-	if (tmp[0] != '\0')
+	if (tmp && tmp[0] != '\0')
+	{
 		prompt = ft_strapnd(prompt, GREY " • " PEACH);
-	prompt = ft_strapnd(prompt, tmp);
-	free(tmp);
+		prompt = ft_strapnd(prompt, tmp);
+		free(tmp);
+	}
 	prompt = ft_strapnd(prompt, SKY "\n╰─");
 	tmp = set_exit_status(shell);
 	prompt = ft_strapnd(prompt, tmp);
