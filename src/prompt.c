@@ -77,6 +77,8 @@ char	*prompt_display(t_shell *shell)
 		prompt = ft_strapnd(prompt, tmp);
 		free(tmp);
 	}
+	else
+		free(tmp);
 	prompt = ft_strapnd(prompt, SKY "\n╰─");
 	tmp = set_exit_status(shell);
 	prompt = ft_strapnd(prompt, tmp);
