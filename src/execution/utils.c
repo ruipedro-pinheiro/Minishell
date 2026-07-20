@@ -74,6 +74,7 @@ void	exec_cmd(char **s_cmd, char **envp, t_shell *shell)
 	char	*path;
 	char	*error_msg;
 	int		bu2_res;
+	int		err;
 
 	bu2_res = bu2(shell);
 	if (bu2_res != -1)
@@ -89,8 +90,9 @@ void	exec_cmd(char **s_cmd, char **envp, t_shell *shell)
 	}
 	if (execve(path, s_cmd, envp) == -1)
 	{
+		err = 126 + (errno == ENOENT);
 		perror(s_cmd[0]);
 		free(path);
-		clean_exit(shell, errno);
+		clean_exit(shell, err);
 	}
 }
