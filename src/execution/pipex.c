@@ -42,10 +42,8 @@ static void	forker(t_shell *shell, int *wread, int x)
 
 int	run_pipeline(t_shell *shell)
 {
-	int		x;
-	t_cmd	*keep;
+	int	x;
 
-	keep = shell->cmds;
 	x = 0;
 	while (1)
 	{
@@ -58,9 +56,9 @@ int	run_pipeline(t_shell *shell)
 			forker(shell, shell->wread, x);
 		shell->prevfd = parent_update(shell->prevfd, shell->wread, shell);
 		x++;
-		if (!keep)
+		if (!shell->cmds->next)
 			break ;
-		keep = keep->next;
+		shell->cmds = shell->cmds->next;
 	}
 	(close(shell->wread[0]), close(shell->wread[1]));
 	return (wait_children(shell, shell->cmd_count));
