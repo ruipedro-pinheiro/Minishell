@@ -6,15 +6,17 @@
 /*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 14:55:09 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/05/18 19:00:30 by rpinheir         ###   ########.ch       */
+/*   Updated: 2026/07/21 15:35:28 by pedro            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+volatile sig_atomic_t	g_signal;
+
 void	sigint_handler(int sig)
 {
-	(void)sig;
+	g_signal = sig;
 	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);

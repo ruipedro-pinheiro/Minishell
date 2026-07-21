@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/17 17:26:51 by pedro            ###   ########.ch       */
+/*   Updated: 2026/07/21 15:35:38 by pedro            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ typedef struct s_shell
 	long long		exit_status;
 	char			*historian;
 }			t_shell;
+
+extern volatile sig_atomic_t	g_signal;
 
 /**			---			EXEC	---			 */
 void			pexiter(char **s_cmd, char *error_msg);

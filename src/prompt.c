@@ -6,7 +6,7 @@
 /*   By: pedro </var/spool/mail/pedro>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 14:51:39 by pedro             #+#    #+#             */
-/*   Updated: 2026/07/15 18:05:25 by pedro            ###   ########.ch       */
+/*   Updated: 2026/07/21 15:30:42 by pedro            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,10 @@ char	*prompt_readline(t_shell *shell)
 	display = prompt_display(shell);
 	line = readline(display);
 	free(display);
+	if (g_signal == SIGINT)
+	{
+		shell->exit_status = 130;
+		g_signal = 0;
+	}
 	return (line);
 }
