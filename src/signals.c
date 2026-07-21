@@ -21,6 +21,12 @@ void	sigint_handler(int sig)
 	rl_redisplay();
 }
 
+void	sigquit_handler(int sig)
+{
+	(void)sig;
+	write(2, "Quit (core dumped)", 19);
+}
+
 void	set_signal_mode(t_signal_modes mode)
 {
 	struct sigaction	sa;
@@ -38,6 +44,7 @@ void	set_signal_mode(t_signal_modes mode)
 	{
 		sa.sa_handler = SIG_IGN;
 		sigaction(SIGINT, &sa, NULL);
+		sa.sa_handler = sigquit_handler;
 		sigaction(SIGQUIT, &sa, NULL);
 	}
 	else if (mode == FORKED)
