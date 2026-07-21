@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedro </var/spool/mail/pedro>              +#+  +:+       +#+        */
+/*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/15 14:51:39 by pedro             #+#    #+#             */
-/*   Updated: 2026/07/15 18:05:25 by pedro            ###   ########.ch       */
+/*   Updated: 2026/07/21 19:40:23 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ char	*prompt_readline(t_shell *shell)
 	print_prompt_sp();
 	display = prompt_display(shell);
 	line = readline(display);
-	if (display == (void *)0)
-		free(display);
+	free(display);
 	return (line);
 }
