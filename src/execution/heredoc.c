@@ -81,7 +81,8 @@ void	here_doc_read(t_shell *shell, t_redir *redir)
 	free(line);
 	close(shell->wread[1]);
 	close(0);
-	exit(0);
+	get_next_line(-1);
+	clean_exit(shell, 0);
 }
 
 int	here_doc_input(t_shell *shell, t_redir *redir)
