@@ -62,6 +62,8 @@ char	*prompt_display(t_shell *shell)
 	char	*prompt;
 	char	*tmp;
 
+	if (!isatty(0))
+		return ("");
 	print_info();
 	prompt = ft_strdup(SKY "╰─");
 	tmp = set_exit_status(shell);
@@ -78,6 +80,7 @@ char	*prompt_readline(t_shell *shell)
 	print_prompt_sp();
 	display = prompt_display(shell);
 	line = readline(display);
-	free(display);
+	if (display == (void *)0)
+		free(display);
 	return (line);
 }

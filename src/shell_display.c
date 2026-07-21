@@ -18,6 +18,8 @@ void	print_info(void)
 	char	*tmp;
 	char	path[1024];
 
+	if (!isatty(0))
+		return ;
 	prompt = ft_strdup(SKY "╭─Minishell •" MAUVE);
 	prompt = ft_strapnd(prompt, "  ");
 	prompt = ft_strapnd(prompt, getenv("USER"));
@@ -35,9 +37,7 @@ void	print_info(void)
 	}
 	else
 		free(tmp);
-	write(1, prompt, ft_strlen(prompt));
-	free(prompt);
-	ft_putendl_fd("", 1);
+	(write(1, prompt, ft_strlen(prompt)), free(prompt), ft_putendl_fd("", 1));
 }
 
 void	print_prompt_sp(void)
