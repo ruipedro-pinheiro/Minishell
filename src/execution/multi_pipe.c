@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   multi_pipe_bonus.c                                :+:      :+:    :+:   */
+/*   multi_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpinheir <rpinhier@student.42Lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/06 17:36:10 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/02/08 17:30:00 by rpinheir         ###   ########.ch       */
+/*   Updated: 2026/07/17 16:41:12 by pedro            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,59 +62,4 @@ int	wait_children(t_shell *shell, int count)
 	if (WIFSIGNALED(status))
 		return (EXIT_SIGNAL_BASE + WTERMSIG(status));
 	return (WEXITSTATUS(status));
-}
-
-void	here_doc_read(int *wread, t_redir *redir)
-{
-	char	*line;
-	int		limsize;
-
-	close(wread[0]);
-	limsize = ft_strlen(redir->file);
-	write(1, "\033[38;2;108;112;134m· \033[0m",
-		ft_strlen("\033[38;2;108;112;134m· \033[0m"));
-	line = get_next_line(0);
-	while (line)
-	{
-		if (ft_strncmp(line, redir->file, limsize) == 0
-			&& ft_strlen(line) == limsize + 1
-			&& line[ft_strlen(line) - 1] == '\n')
-			break ;
-		write(wread[1], line, ft_strlen(line));
-		free(line);
-		write(1, "\033[38;2;108;112;134m· \033[0m",
-			ft_strlen("\033[38;2;108;112;134m· \033[0m"));
-		line = get_next_line(0);
-	}
-	free(line);
-	close(wread[1]);
-	close(0);
-	get_next_line(0);
-	exit(0);
-}
-
-int	here_doc_input(t_shell *shell, t_redir *redir)
-{
-	int	status;
-
-	if (pipe(shell->wread) == -1)
-		exit(1);
-	shell->hereid = fork();
-	if (shell->hereid == -1)
-		exit(1);
-	if (shell->hereid == 0)
-	{
-		set_signal_mode(FORKED);
-		here_doc_read(shell->wread, redir);
-	}
-	waitpid(shell->hereid, &status, 0);
-	close(shell->wread[1]);
-	if (WIFSIGNALED(status))
-	{
-		shell->exit_status = EXIT_SIGNAL_BASE + WTERMSIG(status);
-		return (-2);
-	}
-	else
-		shell->exit_status = WEXITSTATUS(status);
-	return (shell->wread[0]);
 }
