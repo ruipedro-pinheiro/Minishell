@@ -41,7 +41,7 @@ char	*heredoc_expand(t_shell *shell)
 
 static char	*detect_null_eof(t_shell *shell, t_redir *redir)
 {
-	char *line;
+	char	*line;
 
 	write(1, HD_MARK, ft_strlen(HD_MARK));
 	if (redir->is_quoted)
