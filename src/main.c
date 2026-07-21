@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:33 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/14 18:33:35 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/20 19:40:01 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,3 +55,5 @@ int	main(int ac, char **av, char **environ)
 		free_cmds(shell.cmds);
 	return (0);
 }
+
+// valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all -s ./minishell
