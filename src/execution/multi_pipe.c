@@ -21,6 +21,7 @@ int	init_pipes(t_shell *shell)
 	shell->pids = malloc(shell->cmd_count * sizeof(pid_t));
 	if (!shell->pids)
 		exit(1);
+	signal(SIGQUIT, SIG_IGN);
 	while (ptr)
 	{
 		redir = ptr->redirections;
@@ -33,6 +34,7 @@ int	init_pipes(t_shell *shell)
 		}
 		ptr = ptr->next;
 	}
+	signal(SIGQUIT, SIG_DFL);
 	return (-1);
 }
 

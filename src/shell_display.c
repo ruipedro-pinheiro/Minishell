@@ -12,6 +12,34 @@
 
 #include "../include/minishell.h"
 
+void	print_info(void)
+{
+	char	*prompt;
+	char	*tmp;
+	char	path[1024];
+
+	if (!isatty(0))
+		return ;
+	prompt = ft_strdup(SKY "╭─Minishell •" MAUVE);
+	prompt = ft_strapnd(prompt, "  ");
+	prompt = ft_strapnd(prompt, getenv("USER"));
+	prompt = ft_strapnd(prompt, GREY " • " SKY);
+	prompt = ft_strapnd(prompt, " ");
+	tmp = add_home(getcwd(path, sizeof(path)));
+	prompt = ft_strapnd(prompt, tmp);
+	free(tmp);
+	tmp = add_git();
+	if (tmp && tmp[0] != '\0')
+	{
+		prompt = ft_strapnd(prompt, GREY " • " PEACH);
+		prompt = ft_strapnd(prompt, tmp);
+		free(tmp);
+	}
+	else
+		free(tmp);
+	(write(1, prompt, ft_strlen(prompt)), free(prompt), ft_putendl_fd("", 1));
+}
+
 void	print_prompt_sp(void)
 {
 	struct winsize	ws;

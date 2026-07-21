@@ -62,24 +62,10 @@ char	*prompt_display(t_shell *shell)
 	char	*prompt;
 	char	*tmp;
 
-	prompt = ft_strdup(SKY "╭─Minishell •" MAUVE);
-	prompt = ft_strapnd(prompt, "  ");
-	prompt = ft_strapnd(prompt, getenv("USER"));
-	prompt = ft_strapnd(prompt, GREY " • " SKY);
-	prompt = ft_strapnd(prompt, " ");
-	tmp = add_home(variable_expansion("PWD", shell));
-	prompt = ft_strapnd(prompt, tmp);
-	free(tmp);
-	tmp = add_git();
-	if (tmp && tmp[0] != '\0')
-	{
-		prompt = ft_strapnd(prompt, GREY " • " PEACH);
-		prompt = ft_strapnd(prompt, tmp);
-		free(tmp);
-	}
-	else
-		free(tmp);
-	prompt = ft_strapnd(prompt, SKY "\n╰─");
+	if (!isatty(0))
+		return ("");
+	print_info();
+	prompt = ft_strdup(SKY "╰─");
 	tmp = set_exit_status(shell);
 	prompt = ft_strapnd(prompt, tmp);
 	free(tmp);
@@ -94,6 +80,7 @@ char	*prompt_readline(t_shell *shell)
 	print_prompt_sp();
 	display = prompt_display(shell);
 	line = readline(display);
-	free(display);
+	if (display == (void *)0)
+		free(display);
 	return (line);
 }

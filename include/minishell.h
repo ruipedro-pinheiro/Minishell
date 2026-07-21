@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/17 17:26:51 by pedro            ###   ########.ch       */
+/*   Updated: 2026/07/21 15:35:38 by pedro            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ typedef struct s_shell
 	char			*historian;
 }			t_shell;
 
+extern volatile sig_atomic_t	g_signal;
+
 /**			---			EXEC	---			 */
 void			pexiter(char **s_cmd, char *error_msg);
 void			clean_exit(t_shell *shell, int code);
@@ -206,4 +208,9 @@ void			echoer(t_shell *shell, int arg_indx);
 void			print_banner(void);
 char			*prompt_readline(t_shell *shell);
 void			print_prompt_sp(void);
+
+char			*add_git(void);
+char			*add_home(char *path);
+void			print_info(void);
+
 #endif
