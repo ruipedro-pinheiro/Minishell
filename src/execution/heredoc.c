@@ -77,6 +77,7 @@ int	here_doc_input(t_shell *shell, t_redir *redir)
 	if (shell->hereid == 0)
 	{
 		set_signal_mode(FORKED);
+		signal(SIGQUIT, SIG_IGN);
 		here_doc_read(shell, redir);
 	}
 	waitpid(shell->hereid, &status, 0);

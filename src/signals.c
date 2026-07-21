@@ -34,7 +34,7 @@ void	set_signal_mode(t_signal_modes mode)
 	struct sigaction	sa;
 
 	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
+	sa.sa_flags = SA_RESTART;
 	if (mode == INTERACTIVE)
 	{
 		sa.sa_handler = sigint_handler;
@@ -46,7 +46,6 @@ void	set_signal_mode(t_signal_modes mode)
 	{
 		sa.sa_handler = SIG_IGN;
 		sigaction(SIGINT, &sa, NULL);
-		sa.sa_handler = sigquit_handler;
 		sigaction(SIGQUIT, &sa, NULL);
 	}
 	else if (mode == FORKED)

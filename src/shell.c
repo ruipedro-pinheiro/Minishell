@@ -34,6 +34,8 @@ void	executor(t_shell *shell)
 	}
 	waitpid(pid, &status, 0);
 	set_signal_mode(INTERACTIVE);
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT)
+		write(2, "Quit (core dumped)\n", 19);
 	if (WIFSIGNALED(status))
 		shell->exit_status = EXIT_SIGNAL_BASE + WTERMSIG(status);
 	else
