@@ -208,4 +208,9 @@ void			echoer(t_shell *shell, int arg_indx);
 void			print_banner(void);
 char			*prompt_readline(t_shell *shell);
 void			print_prompt_sp(void);
+
+char			*add_git(void);
+char			*add_home(char *path);
+void			print_info(void);
+
 #endif
