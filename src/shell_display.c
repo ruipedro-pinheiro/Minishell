@@ -36,6 +36,7 @@ void	print_info(void)
 	else
 		free(tmp);
 	write(1, prompt, ft_strlen(prompt));
+	free(prompt);
 	ft_putendl_fd("", 1);
 }
 
