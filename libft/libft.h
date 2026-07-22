@@ -57,6 +57,7 @@ int			ft_printf(const char *s, ...);
 int			var_handler(const char *s, int i, va_list varg, int count);
 int			ft_isalpha(int c);
 int			ft_isdigit(int c);
+int			ft_isnumeric(char *s);
 int			ft_isalnum(int c);
 int			ft_isascii(int c);
 int			ft_isprint(int c);
