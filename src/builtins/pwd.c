@@ -14,5 +14,14 @@
 
 void	pwder(t_shell *shell)
 {
-	printf("%s\n", variable_expansion("PWD", shell));
+	char	cwd[1024];
+
+	if (!getcwd(cwd, sizeof(cwd)))
+	{
+		perror("minishell: pwd");
+		shell->exit_status = 1;
+		return ;
+	}
+	printf("%s\n", cwd);
+	shell->exit_status = 0;
 }

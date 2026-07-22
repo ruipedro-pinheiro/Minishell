@@ -21,6 +21,7 @@ void	unset(t_shell *shell, int arg_indx)
 	int		env_indx;
 	char	*name;
 
+	arg_indx++;
 	while (shell->cmds->cmd_args[arg_indx])
 	{
 		name = shell->cmds->cmd_args[arg_indx];
@@ -36,4 +37,5 @@ void	unset(t_shell *shell, int arg_indx)
 		}
 		arg_indx++;
 	}
+	shell->exit_status = 0;
 }
