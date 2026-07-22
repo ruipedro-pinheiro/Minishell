@@ -46,7 +46,7 @@ long long	ft_atoll(const char *str, bool *overflow)
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		if (result > (LLONG_MAX - (*str - '0')) / 10)
+		if (result > (LLONG_MAX - (str[i] - '0')) / 10)
 			return (*overflow = true, result);
 		result = result * 10 + (str[i] - '0');
 		i++;
