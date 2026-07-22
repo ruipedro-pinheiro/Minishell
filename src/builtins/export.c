@@ -12,9 +12,6 @@
 
 #include "../../include/minishell.h"
 
-/*
-   TODO: Sort alphabetically all the env to display correctly
-*/
 void	export_dup(t_shell *shell)
 {
 	int		n;
@@ -37,15 +34,6 @@ void	export_dup(t_shell *shell)
 	sort_env(tmp_env);
 	free(tmp_env);
 }
-/*
-		TODO: Remplace variable (already exists)
-				1. free string
-				2. Move new string to the same address
- */
-// do i malloc a whole new string with variable=name ?
-// or do i change directly the string without malloc ?!
-// i need to see if there is any issues with overflow
-//		if new value is bigger than actual then yes -> overflow.
 
 void	modify_env(t_shell *shell, int index, char *value)
 {
@@ -114,19 +102,6 @@ static void	export_one(t_shell *shell, char *arg)
 	free(value);
 }
 
-/*
-TODO: Main exporter orchestration
-		1. Check if export is from child or parent (with i)
-			a. if yes = only display env
-				(modifying anything on child is irrelevant)
-				i still let it modify subshell env in case bash does the same
-		2. find if the variable is already on env
-			Exporter does only one cmd per cmd
-					([export] [ls="ls -la"] [dir="my dir"] etc...)
-			a. if it exists -> modify only the value
-			b. if it doesn't exist :
-				realloc new array and add enough space to add new variable
-*/
 void	exporter(t_shell *shell, int arg_indx)
 {
 	char	*arg;
