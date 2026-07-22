@@ -63,7 +63,7 @@ char	*prompt_display(t_shell *shell)
 	char	*tmp;
 
 	if (!isatty(0))
-		return ("");
+		return (NULL);
 	print_info();
 	prompt = ft_strdup(SKY "╰─");
 	tmp = set_exit_status(shell);

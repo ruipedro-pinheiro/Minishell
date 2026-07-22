@@ -17,7 +17,7 @@ volatile sig_atomic_t	g_signal;
 void	sigint_handler(int sig)
 {
 	g_signal = sig;
-	write(STDOUT_FILENO, "\n", 1);
+	write(STDOUT_FILENO, "\n\n", 2);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	print_info();

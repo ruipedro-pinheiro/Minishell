@@ -12,3 +12,5 @@ debug.log
 *.swo
 *~
 .vscode/
+compile_commands.json
+.cache/
