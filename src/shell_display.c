@@ -67,8 +67,11 @@ void	print_banner(void)
 		return ;
 	write(1, CLR_SCREEN, ft_strlen(CLR_SCREEN));
 	ft_printf(""MAUVE"\
-                    ╭───────────────────────╮\n\
-                    │   " PEACH "=== MINISHELL === " MAUVE "  │\n\
-                    │   " GREY "By: Sami & Pedro " MAUVE "   │\n\
-                    ╰───────────────────────╯\n");
+                    ╭──────────────────────────────────╮\n\
+                    │                                  │\n\
+                    │            " PEACH "\033[1mMINISHELL\033[22m" MAUVE "             │\n\
+                    │   " GREY "\033[3m« As beautiful as a shell »\033[23m" MAUVE "    │\n\
+                    │         " GREY "\033[2mby Sami & Pedro\033[22m" MAUVE "          │\n\
+                    │                                  │\n\
+                    ╰──────────────────────────────────╯" RESET "\n");
 }
