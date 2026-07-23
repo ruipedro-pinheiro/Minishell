@@ -52,11 +52,6 @@ USER
 $USER
 eof
 ```
-
-```bash
-
-```
-
 # Resources
 
 ### Minishell 42 Guides
