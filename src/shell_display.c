@@ -70,7 +70,8 @@ void	print_banner(void)
                     ╭──────────────────────────────────╮\n\
                     │                                  │\n\
                     │            " PEACH "\033[1mMINISHELL\033[22m" MAUVE "             │\n\
-                    │   " GREY "\033[3m« As beautiful as a shell »\033[23m" MAUVE "    │\n\
+                    │   " GREY "\033[3m« As beautiful as a shell »\033[23m"
+		MAUVE "    │\n\
                     │         " GREY "\033[2mby Sami & Pedro\033[22m" MAUVE "          │\n\
                     │                                  │\n\
                     ╰──────────────────────────────────╯" RESET "\n");
