@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/21 18:22:52 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/23 13:47:07 by rpinheir         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,6 @@
 # define RESET "\001\033[0m\002"
 # define HD_MARK "\033[38;2;108;112;134m· \033[0m"
 
-/*  TOKEN_TYPES
-
-	TOKEN_WORD			=  "cat" or "grep"
-	TOKEN_PIPE			=  " | "
-	TOKEN_REDIR_IN		= " < "
-	TOKEN_REDIR_OUT		=  " > "
-	TOKEN_REDIR_APPEND	= " >> "
-	TOKEN_REDIR_HEREDOC	=  " << "
-*/
 typedef enum e_token_type
 {
 	TOKEN_WORD,
@@ -56,14 +47,6 @@ typedef enum e_token_type
 	TOKEN_REDIR_HEREDOC
 }				t_token_type;
 
-/*
-	REDIR_TYPES
-
-	REDIR_IN			= '<'
-	REDIR_OUT			= '>'
-	REDIR_APPEND		= '>>'
-	REDIR_HEREDOC		= '<<'
-*/
 typedef enum e_redir_type
 {
 	REDIR_IN,
@@ -97,10 +80,6 @@ typedef struct s_redir
 	bool			is_quoted;
 }				t_redir;
 
-// cat outfile =  {"cat", "outfile", NULL}
-// t_redir list, NULL if no redirections
-// next cmd if pipe, NULL if last
-
 typedef struct s_cmd
 {
 	char			**cmd_args;
@@ -123,94 +102,81 @@ typedef struct s_shell
 }			t_shell;
 
 extern volatile sig_atomic_t	g_signal;
+void			set_signal_mode(t_signal_modes mode);
 
-/**			---			EXEC	---			 */
-void			pexiter(char **s_cmd, char *error_msg);
-void			clean_exit(t_shell *shell, int code);
-char			*dotter(t_shell *shell, char *b);
-void			singlecmd(t_shell *shell);
-void			here_doc_read(t_shell *shell, t_redir *redir);
-int				init_pipes(t_shell *shell);
-int				parent_update(int prev_fd, int *wread, t_shell *shell);
-int				wait_children(t_shell *shell, int count);
-void			exec_cmd(char **s_cmd, char **envp, t_shell *shell);
-int				error_handler(char *msg);
-int				here_doc_input(t_shell *shell, t_redir *redir);
-int				ft_strcmp(char *s1, char *s2);
-// void			init_pipex(t_shell *shell, int argc, char **argv, char **envp);
-int				pipex(t_shell *shell);
-char			*get_path(char *cmd, t_shell *shell);
-void			exiter(t_shell *shell);
-void			scribe(t_shell *shell, char *prompt);
-void			historer(t_shell *shell);
-int				exit_minishell(t_shell *shell);
-void			destroyer(t_shell *shell);
-
-int				apply_redirs(t_shell *shell);
-char			*variable_expansion(char *name, t_shell *shell);
-int				count_fields(char *value);
-void			mark_range(char *s);
-void			exporter(t_shell *shell, int i);
-int				find_env_var(char **env, char *name);
-char			*get_name(char *arg);
-char			*get_value(char *arg);
 /**			---		PROMPT			---		*/
 void			set_prompt(t_shell *shell);
 void			endoutf(t_shell *shell, int *wread);
 void			middle(t_shell *shell, int *wread);
 void			startinf(t_shell *shell, int *wread);
+void			print_banner(void);
+void			print_prompt_sp(void);
+void			print_info(void);
+char			*add_git(void);
+char			*add_home(char *path);
+char			*prompt_readline(t_shell *shell);
 
-void			set_signal_mode(t_signal_modes mode);
+/**			---		EXEC			---		*/
+void			pexiter(char **s_cmd, char *error_msg);
+void			clean_exit(t_shell *shell, int code);
+void			singlecmd(t_shell *shell);
+void			here_doc_read(t_shell *shell, t_redir *redir);
+void			exec_cmd(char **s_cmd, char **envp, t_shell *shell);
+void			exiter(t_shell *shell);
+void			scribe(t_shell *shell, char *prompt);
+void			destroyer(t_shell *shell);
+void			mark_range(char *s);
+void			exporter(t_shell *shell, int i);
+void			historer(t_shell *shell);
+char			*get_name(char *arg);
+char			*get_value(char *arg);
+char			*variable_expansion(char *name, t_shell *shell);
+char			*get_path(char *cmd, t_shell *shell);
+char			*dotter(t_shell *shell, char *b);
+int				init_pipes(t_shell *shell);
+int				parent_update(int prev_fd, int *wread, t_shell *shell);
+int				wait_children(t_shell *shell, int count);
+int				error_handler(char *msg);
+int				here_doc_input(t_shell *shell, t_redir *redir);
+int				ft_strcmp(char *s1, char *s2);
+int				pipex(t_shell *shell);
+int				exit_minishell(t_shell *shell);
+int				apply_redirs(t_shell *shell);
+int				count_fields(char *value);
+int				find_env_var(char **env, char *name);
 
 /**			---     PARSING			---		*/
 t_cmd			*parse(char *line, t_shell *shell);
-t_token			*lexer(char *line);
 t_cmd			*build_cmds(t_token *tokens);
-void			free_cmds(t_cmd *cmds);
-
-/**			---     TOKENS			---		*/
+t_token			*lexer(char *line);
 t_token			*new_token(t_token_type token_type, char *value);
+t_redir_type	token_to_redir_type(t_token_type token_type);
 void			add_token(t_token **head, t_token **last, t_token *new_token);
 void			free_tokens(t_token *tokens);
-
-/**			---     REDIRECTIONS	---		*/
 void			handle_operator(char *line, int *i, t_token **head,
 					t_token **last);
-bool			is_redir(t_token *tokens);
 void			append_redir(t_redir **head, t_redir_type type, char *file);
-t_redir_type	token_to_redir_type(t_token_type token_type);
-
-/**			---		VALIDATION		---		*/
-bool			validation(t_token *head);
-
-/**			---		EXPANSION		---		*/
-bool			expansion(t_token *head, t_shell *shell);
+void			free_cmds(t_cmd *cmds);
 void			fill_fields(char *value, char **cmd_args, int *i);
 char			*strip_quotes(char *string);
 char			*resolve_redir_file(t_redir_type type,
 					char *file, bool *is_quoted);
 char			**enver(char **environ);
 char			*value_expand(char *value, int *i, t_shell *shell);
-/**			---		BUILTIN		---			*/
+bool			expansion(t_token *head, t_shell *shell);
+bool			validation(t_token *head);
+bool			is_redir(t_token *tokens);
+
+/**			---		BUILTINS		---		*/
 void			envinator(t_shell *shell);
 void			pwder(t_shell *shell);
-int				builtex(t_shell *shell);
-int				bu2(t_shell *shell);
 void			cder(t_shell *shell);
-
 void			export_dup(t_shell *shell);
 void			sort_env(char **tmp_env);
 void			unset(t_shell *shell, int i);
 void			display_export(char **env);
-bool			is_name_valid(char *arg);
 void			echoer(t_shell *shell, int arg_indx);
-
-void			print_banner(void);
-char			*prompt_readline(t_shell *shell);
-void			print_prompt_sp(void);
-
-char			*add_git(void);
-char			*add_home(char *path);
-void			print_info(void);
-
+int				builtex(t_shell *shell);
+int				bu2(t_shell *shell);
+bool			is_name_valid(char *arg);
 #endif

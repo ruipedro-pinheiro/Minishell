@@ -12,7 +12,7 @@ The manner we've decided to do is the following:
 Input -> readline() -> lexer -> tokens -> parser -> struct with linked lists -> execution.
 Technical details will be listed later.
 
-![Minishell project](https://github.com/ruipedro-pinheiro/Minishell/blob/Pedro/media/Example.png?raw=true "Title")
+![Minishell project](https://github.com/ruipedro-pinheiro/Minishell/blob/Pedro/media/Example.png?raw=true "Minishell")
 
 # Instructions
 
@@ -47,11 +47,14 @@ cat README.md | grep "Instructions"
 ```
 
 ```bash
-infile "grep foo" "sort" "wc -l" outfile
+cat << eof > here.log | cat here.log | grep "$USER"
+USER
+$USER
+eof
 ```
 
 ```bash
-here_doc EOF "cat" "wc -l" outfile
+
 ```
 
 # Resources
