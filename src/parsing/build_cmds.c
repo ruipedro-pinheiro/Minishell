@@ -46,7 +46,7 @@ int	count_args(t_token *tokens)
 	n_args = 0;
 	while (tokens && tokens->type != TOKEN_PIPE)
 	{
-		if (tokens->is_var && tokens->value[0] == '\0')
+		if (tokens->is_var && tokens->value[0] == '\0' && !tokens->is_quoted)
 		{
 			tokens = tokens->next;
 			continue ;
@@ -68,7 +68,8 @@ int	count_args(t_token *tokens)
 
 bool	builder_helper(t_token **tokens, t_cmd *cmd, int *i)
 {
-	if ((*tokens)->is_var && (*tokens)->value[0] == '\0')
+	if ((*tokens)->is_var && (*tokens)->value[0] == '\0'
+		&& !(*tokens)->is_quoted)
 	{
 		(*tokens) = (*tokens)->next;
 		return (false);

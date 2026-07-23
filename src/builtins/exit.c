@@ -13,24 +13,6 @@
 #include "../../include/minishell.h"
 #include <limits.h>
 
-static int	is_numeric(char *s)
-{
-	int	i;
-
-	i = 0;
-	if (s[i] == '+' || s[i] == '-')
-		i++;
-	if (!s[i])
-		return (0);
-	while (s[i])
-	{
-		if (!ft_isdigit(s[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 void	print_err(t_shell *shell, char **args, int i)
 {
 	ft_putstr_fd("minishell: exit: ", 2);
@@ -46,7 +28,7 @@ void	check_overflow(t_shell *shell, char **args, int i)
 
 	if (args[i])
 	{
-		exit_number = ((ft_atoll(args[1], &overflow) % 256) + 256) % 256;
+		exit_number = (unsigned char)ft_atoll(args[1], &overflow);
 		if (overflow)
 		{
 			print_err(shell, args, i);
@@ -57,21 +39,23 @@ void	check_overflow(t_shell *shell, char **args, int i)
 	}
 }
 
-void	exit_minishell(t_shell *shell)
+int	exit_minishell(t_shell *shell)
 {
 	char	**args;
 
+	if (shell->cmds->next)
+		return (0);
 	args = shell->cmds->cmd_args;
 	if (!args[0] || ft_strncmp(args[0], "exit", 5) != 0)
-		return ;
+		return (0);
+	if (args[1] && !ft_isnumeric(args[1]))
+		(print_err(shell, args, 1), exiter(shell));
 	check_overflow(shell, args, 1);
-	if (args[1] && !is_numeric(args[1]))
-		print_err(shell, args, 1);
 	if (args[1] && args[2])
 	{
 		ft_putendl_fd("minishell: exit: too many arguments", 2);
 		shell->exit_status = 1;
-		return ;
+		return (1);
 	}
-	exiter(shell);
+	return (exiter(shell), 0);
 }

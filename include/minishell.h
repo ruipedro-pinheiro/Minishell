@@ -143,7 +143,7 @@ char			*get_path(char *cmd, t_shell *shell);
 void			exiter(t_shell *shell);
 void			scribe(t_shell *shell, char *prompt);
 void			historer(t_shell *shell);
-void			exit_minishell(t_shell *shell);
+int				exit_minishell(t_shell *shell);
 void			destroyer(t_shell *shell);
 
 int				apply_redirs(t_shell *shell);

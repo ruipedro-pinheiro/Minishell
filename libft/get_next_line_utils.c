@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: rpinheir <rpinheir@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/27 18:06:19 by saouissi          #+#    #+#             */
-/*   Updated: 2026/07/16 19:19:04 by saouissi         ###   ########.fr       */
+/*   Created: 2025/11/03 11:27:32 by rpinheir          #+#    #+#             */
+/*   Updated: 2026/02/06 00:00:00 by rpinheir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "libft.h"
 
-void	pwder(t_shell *shell)
+int	gnl_find_char(const char *s, int c)
 {
-	char	cwd[1024];
+	int	i;
 
-	if (!getcwd(cwd, sizeof(cwd)))
+	if (!s)
+		return (-1);
+	i = 0;
+	while (s[i])
 	{
-		perror("minishell: pwd");
-		shell->exit_status = 1;
-		return ;
+		if (s[i] == (char)c)
+			return (i);
+		i++;
 	}
-	printf("%s\n", cwd);
-	shell->exit_status = 0;
+	if ((char)c == '\0')
+		return (i);
+	return (-1);
 }

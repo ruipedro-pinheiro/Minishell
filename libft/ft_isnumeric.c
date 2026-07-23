@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_isnumeric.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: pedro </var/spool/mail/pedro>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/27 18:06:19 by saouissi          #+#    #+#             */
-/*   Updated: 2026/07/16 19:19:04 by saouissi         ###   ########.fr       */
+/*   Created: 2026/07/22 12:17:16 by pedro             #+#    #+#             */
+/*   Updated: 2026/07/22 12:17:18 by pedro            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "libft.h"
 
-void	pwder(t_shell *shell)
+int	ft_isnumeric(char *s)
 {
-	char	cwd[1024];
+	int	i;
 
-	if (!getcwd(cwd, sizeof(cwd)))
+	i = 0;
+	if (s[i] == '+' || s[i] == '-')
+		i++;
+	if (!s[i])
+		return (0);
+	while (s[i])
 	{
-		perror("minishell: pwd");
-		shell->exit_status = 1;
-		return ;
+		if (!ft_isdigit(s[i]))
+			return (0);
+		i++;
 	}
-	printf("%s\n", cwd);
-	shell->exit_status = 0;
+	return (1);
 }

@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strjoin_char.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: rpinheir <rpinheir@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/27 18:06:19 by saouissi          #+#    #+#             */
-/*   Updated: 2026/07/16 19:19:04 by saouissi         ###   ########.fr       */
+/*   Created: 2026/05/13 14:38:58 by rpinheir          #+#    #+#             */
+/*   Updated: 2026/05/13 14:39:57 by rpinheir         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "libft.h"
 
-void	pwder(t_shell *shell)
+char	*ft_strjoin_char(char *s, char c)
 {
-	char	cwd[1024];
+	char	tmp[2];
+	char	*result;
 
-	if (!getcwd(cwd, sizeof(cwd)))
-	{
-		perror("minishell: pwd");
-		shell->exit_status = 1;
-		return ;
-	}
-	printf("%s\n", cwd);
-	shell->exit_status = 0;
+	tmp[0] = c;
+	tmp[1] = '\0';
+	result = ft_strjoin(s, tmp);
+	free(s);
+	return (result);
 }

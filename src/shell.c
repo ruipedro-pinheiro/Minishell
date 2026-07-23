@@ -63,8 +63,8 @@ void	set_prompt(t_shell *shell)
 				free(prompt);
 				continue ;
 			}
-			exit_minishell(shell);
-			executor(shell);
+			if (exit_minishell(shell) == 0)
+				executor(shell);
 		}
 		free(prompt);
 	}

@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strfree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: rpinheir <rpinhier@student.42Lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/27 18:06:19 by saouissi          #+#    #+#             */
-/*   Updated: 2026/07/16 19:19:04 by saouissi         ###   ########.fr       */
+/*   Created: 2026/02/04 12:49:26 by rpinheir          #+#    #+#             */
+/*   Updated: 2026/02/04 12:51:55 by rpinheir         ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "libft.h"
 
-void	pwder(t_shell *shell)
+int	ft_strfree(char **str)
 {
-	char	cwd[1024];
+	int	i;
 
-	if (!getcwd(cwd, sizeof(cwd)))
+	i = 0;
+	while (str[i])
 	{
-		perror("minishell: pwd");
-		shell->exit_status = 1;
-		return ;
+		free(str[i]);
+		i++;
 	}
-	printf("%s\n", cwd);
-	shell->exit_status = 0;
+	free(str);
+	return (0);
 }

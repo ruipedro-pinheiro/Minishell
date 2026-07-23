@@ -81,5 +81,10 @@ char	*prompt_readline(t_shell *shell)
 	display = prompt_display(shell);
 	line = readline(display);
 	free(display);
+	if (g_signal == SIGINT)
+	{
+		shell->exit_status = 130;
+		g_signal = 0;
+	}
 	return (line);
 }

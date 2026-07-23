@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strapnd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
+/*   By: pedro </var/spool/mail/pedro>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/27 18:06:19 by saouissi          #+#    #+#             */
-/*   Updated: 2026/07/16 19:19:04 by saouissi         ###   ########.fr       */
+/*   Created: 2026/06/24 11:46:36 by pedro             #+#    #+#             */
+/*   Updated: 2026/06/24 11:47:29 by pedro            ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "libft.h"
 
-void	pwder(t_shell *shell)
+char	*ft_strapnd(char *s1, char *s2)
 {
-	char	cwd[1024];
+	char	*res;
 
-	if (!getcwd(cwd, sizeof(cwd)))
-	{
-		perror("minishell: pwd");
-		shell->exit_status = 1;
-		return ;
-	}
-	printf("%s\n", cwd);
-	shell->exit_status = 0;
+	res = ft_strjoin(s1, s2);
+	free(s1);
+	return (res);
 }
