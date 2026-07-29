@@ -6,15 +6,14 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/14 18:57:01 by saouissi          #+#    #+#             */
-/*   Updated: 2026/07/14 19:00:41 by saouissi         ###   ########.fr       */
+/*   Updated: 2026/07/24 19:55:42 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	pexiter(char **s_cmd, char *error_msg)
+void	pexiter(char *error_msg, t_shell *shell)
 {
-	ft_strfree(s_cmd);
 	free(error_msg);
-	exit(127);
+	clean_exit(shell, 127);
 }

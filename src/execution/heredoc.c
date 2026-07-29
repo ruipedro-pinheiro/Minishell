@@ -104,6 +104,7 @@ int	here_doc_input(t_shell *shell, t_redir *redir)
 	close(shell->wread[1]);
 	if (WIFSIGNALED(status))
 	{
+		close(shell->wread[0]);
 		shell->exit_status = EXIT_SIGNAL_BASE + WTERMSIG(status);
 		return (-2);
 	}

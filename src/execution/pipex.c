@@ -12,6 +12,24 @@
 
 #include "../../include/minishell.h"
 
+void	close_heredoc_fd(t_cmd *cmds)
+{
+	t_cmd	*ptr;
+	t_redir	*redir;
+
+	ptr = cmds;
+	redir = cmds->redirections;
+	while (redir)
+	{
+		if (redir->type == REDIR_HEREDOC && redir->heredoc_fd >= 0)
+		{
+			close(redir->heredoc_fd);
+			redir->heredoc_fd = -1;
+		}
+		redir = redir->next;
+	}
+}
+
 static int	cmdlen(t_shell *shell)
 {
 	t_cmd	*keep;
@@ -56,6 +74,7 @@ int	run_pipeline(t_shell *shell)
 			exit(1);
 		if (shell->pids[x] == 0)
 			forker(shell, shell->wread, x);
+		close_heredoc_fd(shell->cmds);
 		shell->prevfd = parent_update(shell->prevfd, shell->wread, shell);
 		x++;
 		if (!shell->cmds->next)

@@ -45,6 +45,8 @@ int	apply_redirs(t_shell *shell)
 		if (redir->type == REDIR_HEREDOC)
 		{
 			dup2(redir->heredoc_fd, STDIN_FILENO);
+			close(redir->heredoc_fd);
+			redir->heredoc_fd = -1;
 			redir = redir->next;
 			continue ;
 		}
