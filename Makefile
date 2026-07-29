@@ -5,7 +5,7 @@ OBJDIR = .obj
 INCDIR = include
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror -I$(INCDIR) -I$(LIBFT_DIR) -Wshadow -Wstrict-prototypes -Wpointer-arith 
 VAL_FLAGS  = -g3 -O0
 ASAN_FLAGS = -fsanitize=address,undefined -fno-omit-frame-pointer
@@ -48,8 +48,7 @@ OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 ################################################################################
 #                                PROGRESS BAR                                  #
 ################################################################################
-
-CNT = ~/.tmp/.mini_cnt
+CNT = .mini_cnt
 RESET := $(shell echo 0 > $(CNT))
 C = \033[1;36m
 Y = \033[1;33m

@@ -58,7 +58,7 @@ OBJ = $(SRC:.c=.o)
 #                                PROGRESS BAR                                  #
 ################################################################################
 
-CNT = ~/.tmp/.libft_cnt
+CNT = .libft_cnt
 RESET := $(shell echo 0 > $(CNT))
 C = \033[1;35m
 Y = \033[1;33m

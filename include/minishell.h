@@ -6,7 +6,7 @@
 /*   By: saouissi <saouissi@student.42lausanne.ch>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 13:01:53 by rpinheir          #+#    #+#             */
-/*   Updated: 2026/07/23 13:47:07 by rpinheir         ###   ########.ch       */
+/*   Updated: 2026/07/24 19:42:04 by saouissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ char			*add_home(char *path);
 char			*prompt_readline(t_shell *shell);
 
 /**			---		EXEC			---		*/
-void			pexiter(char **s_cmd, char *error_msg);
+void			pexiter(char *error_msg, t_shell *shell);
 void			clean_exit(t_shell *shell, int code);
 void			singlecmd(t_shell *shell);
 void			here_doc_read(t_shell *shell, t_redir *redir);
